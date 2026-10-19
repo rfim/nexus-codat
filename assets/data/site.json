@@ -120,65 +120,77 @@
    {
     "key": "generate",
     "label": "Generate synthetic SMB feeds",
-    "start_s": 8.5,
-    "duration_s": 0.0
+    "duration_s": 0.0,
+    "start_s": 0
    },
    {
     "key": "ingest",
     "label": "Ingest every feed to bronze (MERGE)",
-    "start_s": 8.5,
-    "duration_s": 73.3
+    "duration_s": 72.0,
+    "start_s": 0.0
    },
    {
     "key": "replay",
     "label": "Replay every feed (should change nothing)",
-    "start_s": 81.9,
-    "duration_s": 37.2
+    "duration_s": 33.9,
+    "start_s": 72.0
    },
    {
     "key": "silver",
     "label": "Canonical invoice, quality split, SCD2, banking",
-    "start_s": 119.1,
-    "duration_s": 35.9
+    "duration_s": 32.8,
+    "start_s": 105.9
    },
    {
     "key": "gold",
     "label": "Invoice fact (incremental MERGE) and Insights products",
-    "start_s": 156.1,
-    "duration_s": 33.2
+    "duration_s": 31.4,
+    "start_s": 138.7
    },
    {
     "key": "rerun",
     "label": "Re-run the fact inside the lookback window",
-    "start_s": 189.3,
-    "duration_s": 6.0
+    "duration_s": 5.3,
+    "start_s": 170.1
    },
    {
     "key": "check_issued",
     "label": "Contract checks on the first publish",
-    "start_s": 195.7,
-    "duration_s": 55.0
+    "duration_s": 54.1,
+    "start_s": 175.4
    },
    {
     "key": "late",
     "label": "Late corrections to bronze (MERGE)",
-    "start_s": 251.6,
-    "duration_s": 14.0
+    "duration_s": 15.7,
+    "start_s": 229.5
    },
    {
     "key": "restate",
     "label": "Re-run silver and gold with the corrections",
-    "start_s": 265.6,
-    "duration_s": 62.4
+    "duration_s": 60.9,
+    "start_s": 245.2
    },
    {
     "key": "check",
     "label": "Contract checks on the restated products",
-    "start_s": 328.0,
-    "duration_s": 52.5
+    "duration_s": 54.1,
+    "start_s": 306.1
+   },
+   {
+    "key": "gx",
+    "label": "Great Expectations suites on every product",
+    "duration_s": 0.5,
+    "start_s": 360.2
+   },
+   {
+    "key": "agent",
+    "label": "On-call agent diagnoses failing checks over MCP",
+    "duration_s": 2.5,
+    "start_s": 360.7
    }
   ],
-  "seconds": 381.4
+  "seconds": 363.2
  },
  "contracts": [
   {
@@ -1800,5 +1812,571 @@
    "governance": "-- generated from contracts/products/insights_revenue_monthly.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_revenue_monthly SET OWNER TO `insights-product-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_revenue_monthly IS 'Revenue = net invoiced amount (excluding tax) on accounts mapped to revenue at the issue date, for open and paid documents. Credit notes net off; void and draft documents are excluded.';\nALTER TABLE nexus.gold.insights_revenue_monthly SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id, currency, month');\nGRANT SELECT ON TABLE nexus.gold.insights_revenue_monthly TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_revenue_monthly TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_revenue_monthly SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
    "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_revenue_monthly.yml: do not edit by hand\nRULES = {\n    \"customer_id_not_null\": \"customer_id IS NOT NULL\",\n    \"customer_id_accepted_values\": \"customer_id IN ('northbank', 'brightpay')\",\n    \"company_id_not_null\": \"company_id IS NOT NULL\",\n    \"currency_not_null\": \"currency IS NOT NULL\",\n    \"currency_accepted_values\": \"currency IN ('GBP', 'EUR', 'USD')\",\n    \"revenue_not_null\": \"revenue IS NOT NULL\",\n}\n\n@dp.materialized_view(name=\"insights_revenue_monthly\", comment='Revenue = net invoiced amount (excluding tax) on accounts mapped to revenue at the issue date, for open and paid documents. Credit notes net off; void and draft documents are excluded.')\n@dp.expect_all_or_fail(RULES)\ndef insights_revenue_monthly():\n    return build_insights_revenue_monthly()\n"
   }
+ },
+ "gx": [
+  {
+   "product": "insights_cash_flow_monthly",
+   "suite": "insights_cash_flow_monthly__contract",
+   "success": true,
+   "evaluated": 11,
+   "passed": 11,
+   "expectations": [
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_in_set",
+     "kwargs": {
+      "column": "customer_id",
+      "value_set": [
+       "northbank",
+       "brightpay"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "net_operating_cash_flow"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "operating_inflows"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "operating_inflows",
+      "min_value": 0.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_compound_columns_to_be_unique",
+     "kwargs": {
+      "column_list": [
+       "customer_id",
+       "company_id",
+       "currency",
+       "month"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_table_row_count_to_be_between",
+     "kwargs": {
+      "min_value": 1
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": 52
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "currency"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "month"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    }
+   ]
+  },
+  {
+   "product": "insights_commerce_monthly",
+   "suite": "insights_commerce_monthly__contract",
+   "success": true,
+   "evaluated": 10,
+   "passed": 10,
+   "expectations": [
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "net_sales"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "net_sales",
+      "min_value": 0.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "payouts_in_bank_ratio"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "payouts_in_bank_ratio",
+      "min_value": 0.98,
+      "max_value": 1.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_compound_columns_to_be_unique",
+     "kwargs": {
+      "column_list": [
+       "customer_id",
+       "company_id",
+       "currency",
+       "month"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_table_row_count_to_be_between",
+     "kwargs": {
+      "min_value": 1
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": 16
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "currency"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "month"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    }
+   ]
+  },
+  {
+   "product": "insights_data_completeness",
+   "suite": "insights_data_completeness__contract",
+   "success": true,
+   "evaluated": 6,
+   "passed": 6,
+   "expectations": [
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "completeness_score"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "completeness_score",
+      "min_value": 0.0,
+      "max_value": 1.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_compound_columns_to_be_unique",
+     "kwargs": {
+      "column_list": [
+       "customer_id",
+       "company_id"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_table_row_count_to_be_between",
+     "kwargs": {
+      "min_value": 1
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": 13
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    }
+   ]
+  },
+  {
+   "product": "insights_dso_monthly",
+   "suite": "insights_dso_monthly__contract",
+   "success": true,
+   "evaluated": 8,
+   "passed": 8,
+   "expectations": [
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "dso_days",
+      "min_value": 0.0,
+      "max_value": 365.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "receivables"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_between",
+     "kwargs": {
+      "column": "receivables",
+      "min_value": 0.0
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_compound_columns_to_be_unique",
+     "kwargs": {
+      "column_list": [
+       "customer_id",
+       "company_id",
+       "month"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_table_row_count_to_be_between",
+     "kwargs": {
+      "min_value": 1
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": 52
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "month"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    }
+   ]
+  },
+  {
+   "product": "insights_revenue_monthly",
+   "suite": "insights_revenue_monthly__contract",
+   "success": true,
+   "evaluated": 12,
+   "passed": 12,
+   "expectations": [
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_in_set",
+     "kwargs": {
+      "column": "customer_id",
+      "value_set": [
+       "northbank",
+       "brightpay"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "customer_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "company_id"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "currency"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_be_in_set",
+     "kwargs": {
+      "column": "currency",
+      "value_set": [
+       "GBP",
+       "EUR",
+       "USD"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "currency"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_column_values_to_not_be_null",
+     "kwargs": {
+      "column": "revenue"
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_compound_columns_to_be_unique",
+     "kwargs": {
+      "column_list": [
+       "customer_id",
+       "company_id",
+       "currency",
+       "month"
+      ]
+     },
+     "success": true,
+     "unexpected_count": 0,
+     "partial_unexpected": [],
+     "observed_value": null
+    },
+    {
+     "type": "expect_table_row_count_to_be_between",
+     "kwargs": {
+      "min_value": 1
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": 52
+    },
+    {
+     "type": "expect_column_to_exist",
+     "kwargs": {
+      "column": "month"
+     },
+     "success": true,
+     "unexpected_count": null,
+     "partial_unexpected": [],
+     "observed_value": null
+    }
+   ]
+  }
+ ],
+ "incident": {
+  "model": "offline-rules",
+  "seconds": 2.5,
+  "title": "insights_cash_flow_monthly: C-107 fails bank reconciliation by 1,250.00"
  }
 }

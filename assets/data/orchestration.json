@@ -1,0 +1,325 @@
+{
+ "run_id": "05904dfe-79b3-4e7a-8948-c818e5b78cc8",
+ "success": true,
+ "started_at": "2026-10-19T16:35:37+00:00",
+ "dagster": "1.13.26",
+ "job": "nexus_insights",
+ "schedule": {
+  "name": "nexus_daily_0600",
+  "cron": "0 6 * * *",
+  "timezone": "Europe/London"
+ },
+ "assets": [
+  {
+   "key": "landing_feeds",
+   "group": "ingest",
+   "kinds": [
+    "python"
+   ],
+   "deps": [],
+   "description": "Synthetic SMB feeds: two accounting platforms, an ERP, a bank feed and commerce payouts, with every planted problem."
+  },
+  {
+   "key": "bronze",
+   "group": "ingest",
+   "kinds": [
+    "delta",
+    "spark"
+   ],
+   "deps": [
+    "landing_feeds"
+   ],
+   "description": "Every feed landed by ordered MERGE."
+  },
+  {
+   "key": "silver_tables",
+   "group": "conform",
+   "kinds": [
+    "delta",
+    "spark"
+   ],
+   "deps": [
+    "bronze"
+   ],
+   "description": "One canonical invoice, the quality split, SCD2 account mappings, conformed banking and commerce."
+  },
+  {
+   "key": "gold_fact",
+   "group": "publish",
+   "kinds": [
+    "delta",
+    "spark"
+   ],
+   "deps": [
+    "silver_tables"
+   ],
+   "description": "The incremental invoice fact (MERGE, 72h lookback)."
+  },
+  {
+   "key": "insights_as_issued",
+   "group": "publish",
+   "kinds": [
+    "delta",
+    "spark"
+   ],
+   "deps": [
+    "gold_fact"
+   ],
+   "description": "The Insights products as first issued (Delta v0)."
+  },
+  {
+   "key": "late_corrections",
+   "group": "ingest",
+   "kinds": [
+    "delta",
+    "spark"
+   ],
+   "deps": [
+    "insights_as_issued"
+   ],
+   "description": "Backdated credit notes and late voids, merged into bronze."
+  },
+  {
+   "key": "insights",
+   "group": "publish",
+   "kinds": [
+    "delta",
+    "great_expectations",
+    "spark"
+   ],
+   "deps": [
+    "late_corrections"
+   ],
+   "description": "The Insights products, restated with the late corrections, checked by SQL contracts and GX."
+  },
+  {
+   "key": "incident_report",
+   "group": "operate",
+   "kinds": [
+    "anthropic",
+    "mcp",
+    "python"
+   ],
+   "deps": [
+    "insights"
+   ],
+   "description": "The on-call agent: Claude over the nexus-insights MCP server (or offline rules without credentials) diagnoses failing checks and proposes a fix as a pull request."
+  },
+  {
+   "key": "site_data",
+   "group": "operate",
+   "kinds": [
+    "python"
+   ],
+   "deps": [
+    "incident_report"
+   ],
+   "description": "Everything the site shows, exported from this run."
+  }
+ ],
+ "step_seconds": {
+  "landing_feeds": 0.1,
+  "bronze": 114.2,
+  "silver_tables": 34.2,
+  "gold_fact": 36.8,
+  "insights_as_issued": 55.1,
+  "late_corrections": 15.7,
+  "insights": 122.2,
+  "incident_report": 2.6,
+  "site_data": 19.0
+ },
+ "checks": [
+  {
+   "asset": "bronze",
+   "check": "replay_changes_nothing",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "rows_before": "2335",
+    "rows_after_replay": "2335"
+   }
+  },
+  {
+   "asset": "silver_tables",
+   "check": "quarantine_keeps_its_reasons",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "due_after_issue": "1",
+    "currency_iso": "1",
+    "status_known": "2"
+   }
+  },
+  {
+   "asset": "gold_fact",
+   "check": "rerun_is_idempotent",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "rows": "433",
+    "after_rerun": "433"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "contract_insights_cash_flow_monthly",
+   "passed": false,
+   "severity": "ERROR",
+   "metadata": {
+    "passed": "8/9",
+    "failing": "['reconcile net_movement_all to source within 0.01']"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "gx_insights_cash_flow_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "expectations": "11/11"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "contract_insights_commerce_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "passed": "7/7",
+    "failing": "[]"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "gx_insights_commerce_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "expectations": "10/10"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "contract_insights_data_completeness",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "passed": "5/5",
+    "failing": "[]"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "gx_insights_data_completeness",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "expectations": "6/6"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "contract_insights_dso_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "passed": "6/6",
+    "failing": "[]"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "gx_insights_dso_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "expectations": "8/8"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "contract_insights_revenue_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "passed": "10/10",
+    "failing": "[]"
+   }
+  },
+  {
+   "asset": "insights",
+   "check": "gx_insights_revenue_monthly",
+   "passed": true,
+   "severity": "ERROR",
+   "metadata": {
+    "expectations": "12/12"
+   }
+  }
+ ],
+ "metadata": {
+  "landing_feeds": {
+   "records": 2577,
+   "planted_break": {
+    "company_id": "C-107",
+    "booked_date": "2026-08-14",
+    "amount": 1250.0
+   },
+   "path": "/tmp/tmpa572r552/storage/landing_feeds"
+  },
+  "bronze": {
+   "rows": 2335,
+   "tables": {
+    "companies": 12,
+    "entitlements": 14,
+    "accounts": 49,
+    "ledgerone_invoices": 130,
+    "bookwise_invoices": 153,
+    "orbiterp_invoices": 154,
+    "bank_transactions": 1331,
+    "bank_balances": 12,
+    "commerce_payouts": 480
+   },
+   "path": "/tmp/tmpa572r552/storage/bronze"
+  },
+  "silver_tables": {
+   "canonical_invoices": 433,
+   "quarantined": 4,
+   "quarantine_reasons": {
+    "due_after_issue": 1,
+    "currency_iso": 1,
+    "status_known": 2
+   },
+   "path": "/tmp/tmpa572r552/storage/silver_tables"
+  },
+  "gold_fact": {
+   "rows": 433,
+   "path": "/tmp/tmpa572r552/storage/gold_fact"
+  },
+  "insights_as_issued": {
+   "revenue_version": 0,
+   "checks": "36/37",
+   "path": "/tmp/tmpa572r552/storage/insights_as_issued"
+  },
+  "late_corrections": {
+   "documents": 31,
+   "path": "/tmp/tmpa572r552/storage/late_corrections"
+  },
+  "insights": {
+   "revenue_version": 1,
+   "failing_checks": 1,
+   "gx_suites_passing": 5,
+   "path": "/tmp/tmpa572r552/storage/insights"
+  },
+  "incident_report": {
+   "written_by": "offline-rules",
+   "title": "insights_cash_flow_monthly: C-107 fails bank reconciliation by 1,250.00",
+   "confidence": 0.9,
+   "mcp_tool_calls": 6,
+   "path": "/tmp/tmpa572r552/storage/incident_report"
+  },
+  "site_data": {
+   "seconds": 19.0,
+   "path": "/tmp/tmpa572r552/storage/site_data"
+  }
+ }
+}

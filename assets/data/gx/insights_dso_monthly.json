@@ -1,0 +1,96 @@
+{
+ "product": "insights_dso_monthly",
+ "suite": "insights_dso_monthly__contract",
+ "success": true,
+ "evaluated": 8,
+ "passed": 8,
+ "expectations": [
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "dso_days",
+    "min_value": 0.0,
+    "max_value": 365.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "receivables"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "receivables",
+    "min_value": 0.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_compound_columns_to_be_unique",
+   "kwargs": {
+    "column_list": [
+     "customer_id",
+     "company_id",
+     "month"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": 52
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "month"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  }
+ ]
+}

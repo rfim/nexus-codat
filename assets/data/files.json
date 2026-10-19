@@ -57,7 +57,7 @@
   "path": "src/nexus/export.py",
   "folder": "src/nexus",
   "runs": "spark",
-  "lines": 125
+  "lines": 126
  },
  {
   "path": "src/nexus/generate.py",
@@ -75,7 +75,13 @@
   "path": "src/nexus/mcp_server.py",
   "folder": "src/nexus",
   "runs": "browser",
-  "lines": 93
+  "lines": 154
+ },
+ {
+  "path": "src/nexus/oncall_agent.py",
+  "folder": "src/nexus",
+  "runs": "local",
+  "lines": 253
  },
  {
   "path": "src/nexus/paths.py",
@@ -88,6 +94,12 @@
   "folder": "src/nexus",
   "runs": "spark",
   "lines": 113
+ },
+ {
+  "path": "src/nexus/quality_gx.py",
+  "folder": "src/nexus",
+  "runs": "local",
+  "lines": 92
  },
  {
   "path": "src/nexus/semantic.py",
@@ -112,6 +124,36 @@
   "folder": "src/nexus",
   "runs": "spark",
   "lines": 30
+ },
+ {
+  "path": "src/nexus/orchestration/__init__.py",
+  "folder": "src/nexus/orchestration",
+  "runs": "local",
+  "lines": 2
+ },
+ {
+  "path": "src/nexus/orchestration/assets.py",
+  "folder": "src/nexus/orchestration",
+  "runs": "local",
+  "lines": 227
+ },
+ {
+  "path": "src/nexus/orchestration/definitions.py",
+  "folder": "src/nexus/orchestration",
+  "runs": "local",
+  "lines": 22
+ },
+ {
+  "path": "src/nexus/orchestration/resources.py",
+  "folder": "src/nexus/orchestration",
+  "runs": "local",
+  "lines": 10
+ },
+ {
+  "path": "src/nexus/orchestration/run.py",
+  "folder": "src/nexus/orchestration",
+  "runs": "local",
+  "lines": 58
  },
  {
   "path": "contracts/quality.yml",
@@ -213,13 +255,31 @@
   "path": "tests/test_mcp.py",
   "folder": "tests",
   "runs": "tests",
-  "lines": 90
+  "lines": 91
  },
  {
   "path": "tests/test_mini_warehouse.py",
   "folder": "tests",
   "runs": "tests",
   "lines": 52
+ },
+ {
+  "path": "tests/test_oncall_agent.py",
+  "folder": "tests",
+  "runs": "local",
+  "lines": 109
+ },
+ {
+  "path": "tests/test_orchestration.py",
+  "folder": "tests",
+  "runs": "local",
+  "lines": 48
+ },
+ {
+  "path": "tests/test_quality_gx.py",
+  "folder": "tests",
+  "runs": "local",
+  "lines": 46
  },
  {
   "path": "tests/test_scd2.py",
@@ -249,19 +309,19 @@
   "path": "scripts/build.sh",
   "folder": "scripts",
   "runs": "view",
-  "lines": 16
+  "lines": 11
  },
  {
   "path": "scripts/manifest.py",
   "folder": "scripts",
   "runs": "view",
-  "lines": 27
+  "lines": 29
  },
  {
   "path": "scripts/test_report.py",
   "folder": "scripts",
   "runs": "view",
-  "lines": 46
+  "lines": 50
  },
  {
   "path": "databricks.yml",
@@ -273,12 +333,12 @@
   "path": ".github/workflows/ci.yml",
   "folder": ".github/workflows",
   "runs": "view",
-  "lines": 22
+  "lines": 25
  },
  {
   "path": "requirements.txt",
   "folder": ".",
   "runs": "view",
-  "lines": 6
+  "lines": 10
  }
 ]

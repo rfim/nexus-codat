@@ -5,7 +5,8 @@
   const files = await NX.get("assets/data/files.json");
   const byPath = Object.fromEntries(files.map((f) => [f.path, f]));
   const BADGE = { browser: ["runs in your browser", "b-run"], spark: ["needs Spark · runs in CI", "b-spark"],
-                  tests: ["tests · run below", "b-test"], view: ["read only", "b-view"] };
+                  tests: ["tests · run below", "b-test"], view: ["read only", "b-view"],
+                  local: ["Dagster · GX · MCP · Claude: runs in a Python env", "b-local"] };
   const MODE = { py: "python", yml: "yaml", yaml: "yaml", sql: "sql", sh: "shell", txt: null, js: "javascript" };
   const original = {}, edited = {};
   let current = null;
@@ -36,6 +37,8 @@
     $("run").title = f.runs === "spark" ? "This module needs Spark and Delta. It runs in CI and with ./scripts/build.sh." :
       f.runs === "tests" ? "Run the tests with the panel below." : "";
     $("dirty").hidden = (edited[path] ?? original[path]) === original[path];
+    if (f.runs === "local") note(`<b>${NX.esc(path)}</b> runs in a real Python environment (Dagster, Great Expectations, the MCP client and the Anthropic SDK). ` +
+      `It ran for this page with <code>./scripts/build.sh</code>; the results are in the Orchestrator page.`);
     if (f.runs === "spark") note(`<b>${NX.esc(path)}</b> needs PySpark and Delta, which can't run in a browser. ` +
       `It ran for real to produce every number on this page; run it yourself with <code>./scripts/build.sh</code>, or see the CI log.`);
     history.replaceState(null, "", `#code=${encodeURIComponent(path)}`);

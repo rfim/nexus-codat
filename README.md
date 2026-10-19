@@ -8,6 +8,27 @@ An independent Senior Data Engineer portfolio by R. Firman Insan Muhammad (Vim),
 
 The repository runs the methods I used at Lifepal on SMB data shaped like Codat's: accounting and ERP systems, bank feeds and commerce payouts. Every metric is agreed once as a YAML contract, every sync lands replay-safe in Delta, every product is scoped by consent, and a semantic layer with an MCP server lets AI agents query certified Insights as the caller. The numbers on the site come from a real run of the PySpark code here, on synthetic data.
 
+## Python end to end
+
+```
+landing_feeds → bronze → silver_tables → gold_fact → insights_as_issued → late_corrections → insights → incident_report → site_data
+   (python)     (spark·delta)                                                          (spark·delta·GX)   (python·MCP·Claude)
+```
+
+- **Orchestration: Dagster** (`src/nexus/orchestration/`). Nine assets, asset checks on every layer (replay is a no-op,
+  quarantine keeps its reasons, the incremental fact re-runs idempotently), two checks per Insights product (the SQL
+  contract and a Great Expectations suite), a freshness check, and a daily 06:00 Europe/London schedule.
+  `./scripts/build.sh` materialises the graph in-process; `dagster dev -m nexus.orchestration.definitions` opens it in the UI.
+- **Data quality: Great Expectations** (`src/nexus/quality_gx.py`). One ExpectationSuite per product, generated from its
+  YAML contract. GX owns column rules, grain and row counts; the SQL checks keep reconciliation to source and consent.
+- **MCP** (`src/nexus/mcp_server.py`). Analyst tools scoped by consent, and on-call tools (`list_failing_checks`,
+  `get_check_evidence`, `run_diagnostic`, `recent_changes`) that only the on-call identity can call. All read-only.
+- **AI model: Claude** (`src/nexus/oncall_agent.py`). When a check fails, the `incident_report` asset starts the MCP
+  server over stdio, lists its tools and lets `claude-opus-5-5` (adaptive thinking, effort high, server-side refusal
+  fallbacks) investigate. It files the result through a strict `submit_incident_report` tool and proposes the fix as a
+  pull request; it never writes data. Without Anthropic credentials the same MCP calls run in a fixed order with simple
+  rules, and the incident says `offline-rules`. Add an `ANTHROPIC_API_KEY` repository secret and CI uses Claude.
+
 ## What's here
 
 | Path | What it does |
@@ -20,10 +41,13 @@ The repository runs the methods I used at Lifepal on SMB data shaped like Codat'
 | `contracts/products/` | Product contracts, compiled by `src/nexus/contracts.py` into SQL checks (columns, grain, freshness, consent, reconciliation), expectations and Unity Catalog governance. |
 | `semantic/metrics.yml`, `src/nexus/semantic.py` | The semantic layer: each metric defined once, compiled to SQL with the consent filter always applied; point-in-time metrics can't be summed. |
 | `src/nexus/mcp_server.py` | The MCP server (`mcp` 2.x): `list_metrics`, `describe_metric`, `get_lineage`, `query_metric`. Read-only, runs as the caller, cites its source. |
+| `src/nexus/orchestration/` | Dagster: `assets.py` (the graph and its checks), `definitions.py` (job, schedule, freshness check), `run.py` (materialise and record the run for the site). |
+| `src/nexus/quality_gx.py` | Great Expectations suites from the product contracts. |
+| `src/nexus/oncall_agent.py` | The on-call agent: Claude over the MCP server (or offline rules), and the incident report. |
 | `src/nexus/agent.py`, `evals/questions.yml` | A rule-based planner that stands in for the LLM, and the eval set that runs in CI: values, tool choice, citations, consent and refusals. |
 | `examples/` | Five short scripts (generate, compile a contract, the semantic layer, the MCP tools as two customers, the evals) that run locally and in the browser. |
 | `tests/` | 375 tests across every layer: generator, Spark bronze/silver/gold, contracts, semantic layer, the browser evaluator against DuckDB, planner, MCP tools and evals, the published data, and the site. `scripts/test_report.py` turns the run into `assets/data/tests.json`. |
-| `index.html`, `mcp.html`, `run.html`, `oncall.html` | The site. `mcp.html` animates the MCP exchange step by step (with Lifepal and lesson-for-Codat tabs). `run.html` ends with a code editor that opens every file in the repo and runs the pure-Python parts in your browser (Pyodide), plus the test report and a button to run the tests in the browser. |
+| `index.html`, `orchestrator.html`, `mcp.html`, `run.html`, `oncall.html` | The site. `orchestrator.html` replays the last Dagster run, its checks, the GX results and the agent's incident. `mcp.html` animates the MCP exchange step by step (with Lifepal and lesson-for-Codat tabs). `run.html` ends with a code editor that opens every file in the repo and runs the pure-Python parts in your browser (Pyodide), plus the test report and a button to run the tests in the browser. |
 | `assets/vendor/`, `assets/pyshims/` | Pyodide, CodeMirror and js-yaml, served from the repo; and the small stand-ins (yaml, pytest, MCPServer) that let the same Python run unchanged in the browser. |
 
 ## The last run

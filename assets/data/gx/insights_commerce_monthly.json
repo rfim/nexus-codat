@@ -1,0 +1,117 @@
+{
+ "product": "insights_commerce_monthly",
+ "suite": "insights_commerce_monthly__contract",
+ "success": true,
+ "evaluated": 10,
+ "passed": 10,
+ "expectations": [
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "net_sales"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "net_sales",
+    "min_value": 0.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "payouts_in_bank_ratio"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "payouts_in_bank_ratio",
+    "min_value": 0.98,
+    "max_value": 1.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_compound_columns_to_be_unique",
+   "kwargs": {
+    "column_list": [
+     "customer_id",
+     "company_id",
+     "currency",
+     "month"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": 16
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "currency"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "month"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  }
+ ]
+}

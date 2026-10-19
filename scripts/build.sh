@@ -5,12 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 rm -rf target landing
 export PYTHONPATH=src
-python - <<'PY'
-from nexus.pipeline import run, summarise
-from nexus.export import export
-log = run()
-summarise(log)
-export(log)
-print("wrote assets/data/")
-PY
+# The whole graph through Dagster: land → conform → publish → SQL + Great Expectations checks → on-call agent → export.
+# The on-call agent uses Claude when ANTHROPIC_API_KEY (or another Anthropic credential) is set, offline rules otherwise.
+python -m nexus.orchestration.run
 python scripts/manifest.py

@@ -1,0 +1,74 @@
+{
+ "product": "insights_data_completeness",
+ "suite": "insights_data_completeness__contract",
+ "success": true,
+ "evaluated": 6,
+ "passed": 6,
+ "expectations": [
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "completeness_score"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "completeness_score",
+    "min_value": 0.0,
+    "max_value": 1.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_compound_columns_to_be_unique",
+   "kwargs": {
+    "column_list": [
+     "customer_id",
+     "company_id"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": 13
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  }
+ ]
+}

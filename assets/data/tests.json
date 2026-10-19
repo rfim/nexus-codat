@@ -1,30 +1,31 @@
 {
- "generated_at": "2026-10-19T15:51:14+00:00",
- "total": 375,
- "passed": 345,
+ "generated_at": "2026-10-19T16:44:50+00:00",
+ "total": 400,
+ "passed": 370,
  "failed": 0,
  "skipped": 30,
- "seconds": 155.3,
+ "seconds": 147.9,
  "suites": [
   {
    "file": "tests/test_generate.py",
    "about": "Synthetic feeds carry every planted problem",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_generation_is_deterministic",
      "outcome": "passed",
-     "seconds": 0.09
+     "seconds": 0.085
     },
     {
      "name": "test_every_accounting_and_erp_system_resends_its_last_page",
      "outcome": "passed",
-     "seconds": 0.039
+     "seconds": 0.043
     },
     {
      "name": "test_the_three_systems_use_three_different_schemas",
      "outcome": "passed",
-     "seconds": 0.039
+     "seconds": 0.034
     },
     {
      "name": "test_malformed_rows_are_planted_for_the_quality_gate",
@@ -34,7 +35,7 @@
     {
      "name": "test_the_planted_bank_break_is_one_exact_duplicate_under_a_new_id",
      "outcome": "passed",
-     "seconds": 0.039
+     "seconds": 0.037
     },
     {
      "name": "test_bank_balances_explain_every_line_except_the_duplicate",
@@ -44,22 +45,22 @@
     {
      "name": "test_consent_one_revocation_and_two_shared_companies",
      "outcome": "passed",
-     "seconds": 0.034
+     "seconds": 0.035
     },
     {
      "name": "test_one_account_is_remapped_on_1_september",
      "outcome": "passed",
-     "seconds": 0.033
+     "seconds": 0.037
     },
     {
      "name": "test_late_batch_is_backdated_and_newer",
      "outcome": "passed",
-     "seconds": 0.037
+     "seconds": 0.038
     },
     {
      "name": "test_commerce_payouts_arrive_two_days_after_sales",
      "outcome": "passed",
-     "seconds": 0.035
+     "seconds": 0.037
     }
    ]
   },
@@ -67,11 +68,12 @@
    "file": "tests/test_bronze.py",
    "about": "Replay-safe MERGE on Delta (Spark)",
    "spark": true,
+   "local": false,
    "tests": [
     {
      "name": "test_replayed_page_is_a_no_op_and_newest_version_wins",
      "outcome": "passed",
-     "seconds": 45.117
+     "seconds": 41.914
     }
    ]
   },
@@ -79,16 +81,17 @@
    "file": "tests/test_silver.py",
    "about": "Three schemas \u2192 one canonical invoice; quarantine (Spark)",
    "spark": true,
+   "local": false,
    "tests": [
     {
      "name": "test_three_systems_one_canonical_invoice",
      "outcome": "passed",
-     "seconds": 19.935
+     "seconds": 18.621
     },
     {
      "name": "test_bad_rows_are_quarantined_with_every_failed_rule",
      "outcome": "passed",
-     "seconds": 27.673
+     "seconds": 23.547
     }
    ]
   },
@@ -96,11 +99,12 @@
    "file": "tests/test_scd2.py",
    "about": "Account remaps kept as history (Spark)",
    "spark": true,
+   "local": false,
    "tests": [
     {
      "name": "test_a_remap_closes_the_old_version_without_rewriting_it",
      "outcome": "passed",
-     "seconds": 11.361
+     "seconds": 8.23
     }
    ]
   },
@@ -108,16 +112,17 @@
    "file": "tests/test_gold.py",
    "about": "As-of joins, consent scope, idempotent re-runs (Spark)",
    "spark": true,
+   "local": false,
    "tests": [
     {
      "name": "test_as_of_join_and_consent_scope_revenue",
      "outcome": "passed",
-     "seconds": 22.411
+     "seconds": 20.678
     },
     {
      "name": "test_rerunning_the_incremental_fact_changes_nothing",
      "outcome": "passed",
-     "seconds": 23.091
+     "seconds": 21.043
     }
    ]
   },
@@ -125,6 +130,7 @@
    "file": "tests/test_contracts.py",
    "about": "Contracts compile into checks, expectations and governance",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_every_product_contract_compiles_with_grain_freshness_and_tenant_checks[insights_cash_flow_monthly]",
@@ -149,17 +155,17 @@
     {
      "name": "test_every_product_contract_compiles_with_grain_freshness_and_tenant_checks[insights_revenue_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_governance_sets_owner_grants_and_the_row_filter[insights_cash_flow_monthly]",
      "outcome": "passed",
-     "seconds": 0.001
+     "seconds": 0.0
     },
     {
      "name": "test_governance_sets_owner_grants_and_the_row_filter[insights_commerce_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.003
     },
     {
      "name": "test_governance_sets_owner_grants_and_the_row_filter[insights_data_completeness]",
@@ -169,12 +175,12 @@
     {
      "name": "test_governance_sets_owner_grants_and_the_row_filter[insights_dso_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_governance_sets_owner_grants_and_the_row_filter[insights_revenue_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_generated_expectations_are_valid_python[insights_cash_flow_monthly]",
@@ -194,12 +200,12 @@
     {
      "name": "test_generated_expectations_are_valid_python[insights_dso_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_generated_expectations_are_valid_python[insights_revenue_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_contract_columns_and_grain_exist_in_the_published_product[insights_cash_flow_monthly]",
@@ -209,7 +215,7 @@
     {
      "name": "test_contract_columns_and_grain_exist_in_the_published_product[insights_commerce_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_contract_columns_and_grain_exist_in_the_published_product[insights_data_completeness]",
@@ -234,7 +240,7 @@
     {
      "name": "test_every_contract_names_a_person_who_signs_off_and_one_who_builds[insights_commerce_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_every_contract_names_a_person_who_signs_off_and_one_who_builds[insights_data_completeness]",
@@ -259,22 +265,22 @@
     {
      "name": "test_unknown_column_tests_are_rejected",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_every_accounting_and_erp_source_maps_onto_the_whole_canonical_invoice",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.015
     },
     {
      "name": "test_every_source_declares_an_owner_merge_keys_and_a_data_class",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.01
     },
     {
      "name": "test_the_quality_rules_are_plain_sql_predicates",
      "outcome": "passed",
-     "seconds": 0.002
+     "seconds": 0.001
     }
    ]
   },
@@ -282,6 +288,7 @@
    "file": "tests/test_semantic.py",
    "about": "Semantic layer: tenant filter, refusals, metric kinds",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_compiled_sql_always_carries_the_tenant_filter",
@@ -306,37 +313,37 @@
     {
      "name": "test_point_in_time_metric_is_allowed_by_company_and_month",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.009
     },
     {
      "name": "test_derived_growth_adds_its_required_dimensions",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.009
     },
     {
      "name": "test_uncertified_metrics_are_refused",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.014
     },
     {
      "name": "test_unknown_metrics_dimensions_and_principals_are_refused",
      "outcome": "passed",
-     "seconds": 0.026
+     "seconds": 0.02
     },
     {
      "name": "test_month_filter_is_inclusive",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.008
     },
     {
      "name": "test_every_certified_metric_names_a_product_owner_and_dimensions",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.009
     },
     {
      "name": "test_catalogue_names_are_unique_and_synonyms_do_not_collide",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.008
     }
    ]
   },
@@ -344,11 +351,12 @@
    "file": "tests/test_mini_warehouse.py",
    "about": "Browser evaluator returns exactly DuckDB's rows",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_same_rows_as_duckdb[revenue-group0-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.056
+     "seconds": 0.037
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group1-northbank-None-months1]",
@@ -358,17 +366,17 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group2-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group3-northbank-C-107-months3]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group4-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group5-northbank-C-104-months5]",
@@ -378,17 +386,17 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group6-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group7-brightpay-None-months7]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group8-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group9-brightpay-C-107-months9]",
@@ -398,17 +406,17 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group10-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group11-brightpay-C-104-months11]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group12-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group13-northbank-None-months13]",
@@ -418,22 +426,22 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group14-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group15-northbank-C-107-months15]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group16-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group17-northbank-C-104-months17]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group18-brightpay-None-None]",
@@ -443,12 +451,12 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group19-brightpay-None-months19]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.02
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group20-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group21-brightpay-C-107-months21]",
@@ -458,7 +466,7 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group22-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group23-brightpay-C-104-months23]",
@@ -478,72 +486,72 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group26-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.028
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group27-northbank-C-107-months27]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group28-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group29-northbank-C-104-months29]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group30-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.018
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group31-brightpay-None-months31]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group32-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group33-brightpay-C-107-months33]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group34-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group35-brightpay-C-104-months35]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group36-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group37-northbank-None-months37]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group38-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group39-northbank-C-107-months39]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group40-northbank-C-104-None]",
@@ -558,67 +566,67 @@
     {
      "name": "test_same_rows_as_duckdb[revenue-group42-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group43-brightpay-None-months43]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.036
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group44-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.019
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group45-brightpay-C-107-months45]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group46-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue-group47-brightpay-C-104-months47]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group48-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group49-northbank-None-months49]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group50-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group51-northbank-C-107-months51]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.019
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group52-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.02
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group53-northbank-C-104-months53]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.023
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group54-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group55-brightpay-None-months55]",
@@ -628,7 +636,7 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group56-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group57-brightpay-C-107-months57]",
@@ -648,7 +656,7 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group60-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group61-northbank-None-months61]",
@@ -658,12 +666,12 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group62-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group63-northbank-C-107-months63]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group64-northbank-C-104-None]",
@@ -673,107 +681,107 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group65-northbank-C-104-months65]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.023
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group66-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group67-brightpay-None-months67]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group68-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group69-brightpay-C-107-months69]",
      "outcome": "passed",
-     "seconds": 0.017
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group70-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.019
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group71-brightpay-C-104-months71]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group72-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group73-northbank-None-months73]",
      "outcome": "passed",
-     "seconds": 0.019
+     "seconds": 0.017
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group74-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group75-northbank-C-107-months75]",
      "outcome": "passed",
-     "seconds": 0.019
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group76-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group77-northbank-C-104-months77]",
      "outcome": "passed",
-     "seconds": 0.018
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group78-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group79-brightpay-None-months79]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group80-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group81-brightpay-C-107-months81]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group82-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group83-brightpay-C-104-months83]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group84-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group85-northbank-None-months85]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group86-northbank-C-107-None]",
@@ -783,17 +791,17 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group87-northbank-C-107-months87]",
      "outcome": "passed",
-     "seconds": 0.017
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group88-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group89-northbank-C-104-months89]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group90-brightpay-None-None]",
@@ -803,7 +811,7 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group91-brightpay-None-months91]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group92-brightpay-C-107-None]",
@@ -813,17 +821,17 @@
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group93-brightpay-C-107-months93]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group94-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[revenue_growth_mom-group95-brightpay-C-104-months95]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group96-northbank-None-None]",
@@ -833,7 +841,7 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group97-northbank-None-months97]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group98-northbank-C-107-None]",
@@ -843,22 +851,22 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group99-northbank-C-107-months99]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group100-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group101-northbank-C-104-months101]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group102-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group103-brightpay-None-months103]",
@@ -868,12 +876,12 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group104-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group105-brightpay-C-107-months105]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group106-brightpay-C-104-None]",
@@ -888,97 +896,97 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group108-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group109-northbank-None-months109]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group110-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.019
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group111-northbank-C-107-months111]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.019
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group112-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group113-northbank-C-104-months113]",
      "outcome": "passed",
-     "seconds": 0.017
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group114-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group115-brightpay-None-months115]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group116-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group117-brightpay-C-107-months117]",
      "outcome": "passed",
-     "seconds": 0.019
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group118-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group119-brightpay-C-104-months119]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group120-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group121-northbank-None-months121]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group122-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group123-northbank-C-107-months123]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group124-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.022
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group125-northbank-C-104-months125]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.021
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group126-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.018
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group127-brightpay-None-months127]",
@@ -988,7 +996,7 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group128-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.017
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group129-brightpay-C-107-months129]",
@@ -998,37 +1006,37 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group130-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group131-brightpay-C-104-months131]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group132-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group133-northbank-None-months133]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group134-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group135-northbank-C-107-months135]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group136-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group137-northbank-C-104-months137]",
@@ -1043,12 +1051,12 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group139-brightpay-None-months139]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group140-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group141-brightpay-C-107-months141]",
@@ -1058,32 +1066,32 @@
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group142-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[net_operating_cash_flow-group143-brightpay-C-104-months143]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group144-northbank-None-None]",
      "outcome": "skipped",
-     "seconds": 0.014
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group145-northbank-None-months145]",
      "outcome": "skipped",
-     "seconds": 0.011
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group146-northbank-C-107-None]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.008
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group147-northbank-C-107-months147]",
      "outcome": "skipped",
-     "seconds": 0.012
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group148-northbank-C-104-None]",
@@ -1098,7 +1106,7 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group150-brightpay-None-None]",
      "outcome": "skipped",
-     "seconds": 0.009
+     "seconds": 0.008
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group151-brightpay-None-months151]",
@@ -1108,7 +1116,7 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group152-brightpay-C-107-None]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group153-brightpay-C-107-months153]",
@@ -1118,7 +1126,7 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group154-brightpay-C-104-None]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group155-brightpay-C-104-months155]",
@@ -1128,27 +1136,27 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group156-northbank-None-None]",
      "outcome": "skipped",
-     "seconds": 0.013
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group157-northbank-None-months157]",
      "outcome": "skipped",
-     "seconds": 0.009
+     "seconds": 0.008
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group158-northbank-C-107-None]",
      "outcome": "skipped",
-     "seconds": 0.024
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group159-northbank-C-107-months159]",
      "outcome": "skipped",
-     "seconds": 0.011
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group160-northbank-C-104-None]",
      "outcome": "skipped",
-     "seconds": 0.015
+     "seconds": 0.008
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group161-northbank-C-104-months161]",
@@ -1158,12 +1166,12 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group162-brightpay-None-None]",
      "outcome": "skipped",
-     "seconds": 0.015
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group163-brightpay-None-months163]",
      "outcome": "skipped",
-     "seconds": 0.012
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group164-brightpay-C-107-None]",
@@ -1173,17 +1181,17 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group165-brightpay-C-107-months165]",
      "outcome": "skipped",
-     "seconds": 0.009
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group166-brightpay-C-104-None]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group167-brightpay-C-104-months167]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group168-northbank-None-None]",
@@ -1193,12 +1201,12 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group169-northbank-None-months169]",
      "outcome": "skipped",
-     "seconds": 0.01
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group170-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group171-northbank-C-107-months171]",
@@ -1213,27 +1221,27 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group173-northbank-C-104-months173]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group174-brightpay-None-None]",
      "outcome": "skipped",
-     "seconds": 0.009
+     "seconds": 0.04
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group175-brightpay-None-months175]",
      "outcome": "skipped",
-     "seconds": 0.008
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group176-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group177-brightpay-C-107-months177]",
      "outcome": "passed",
-     "seconds": 0.021
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group178-brightpay-C-104-None]",
@@ -1243,22 +1251,22 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group179-brightpay-C-104-months179]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.015
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group180-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group181-northbank-None-months181]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group182-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.025
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group183-northbank-C-107-months183]",
@@ -1268,37 +1276,37 @@
     {
      "name": "test_same_rows_as_duckdb[dso_days-group184-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group185-northbank-C-104-months185]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group186-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.024
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group187-brightpay-None-months187]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group188-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group189-brightpay-C-107-months189]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group190-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[dso_days-group191-brightpay-C-104-months191]",
@@ -1308,17 +1316,17 @@
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group192-northbank-None-None]",
      "outcome": "skipped",
-     "seconds": 0.011
+     "seconds": 0.009
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group193-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group194-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group195-brightpay-None-None]",
@@ -1328,12 +1336,12 @@
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group196-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group197-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group198-northbank-None-None]",
@@ -1343,17 +1351,17 @@
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group199-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group200-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group201-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[data_completeness-group202-brightpay-C-107-None]",
@@ -1373,7 +1381,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group205-northbank-None-months205]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group206-northbank-C-107-None]",
@@ -1383,32 +1391,32 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group207-northbank-C-107-months207]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group208-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.022
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group209-northbank-C-104-months209]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group210-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group211-brightpay-None-months211]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group212-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group213-brightpay-C-107-months213]",
@@ -1418,22 +1426,22 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group214-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group215-brightpay-C-104-months215]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group216-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group217-northbank-None-months217]",
      "outcome": "passed",
-     "seconds": 0.017
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group218-northbank-C-107-None]",
@@ -1443,7 +1451,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group219-northbank-C-107-months219]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group220-northbank-C-104-None]",
@@ -1453,12 +1461,12 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group221-northbank-C-104-months221]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group222-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group223-brightpay-None-months223]",
@@ -1468,27 +1476,27 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group224-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.013
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group225-brightpay-C-107-months225]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group226-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group227-brightpay-C-104-months227]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group228-northbank-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group229-northbank-None-months229]",
@@ -1503,7 +1511,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group231-northbank-C-107-months231]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group232-northbank-C-104-None]",
@@ -1518,7 +1526,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group234-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group235-brightpay-None-months235]",
@@ -1533,7 +1541,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group237-brightpay-C-107-months237]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group238-brightpay-C-104-None]",
@@ -1543,7 +1551,7 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group239-brightpay-C-104-months239]",
      "outcome": "passed",
-     "seconds": 0.01
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group240-northbank-None-None]",
@@ -1558,17 +1566,17 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group242-northbank-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group243-northbank-C-107-months243]",
      "outcome": "passed",
-     "seconds": 0.014
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group244-northbank-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.01
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group245-northbank-C-104-months245]",
@@ -1578,27 +1586,27 @@
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group246-brightpay-None-None]",
      "outcome": "passed",
-     "seconds": 0.013
+     "seconds": 0.014
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group247-brightpay-None-months247]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group248-brightpay-C-107-None]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.011
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group249-brightpay-C-107-months249]",
      "outcome": "passed",
-     "seconds": 0.012
+     "seconds": 0.016
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group250-brightpay-C-104-None]",
      "outcome": "passed",
-     "seconds": 0.011
+     "seconds": 0.012
     },
     {
      "name": "test_same_rows_as_duckdb[commerce_net_sales-group251-brightpay-C-104-months251]",
@@ -1608,7 +1616,7 @@
     {
      "name": "test_it_refuses_anything_that_is_not_compiled_sql",
      "outcome": "passed",
-     "seconds": 0.008
+     "seconds": 0.011
     }
    ]
   },
@@ -1616,6 +1624,7 @@
    "file": "tests/test_agent.py",
    "about": "Planner routing, parsing and refusals",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_month_parsing[revenue in august 2026-2026-08]",
@@ -1635,7 +1644,7 @@
     {
      "name": "test_month_parsing[revenue in may-2026-05]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_month_parsing[revenue by month-None]",
@@ -1645,27 +1654,27 @@
     {
      "name": "test_month_parsing[gross margin for c-104-None]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_refusals_happen_before_any_tool_call[List the counterparty bank details for C-104-personal_data]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_refusals_happen_before_any_tool_call[What's the email for C-101?-personal_data]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_refusals_happen_before_any_tool_call[Should we lend to C-107?-advice]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_refusals_happen_before_any_tool_call[Can you approve this loan?-advice]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_refusals_happen_before_any_tool_call[What's the weather?-unknown_metric]",
@@ -1708,36 +1717,37 @@
    "file": "tests/test_mcp.py",
    "about": "MCP tools, consent per customer, and the agent evals",
    "spark": false,
+   "local": false,
    "tests": [
     {
-     "name": "test_the_server_exposes_exactly_the_four_read_only_tools",
+     "name": "test_the_server_exposes_exactly_the_read_only_tools",
      "outcome": "passed",
-     "seconds": 0.001
+     "seconds": 0.002
     },
     {
      "name": "test_query_runs_as_the_caller_and_cites_its_source",
      "outcome": "passed",
-     "seconds": 0.1
+     "seconds": 0.055
     },
     {
      "name": "test_eval[rev-001]",
      "outcome": "passed",
-     "seconds": 0.095
+     "seconds": 0.054
     },
     {
      "name": "test_eval[cash-002]",
      "outcome": "passed",
-     "seconds": 0.065
+     "seconds": 0.064
     },
     {
      "name": "test_eval[trend-003]",
      "outcome": "passed",
-     "seconds": 0.027
+     "seconds": 0.031
     },
     {
      "name": "test_eval[commerce-004]",
      "outcome": "passed",
-     "seconds": 0.084
+     "seconds": 0.064
     },
     {
      "name": "test_eval[def-005]",
@@ -1747,12 +1757,12 @@
     {
      "name": "test_eval[lineage-006]",
      "outcome": "passed",
-     "seconds": 0.016
+     "seconds": 0.022
     },
     {
      "name": "test_eval[tenant-007]",
      "outcome": "passed",
-     "seconds": 0.024
+     "seconds": 0.027
     },
     {
      "name": "test_eval[revoked-008]",
@@ -1762,7 +1772,7 @@
     {
      "name": "test_eval[refuse-009]",
      "outcome": "passed",
-     "seconds": 0.017
+     "seconds": 0.015
     },
     {
      "name": "test_eval[pii-010]",
@@ -1777,7 +1787,7 @@
     {
      "name": "test_eval[dso-012]",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.016
     },
     {
      "name": "test_tools_are_described_and_typed_for_the_agent",
@@ -1787,7 +1797,7 @@
     {
      "name": "test_describe_and_lineage_refuse_uncertified_metrics",
      "outcome": "passed",
-     "seconds": 0.015
+     "seconds": 0.016
     },
     {
      "name": "test_list_metrics_never_offers_an_uncertified_metric",
@@ -1797,12 +1807,12 @@
     {
      "name": "test_an_unknown_caller_gets_nothing",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_each_customer_sees_exactly_its_consented_companies[analyst@northbank.example-allowed0]",
      "outcome": "passed",
-     "seconds": 0.018
+     "seconds": 0.019
     },
     {
      "name": "test_each_customer_sees_exactly_its_consented_companies[analyst@brightpay.example-allowed1]",
@@ -1815,6 +1825,7 @@
    "file": "tests/test_data.py",
    "about": "Published data keeps its promises",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_every_published_row_has_active_consent[insights_cash_flow_monthly]",
@@ -1824,7 +1835,7 @@
     {
      "name": "test_every_published_row_has_active_consent[insights_commerce_monthly]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_every_published_row_has_active_consent[insights_data_completeness]",
@@ -1894,7 +1905,7 @@
     {
      "name": "test_the_browser_catalogue_is_the_semantic_layer",
      "outcome": "passed",
-     "seconds": 0.009
+     "seconds": 0.008
     }
    ]
   },
@@ -1902,9 +1913,15 @@
    "file": "tests/test_site.py",
    "about": "Pages link to real files; nothing secret in the repo",
    "spark": false,
+   "local": false,
    "tests": [
     {
      "name": "test_local_links_and_assets_exist[index.html]",
+     "outcome": "passed",
+     "seconds": 0.001
+    },
+    {
+     "name": "test_local_links_and_assets_exist[orchestrator.html]",
      "outcome": "passed",
      "seconds": 0.001
     },
@@ -1926,7 +1943,12 @@
     {
      "name": "test_every_page_says_it_is_synthetic_and_independent[index.html]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
+    },
+    {
+     "name": "test_every_page_says_it_is_synthetic_and_independent[orchestrator.html]",
+     "outcome": "passed",
+     "seconds": 0.001
     },
     {
      "name": "test_every_page_says_it_is_synthetic_and_independent[mcp.html]",
@@ -1941,17 +1963,17 @@
     {
      "name": "test_every_page_says_it_is_synthetic_and_independent[oncall.html]",
      "outcome": "passed",
-     "seconds": 0.0
+     "seconds": 0.001
     },
     {
      "name": "test_downloads_are_present",
      "outcome": "passed",
-     "seconds": 0.001
+     "seconds": 0.0
     },
     {
      "name": "test_no_real_codat_data_or_credentials_in_the_repo",
      "outcome": "passed",
-     "seconds": 0.004
+     "seconds": 0.006
     },
     {
      "name": "test_the_code_editor_lists_exactly_the_repo_files",
@@ -1960,6 +1982,145 @@
     },
     {
      "name": "test_the_examples_run_unchanged_in_the_browser_runtime",
+     "outcome": "passed",
+     "seconds": 0.001
+    }
+   ]
+  },
+  {
+   "file": "tests/test_quality_gx.py",
+   "about": "Great Expectations suites from the contracts",
+   "spark": false,
+   "local": true,
+   "tests": [
+    {
+     "name": "test_every_contract_test_becomes_an_expectation[insights_cash_flow_monthly]",
+     "outcome": "passed",
+     "seconds": 0.014
+    },
+    {
+     "name": "test_every_contract_test_becomes_an_expectation[insights_commerce_monthly]",
+     "outcome": "passed",
+     "seconds": 0.007
+    },
+    {
+     "name": "test_every_contract_test_becomes_an_expectation[insights_data_completeness]",
+     "outcome": "passed",
+     "seconds": 0.007
+    },
+    {
+     "name": "test_every_contract_test_becomes_an_expectation[insights_dso_monthly]",
+     "outcome": "passed",
+     "seconds": 0.004
+    },
+    {
+     "name": "test_every_contract_test_becomes_an_expectation[insights_revenue_monthly]",
+     "outcome": "passed",
+     "seconds": 0.007
+    },
+    {
+     "name": "test_published_products_pass_their_suites[insights_cash_flow_monthly]",
+     "outcome": "passed",
+     "seconds": 0.414
+    },
+    {
+     "name": "test_published_products_pass_their_suites[insights_commerce_monthly]",
+     "outcome": "passed",
+     "seconds": 0.076
+    },
+    {
+     "name": "test_published_products_pass_their_suites[insights_data_completeness]",
+     "outcome": "passed",
+     "seconds": 0.051
+    },
+    {
+     "name": "test_published_products_pass_their_suites[insights_dso_monthly]",
+     "outcome": "passed",
+     "seconds": 0.064
+    },
+    {
+     "name": "test_published_products_pass_their_suites[insights_revenue_monthly]",
+     "outcome": "passed",
+     "seconds": 0.085
+    },
+    {
+     "name": "test_each_kind_of_bad_row_is_caught",
+     "outcome": "passed",
+     "seconds": 0.082
+    },
+    {
+     "name": "test_unknown_contract_tests_fail_loudly",
+     "outcome": "passed",
+     "seconds": 0.001
+    }
+   ]
+  },
+  {
+   "file": "tests/test_oncall_agent.py",
+   "about": "On-call agent: Claude's tool loop over the real MCP server; offline rules",
+   "spark": false,
+   "local": true,
+   "tests": [
+    {
+     "name": "test_on_call_tools_refuse_analysts",
+     "outcome": "passed",
+     "seconds": 0.001
+    },
+    {
+     "name": "test_diagnostics_are_a_fixed_menu",
+     "outcome": "passed",
+     "seconds": 0.001
+    },
+    {
+     "name": "test_offline_agent_finds_the_resent_bank_line_over_mcp",
+     "outcome": "passed",
+     "seconds": 1.106
+    },
+    {
+     "name": "test_offline_report_matches_the_strict_report_schema",
+     "outcome": "passed",
+     "seconds": 0.968
+    },
+    {
+     "name": "test_claude_loop_runs_its_tool_calls_through_the_real_mcp_server",
+     "outcome": "passed",
+     "seconds": 0.957
+    },
+    {
+     "name": "test_a_refusal_is_raised_not_swallowed",
+     "outcome": "passed",
+     "seconds": 0.955
+    }
+   ]
+  },
+  {
+   "file": "tests/test_orchestration.py",
+   "about": "Dagster graph, checks on every product, schedule, last run",
+   "spark": false,
+   "local": true,
+   "tests": [
+    {
+     "name": "test_the_asset_graph_is_the_pipeline",
+     "outcome": "passed",
+     "seconds": 0.008
+    },
+    {
+     "name": "test_every_product_has_a_contract_check_and_a_gx_check",
+     "outcome": "passed",
+     "seconds": 0.011
+    },
+    {
+     "name": "test_the_daily_schedule_runs_at_six_london_time",
+     "outcome": "passed",
+     "seconds": 0.0
+    },
+    {
+     "name": "test_the_agent_asset_declares_mcp_and_anthropic",
+     "outcome": "passed",
+     "seconds": 0.0
+    },
+    {
+     "name": "test_the_last_dagster_run_succeeded_and_only_the_planted_break_failed",
      "outcome": "passed",
      "seconds": 0.001
     }

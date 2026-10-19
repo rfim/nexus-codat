@@ -1,0 +1,129 @@
+{
+ "product": "insights_cash_flow_monthly",
+ "suite": "insights_cash_flow_monthly__contract",
+ "success": true,
+ "evaluated": 11,
+ "passed": 11,
+ "expectations": [
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_in_set",
+   "kwargs": {
+    "column": "customer_id",
+    "value_set": [
+     "northbank",
+     "brightpay"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "net_operating_cash_flow"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "operating_inflows"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_between",
+   "kwargs": {
+    "column": "operating_inflows",
+    "min_value": 0.0
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_compound_columns_to_be_unique",
+   "kwargs": {
+    "column_list": [
+     "customer_id",
+     "company_id",
+     "currency",
+     "month"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": 52
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "currency"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "month"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  }
+ ]
+}

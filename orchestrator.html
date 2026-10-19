@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orchestrator · NEXUS for Codat</title>
+<meta name="description" content="NEXUS in Python, end to end: Dagster assets and asset checks, Great Expectations suites from the contracts, and an on-call agent that uses Claude over the MCP server.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>NEXUS <small>for Codat</small></span></a>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="orchestrator.html" aria-current="page" class="keep"><span class="live" aria-hidden="true"></span>Orchestrator</a>
+    <a href="mcp.html" class="keep">Enable MCP</a>
+    <a href="run.html">How the data gets there</a>
+    <a href="oncall.html">On call</a>
+    <a href="https://github.com/rfim/nexus-codat/tree/main/src/nexus/orchestration" class="nav-code keep">Dagster code ↗</a>
+  </nav>
+</div></header>
+<main id="main">
+<section class="section dark" style="padding-top:3rem">
+  <div class="shell">
+    <div class="index"><span>Python end to end</span><span>Dagster · Great Expectations · MCP · Claude</span></div>
+    <div class="head"><h2>One Python graph, <em>from feed to fix.</em></h2>
+      <p>Every step is a Dagster asset; every contract is checked twice, as SQL and as a Great Expectations suite; and when a check fails, an on-call agent connects to the MCP server, investigates with read-only tools, and files an incident with a proposed fix. This is the record of the last run.</p></div>
+    <div class="grid g4" id="o-tiles"></div>
+    <div class="stage" style="margin-top:1.2rem">
+      <div class="svgwrap"><svg id="dag" viewBox="0 0 1200 330" role="img" aria-label="The Dagster asset graph, replaying the last run"></svg></div>
+      <div class="caption" id="o-cap" aria-live="polite">Press <b>Replay the run</b> to watch the assets materialise in order, with their real durations.</div>
+      <div class="controls"><button class="primary" id="o-play">▶ Replay the run</button><span class="grow"></span>
+        <span style="font-size:.8rem;color:#a9a8d8" id="o-sched"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell">
+    <div class="index"><span>01 · Asset checks</span><span>dagster.AssetCheckResult</span></div>
+    <div class="head"><h2>Every rule, <em>checked on every run.</em></h2>
+      <p>Pipeline checks (replay, quarantine, idempotent re-run) sit on their layers. Each Insights product carries two: the SQL checks compiled from its contract, and a Great Expectations suite generated from the same YAML.</p></div>
+    <div id="o-checks"></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="shell">
+    <div class="index"><span>02 · Great Expectations</span><span>src/nexus/quality_gx.py</span></div>
+    <div class="head"><h2>The contract, <em>as expectations.</em></h2>
+      <p>One YAML contract becomes one ExpectationSuite: not-null, accepted values, ranges, grain uniqueness, row count and the grain columns. GX owns the column rules; the SQL checks keep what one table can't say (reconciliation to source, consent).</p></div>
+    <div class="grid g2">
+      <div><div id="gx-list"></div></div>
+      <div><div class="fname" style="color:#5e6187;font:600 .7rem var(--mono);margin-bottom:.4rem">src/nexus/quality_gx.py</div>
+<pre><span class="k">def</span> suite_for(c: dict) -&gt; gx.ExpectationSuite:
+    suite = gx.ExpectationSuite(name=f<span class="s">"{c['product']}__contract"</span>)
+    E = gx.expectations
+    <span class="k">for</span> col <span class="k">in</span> c.get(<span class="s">"columns"</span>, []):
+        <span class="k">for</span> test <span class="k">in</span> col.get(<span class="s">"tests"</span>, []):
+            name, arg = ...
+            <span class="k">if</span> name == <span class="s">"not_null"</span>:
+                suite.add_expectation(E.ExpectColumnValuesToNotBeNull(column=col[<span class="s">"name"</span>]))
+            <span class="k">elif</span> name == <span class="s">"accepted_values"</span>:
+                suite.add_expectation(E.ExpectColumnValuesToBeInSet(column=..., value_set=list(arg)))
+            <span class="k">elif</span> name == <span class="s">"range"</span>:
+                suite.add_expectation(E.ExpectColumnValuesToBeBetween(column=..., min_value=..., max_value=...))
+    suite.add_expectation(E.ExpectCompoundColumnsToBeUnique(column_list=list(c[<span class="s">"grain"</span>])))
+    suite.add_expectation(E.ExpectTableRowCountToBeBetween(min_value=1))
+    <span class="k">return</span> suite</pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="shell">
+    <div class="index"><span>03 · The on-call agent</span><span>Claude · MCP client over stdio · read-only tools</span></div>
+    <div class="head"><h2>A check failed. <em>The agent investigates.</em></h2>
+      <p>The <code>incident_report</code> asset starts the real <code>nexus-insights</code> MCP server as the on-call identity, lists its tools, and runs the investigation. With credentials it is Claude (<code>claude-opus-5-5</code>, adaptive thinking, effort high); without, the same MCP calls run in a fixed order with simple rules, labelled as such.</p></div>
+    <div id="agent-who" class="callout" style="background:#16184d;color:#d9d6ff;border-left-color:var(--pink)"></div>
+    <div class="grid g2" style="margin-top:1rem">
+      <div><h3 style="color:#fff;margin-bottom:.6rem">MCP tool calls</h3><div id="agent-trace"></div></div>
+      <div><h3 style="color:#fff;margin-bottom:.6rem">The incident it filed</h3><div class="card" id="agent-report" style="background:#fff;color:var(--ink)"></div></div>
+    </div>
+    <h3 style="color:#fff;margin:1.6rem 0 .6rem">The loop, in src/nexus/oncall_agent.py</h3>
+<pre><span class="k">async def</span> diagnose_with_claude(session, client, transcript):
+    listed = <span class="k">await</span> session.list_tools()                     <span class="c"># the MCP server's read-only tools</span>
+    tools = [{<span class="s">"name"</span>: t.name, <span class="s">"description"</span>: t.description, <span class="s">"input_schema"</span>: t.input_schema} <span class="k">for</span> t <span class="k">in</span> listed.tools]
+    tools.append(REPORT_TOOL)                                   <span class="c"># submit_incident_report, strict schema</span>
+    <span class="k">for</span> _ <span class="k">in</span> range(MAX_TURNS):
+        resp = <span class="k">await</span> client.beta.messages.create(
+            model=<span class="s">"claude-opus-5-5"</span>, max_tokens=16000, system=SYSTEM, tools=tools, messages=messages,
+            output_config={<span class="s">"effort"</span>: <span class="s">"high"</span>},
+            betas=[<span class="s">"server-side-fallback-2026-07-01"</span>], fallbacks=<span class="s">"default"</span>)
+        <span class="k">if</span> resp.stop_reason == <span class="s">"refusal"</span>: <span class="k">raise</span> RuntimeError(...)
+        messages.append({<span class="s">"role"</span>: <span class="s">"assistant"</span>, <span class="s">"content"</span>: resp.content})
+        <span class="k">for</span> call <span class="k">in</span> [b <span class="k">for</span> b <span class="k">in</span> resp.content <span class="k">if</span> b.type == <span class="s">"tool_use"</span>]:
+            <span class="k">if</span> call.name == <span class="s">"submit_incident_report"</span>: report = call.input
+            <span class="k">else</span>: out = <span class="k">await</span> session.call_tool(call.name, dict(call.input))   <span class="c"># through MCP</span>
+        messages.append({<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: results})        <span class="c"># all results of a turn together</span></pre>
+    <div class="grid g3" style="margin-top:1rem">
+      <div class="card"><h3>Run it with Claude</h3><p><code>export ANTHROPIC_API_KEY=…</code> then <code>./scripts/build.sh</code>, or just the agent: <code>python -m nexus.oncall_agent</code>.</p></div>
+      <div class="card"><h3>Open the graph</h3><p><code>dagster dev -m nexus.orchestration.definitions</code> shows the assets, checks, runs and the 06:00 London schedule.</p></div>
+      <div class="card"><h3>Tested without spending</h3><p><code>tests/test_oncall_agent.py</code> plays a scripted Claude against the real MCP server and checks every request: model, effort, fallbacks, tools and results.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="shell"><p><b style="color:#fff">From NEXUS, built in Lifepal:</b> best practices from my production work, applied to Codat-shaped data. Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
+<script src="assets/common.js"></script>
+<script src="assets/orchestrator.js"></script>
+</body></html>

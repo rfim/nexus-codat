@@ -10,9 +10,10 @@ from nexus import agent, mcp_server, semantic
 EVALS = yaml.safe_load((semantic.ROOT / "evals" / "questions.yml").read_text())
 
 
-def test_the_server_exposes_exactly_the_four_read_only_tools():
+def test_the_server_exposes_exactly_the_read_only_tools():
     names = sorted(t.name for t in asyncio.run(mcp_server.mcp.list_tools()))
-    assert names == ["describe_metric", "get_lineage", "list_metrics", "query_metric"]
+    assert names == ["describe_metric", "get_check_evidence", "get_lineage", "list_failing_checks", "list_metrics",
+                     "query_metric", "recent_changes", "run_diagnostic"]
 
 
 def test_query_runs_as_the_caller_and_cites_its_source():

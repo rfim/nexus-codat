@@ -1,0 +1,143 @@
+{
+ "product": "insights_revenue_monthly",
+ "suite": "insights_revenue_monthly__contract",
+ "success": true,
+ "evaluated": 12,
+ "passed": 12,
+ "expectations": [
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_in_set",
+   "kwargs": {
+    "column": "customer_id",
+    "value_set": [
+     "northbank",
+     "brightpay"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "customer_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "company_id"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "currency"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_be_in_set",
+   "kwargs": {
+    "column": "currency",
+    "value_set": [
+     "GBP",
+     "EUR",
+     "USD"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "currency"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_column_values_to_not_be_null",
+   "kwargs": {
+    "column": "revenue"
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_compound_columns_to_be_unique",
+   "kwargs": {
+    "column_list": [
+     "customer_id",
+     "company_id",
+     "currency",
+     "month"
+    ]
+   },
+   "success": true,
+   "unexpected_count": 0,
+   "partial_unexpected": [],
+   "observed_value": null
+  },
+  {
+   "type": "expect_table_row_count_to_be_between",
+   "kwargs": {
+    "min_value": 1
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": 52
+  },
+  {
+   "type": "expect_column_to_exist",
+   "kwargs": {
+    "column": "month"
+   },
+   "success": true,
+   "unexpected_count": null,
+   "partial_unexpected": [],
+   "observed_value": null
+  }
+ ]
+}

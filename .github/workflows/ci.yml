@@ -5,6 +5,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # optional: with this secret the on-call agent is Claude (claude-opus-5-5); without it, offline rules
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,5 +21,5 @@ jobs:
         run: python scripts/test_report.py target/junit.xml target/tests.json
       - name: The code editor's file list is current
         run: python scripts/manifest.py && git diff --exit-code -- assets/data/files.json
-      - name: Full run on Spark + Delta, then show what changed in the site data
+      - name: The whole graph through Dagster (Spark + Delta, SQL + GX checks, the on-call agent over MCP), then the site data diff
         run: ./scripts/build.sh && git diff --stat -- assets/data

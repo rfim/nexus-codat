@@ -5,7 +5,7 @@ import pytest
 
 from nexus.paths import ROOT
 
-PAGES = ["index.html", "mcp.html", "run.html", "oncall.html"]
+PAGES = ["index.html", "orchestrator.html", "mcp.html", "run.html", "oncall.html"]
 
 
 @pytest.mark.parametrize("page", PAGES)

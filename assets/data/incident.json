@@ -1,0 +1,127 @@
+{
+ "model": "offline-rules",
+ "mcp_server": "nexus-insights (stdio)",
+ "caller": "oncall@nexus.example",
+ "tools": [
+  "list_metrics",
+  "describe_metric",
+  "get_lineage",
+  "query_metric",
+  "list_failing_checks",
+  "get_check_evidence",
+  "run_diagnostic",
+  "recent_changes"
+ ],
+ "report": {
+  "title": "insights_cash_flow_monthly: C-107 fails bank reconciliation by 1,250.00",
+  "severity": "medium",
+  "affected": [
+   "insights_cash_flow_monthly",
+   "C-107 (both customers it is shared with)"
+  ],
+  "root_cause": "The bank feed re-sent one C-107 payment of 1,250.00 on 2026-08-14 under a new transaction id (C-107-T00120, C-107-T00120-R). The MERGE key is (company_id, txn_id), so it landed as a second row and inflated the month's cash flow by 1,250.00.",
+  "evidence": [
+   {
+    "claim": "reconcile net_movement_all to source within 0.01 failed on 2 rows, all for C-107",
+    "source_tool": "get_check_evidence"
+   },
+   {
+    "claim": "bank lines sum to 52,866.69; the balance moved 51,616.69",
+    "source_tool": "run_diagnostic(bank_lines_vs_balance)"
+   },
+   {
+    "claim": "2 lines share date, amount and description: C-107-T00120, C-107-T00120-R",
+    "source_tool": "run_diagnostic(same_day_same_amount)"
+   },
+   {
+    "claim": "lines by category: commerce_payout 120, loan_drawdown 1, own_transfer 4, payment 46, receipt 23",
+    "source_tool": "run_diagnostic(lines_by_category)"
+   }
+  ],
+  "hypotheses": [
+   {
+    "hypothesis": "The feed re-sent a line under a new id",
+    "verdict": "supported",
+    "why": "A same-day, same-amount pair exactly equals the difference."
+   },
+   {
+    "hypothesis": "The reported balance is stale",
+    "verdict": "rejected",
+    "why": "Every other company reconciles to the penny with the same balance feed."
+   },
+   {
+    "hypothesis": "A recent code or contract change",
+    "verdict": "rejected",
+    "why": "No recent change touches banking logic."
+   }
+  ],
+  "proposed_fix": {
+   "summary": "Quarantine a bank line that repeats an earlier line's account, date, amount and description within one day under a different id, and tell the source owner. Quarantine, not delete: a genuine second payment must stay reviewable.",
+   "files": [
+    "contracts/quality.yml",
+    "src/nexus/silver.py",
+    "tests/test_silver.py"
+   ],
+   "test": "A bank line re-sent under a new id is quarantined, and the cash-flow reconciliation passes."
+  },
+  "customer_impact": "Cash flow for one company is overstated for one month; the product carries a caveat until fixed.",
+  "confidence": 0.9
+ },
+ "transcript": [
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "list_failing_checks",
+   "args": {},
+   "result": "{\"run_id\": \"05904dfe-79b3-4e7a-8948-c818e5b78cc8\", \"failing\": [{\"product\": \"insights_cash_flow_monthly\", \"check\": \"reconcile net_movement_all to source within 0.01\", \"kind\": \"reconcile\", \"failing_rows\": 2}], \"gx_failing\": [], \"checks_total\": 84}"
+  },
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "get_check_evidence",
+   "args": {
+    "product": "insights_cash_flow_monthly",
+    "check": "reconcile net_movement_all to source within 0.01"
+   },
+   "result": "{\"product\": \"insights_cash_flow_monthly\", \"check\": \"reconcile net_movement_all to source within 0.01\", \"kind\": \"reconcile\", \"failing_rows\": 2, \"sample\": [{\"customer_id\": \"northbank\", \"company_id\": \"C-107\", \"published\": 52866.69, \"expected\": 51616.69, \"difference\": 1250.0}, {\"customer_id\": \"brightpay\", \"company_id\": \"C-107\", \"published\": 52866.69, \"expected\": 51616.69, \"difference\": 1250.0}], \"sql\": \"WITH p AS (SELECT customer_id, company_id, round(sum(net_movement_all), 2) AS published FROM nexus_gold.insights_cash_flow_monthly GROUP BY ALL), x AS (SELECT company_id, balance_movement AS expect \u2026"
+  },
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "run_diagnostic",
+   "args": {
+    "name": "bank_lines_vs_balance",
+    "company_id": "C-107"
+   },
+   "result": "{\"diagnostic\": \"bank_lines_vs_balance\", \"company_id\": \"C-107\", \"result\": {\"lines_total\": 52866.69, \"balance_movement\": 51616.69, \"difference\": 1250.0}}"
+  },
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "run_diagnostic",
+   "args": {
+    "name": "same_day_same_amount",
+    "company_id": "C-107"
+   },
+   "result": "{\"diagnostic\": \"same_day_same_amount\", \"company_id\": \"C-107\", \"result\": [{\"booked_date\": \"2026-08-14\", \"amount\": 1250.0, \"description\": \"Customer payment\", \"n\": 2, \"txn_ids\": [\"C-107-T00120\", \"C-107-T00120-R\"]}]}"
+  },
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "run_diagnostic",
+   "args": {
+    "name": "lines_by_category",
+    "company_id": "C-107"
+   },
+   "result": "{\"diagnostic\": \"lines_by_category\", \"company_id\": \"C-107\", \"result\": {\"commerce_payout\": 120, \"loan_drawdown\": 1, \"own_transfer\": 4, \"payment\": 46, \"receipt\": 23}}"
+  },
+  {
+   "by": "offline-rules",
+   "kind": "tool",
+   "tool": "recent_changes",
+   "args": {},
+   "result": "{\"changes\": [{\"commit\": \"bcacebb\", \"date\": \"2026-10-19\", \"subject\": \"Runnable code editor and test report on the run page; 375 tests\", \"files\": \"contracts/sources.yml, src/nexus/contracts.py, src/nexus/generate.py, src/nexus/mcp_server.py, src/nexus/paths.py, src/nexus/semantic.py, src/nexus/silver.py, src/nexus/silver_columns.py\", \"touches_banking\": false}, {\"commit\": \"bf450e0\", \"date\": \"2026-10-19\", \"subject\": \"Build NEXUS for Codat: pipeline, contracts, semantic layer, MCP server and site\", \"files\": \"contracts/products/insights_cash_flow_monthly.yml, contracts/products/insights_commerce_mon \u2026"
+  }
+ ],
+ "seconds": 2.5
+}

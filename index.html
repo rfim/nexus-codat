@@ -18,6 +18,7 @@
     <a href="#sources">Sources</a>
     <a href="#lifepal">Built in Lifepal</a>
     <a href="#run">The run</a>
+    <a href="orchestrator.html" class="keep">Orchestrator</a>
     <a href="mcp.html" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
     <a href="run.html"><span class="live" aria-hidden="true"></span>How the data gets there</a>
     <a href="oncall.html">On call</a>
@@ -40,6 +41,7 @@
     <p class="lede">I'm <b>Vim</b>, R. Firman Insan Muhammad, a Senior Data Engineer in London. For four years I led and wrote the data platform at Lifepal, an insurance marketplace for consumers and SMBs: CDC into Delta on Databricks, dbt with 500+ checks, a semantic layer, and an MCP server so AI agents query certified data instead of raw tables. Everything on this site is from <b>NEXUS, the platform I built in Lifepal</b>: its best practices applied to SMB data shaped like Codat's, synthetic and runnable from this repository.</p>
     <div class="cta">
       <a class="button b-pink" href="mcp.html"><span class="live" aria-hidden="true"></span>Watch MCP being enabled →</a>
+      <a class="button b-primary" href="orchestrator.html">Dagster · GX · MCP · Claude →</a>
       <a class="button b-primary" href="run.html">How the data gets there →</a>
       <a class="button b-ghost" href="assets/Nexus_Codat_VIM.pdf">Fireside deck (PDF) ↓</a>
       <a class="button b-ghost" href="assets/VIM_Codat_one_page.pdf">One page (PDF) ↓</a>
@@ -144,9 +146,24 @@
   </div>
 </section>
 
+<section class="section" id="python">
+  <div class="shell">
+    <div class="index"><span>06 · Python end to end</span><span>Dagster · Great Expectations · MCP · Claude</span></div>
+    <div class="head"><h2>One Python graph, <em>from feed to fix.</em></h2>
+      <p>The whole pipeline is a Dagster asset graph. Every contract is checked twice, as SQL and as a Great Expectations suite, and when a check fails an on-call agent connects to the MCP server and investigates with read-only tools.</p></div>
+    <div class="grid g4">
+      <div class="card top-v"><div class="kicker">Orchestrate</div><h3>Dagster assets</h3><p>Nine assets from feeds to site data, asset checks on every layer, a 06:00 London schedule.</p></div>
+      <div class="card top-p"><div class="kicker" style="color:var(--pink)">Prove</div><h3>Great Expectations</h3><p>One suite per product, generated from its YAML contract; the SQL checks keep reconciliation and consent.</p></div>
+      <div class="card top-v"><div class="kicker">Serve</div><h3>MCP server</h3><p>Analyst tools scoped by consent, and on-call tools only the on-call identity can call.</p></div>
+      <div class="card top-p"><div class="kicker" style="color:var(--pink)">Operate</div><h3>Claude on call</h3><p><code>claude-opus-5-5</code> over MCP diagnoses failures and files an incident with a fix as a PR.</p></div>
+    </div>
+    <div class="cta"><a class="button b-pink" href="orchestrator.html"><span class="live" aria-hidden="true"></span>See the last Dagster run →</a></div>
+  </div>
+</section>
+
 <section class="section alt" id="role">
   <div class="shell">
-    <div class="index"><span>06 · The role, line by line</span><span>where I've done it before</span></div>
+    <div class="index"><span>07 · The role, line by line</span><span>where I've done it before</span></div>
     <div class="head"><h2>Hands-on, <em>and setting direction.</em></h2><p>Every row points to working code or a page on this site.</p></div>
     <div class="tablewrap"><table>
       <tr><th>The role asks for</th><th>What I've done (Lifepal unless stated)</th><th>Here</th></tr>

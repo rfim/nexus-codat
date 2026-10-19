@@ -6,6 +6,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 
 SPARK = {"test_bronze", "test_scd2", "test_silver", "test_gold"}
+LOCAL = {"test_quality_gx", "test_oncall_agent", "test_orchestration"}
 ABOUT = {
     "test_generate": "Synthetic feeds carry every planted problem",
     "test_bronze": "Replay-safe MERGE on Delta (Spark)",
@@ -19,6 +20,9 @@ ABOUT = {
     "test_mcp": "MCP tools, consent per customer, and the agent evals",
     "test_data": "Published data keeps its promises",
     "test_site": "Pages link to real files; nothing secret in the repo",
+    "test_quality_gx": "Great Expectations suites from the contracts",
+    "test_oncall_agent": "On-call agent: Claude's tool loop over the real MCP server; offline rules",
+    "test_orchestration": "Dagster graph, checks on every product, schedule, last run",
 }
 
 
@@ -35,7 +39,7 @@ def main(xml_path: str, out: str) -> None:
               "total": sum(len(v) for v in files.values()),
               **{k: sum(t["outcome"] == k for v in files.values() for t in v) for k in ("passed", "failed", "skipped")},
               "seconds": round(float(suite.get("time", 0)), 1),
-              "suites": [{"file": f"tests/{m}.py", "about": ABOUT.get(m, ""), "spark": m in SPARK, "tests": t}
+              "suites": [{"file": f"tests/{m}.py", "about": ABOUT.get(m, ""), "spark": m in SPARK, "local": m in LOCAL, "tests": t}
                          for m, t in sorted(files.items(), key=lambda kv: list(ABOUT).index(kv[0]) if kv[0] in ABOUT else 99)]}
     with open(out, "w") as fh:
         json.dump(report, fh, indent=1)

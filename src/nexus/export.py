@@ -115,7 +115,8 @@ def export(log: dict | None = None) -> dict:
             "contracts": [{k: c[k] for k in ("product", "owner", "passed", "total")} |
                           {"results": [{x: r[x] for x in ("check", "kind", "status", "failing_rows", "sample")}
                                        for r in c["results"]]} for c in log["contracts"]],
-            "products": products, "evidence": evidence, "history": history, "compiled": compiled}
+            "products": products, "evidence": evidence, "history": history, "compiled": compiled,
+            "gx": log.get("gx", []), "incident": log.get("incident")}
     (DATA / "site.json").write_text(json.dumps(_clean(site), indent=1, default=str))
     return site
 

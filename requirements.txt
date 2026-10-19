@@ -4,3 +4,7 @@ pyyaml==6.0.2
 pytest==8.3.3
 duckdb>=1.1
 mcp>=2.3
+dagster>=1.13
+great_expectations>=1.24
+anthropic[mcp]>=1.15
+pandas>=2.2

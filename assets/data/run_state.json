@@ -1,0 +1,107 @@
+{
+ "run_id": "05904dfe-79b3-4e7a-8948-c818e5b78cc8",
+ "at": "2026-10-19T16:41:52+00:00",
+ "failing": [
+  {
+   "product": "insights_cash_flow_monthly",
+   "check": "reconcile net_movement_all to source within 0.01",
+   "kind": "reconcile",
+   "failing_rows": 2,
+   "sample": [
+    {
+     "customer_id": "northbank",
+     "company_id": "C-107",
+     "published": 52866.69,
+     "expected": 51616.69,
+     "difference": 1250.0
+    },
+    {
+     "customer_id": "brightpay",
+     "company_id": "C-107",
+     "published": 52866.69,
+     "expected": 51616.69,
+     "difference": 1250.0
+    }
+   ],
+   "sql": "WITH p AS (SELECT customer_id, company_id, round(sum(net_movement_all), 2) AS published FROM nexus_gold.insights_cash_flow_monthly GROUP BY ALL), x AS (SELECT company_id, balance_movement AS expected FROM nexus_silver.bank_balance) SELECT p.customer_id, p.company_id, p.published, round(x.expected, 2) AS expected, round(p.published - x.expected, 2) AS difference FROM p JOIN x USING (company_id) WHERE abs(p.published - x.expected) > 0.01",
+   "owner": "insights-product-lead@example.com"
+  }
+ ],
+ "checks_total": 84,
+ "gx": [
+  {
+   "product": "insights_cash_flow_monthly",
+   "success": true,
+   "passed": 11,
+   "evaluated": 11
+  },
+  {
+   "product": "insights_commerce_monthly",
+   "success": true,
+   "passed": 10,
+   "evaluated": 10
+  },
+  {
+   "product": "insights_data_completeness",
+   "success": true,
+   "passed": 6,
+   "evaluated": 6
+  },
+  {
+   "product": "insights_dso_monthly",
+   "success": true,
+   "passed": 8,
+   "evaluated": 8
+  },
+  {
+   "product": "insights_revenue_monthly",
+   "success": true,
+   "passed": 12,
+   "evaluated": 12
+  }
+ ],
+ "diagnostics": {
+  "C-107": {
+   "bank_lines_vs_balance": {
+    "lines_total": 52866.69,
+    "balance_movement": 51616.69,
+    "difference": 1250.0
+   },
+   "same_day_same_amount": [
+    {
+     "booked_date": "2026-08-14",
+     "amount": 1250.0,
+     "description": "Customer payment",
+     "n": 2,
+     "txn_ids": [
+      "C-107-T00120",
+      "C-107-T00120-R"
+     ]
+    }
+   ],
+   "lines_by_category": {
+    "commerce_payout": 120,
+    "loan_drawdown": 1,
+    "own_transfer": 4,
+    "payment": 46,
+    "receipt": 23
+   }
+  }
+ },
+ "recent_changes": [
+  {
+   "commit": "bcacebb",
+   "date": "2026-10-19",
+   "subject": "Runnable code editor and test report on the run page; 375 tests",
+   "files": "contracts/sources.yml, src/nexus/contracts.py, src/nexus/generate.py, src/nexus/mcp_server.py, src/nexus/paths.py, src/nexus/semantic.py, src/nexus/silver.py, src/nexus/silver_columns.py",
+   "touches_banking": false
+  },
+  {
+   "commit": "bf450e0",
+   "date": "2026-10-19",
+   "subject": "Build NEXUS for Codat: pipeline, contracts, semantic layer, MCP server and site",
+   "files": "contracts/products/insights_cash_flow_monthly.yml, contracts/products/insights_commerce_monthly.yml, contracts/products/insights_data_completeness.yml, contracts/products/insights_dso_monthly.yml, contracts/products/insights_revenue_monthly.yml, contracts/quality.yml, contracts/sources.yml, src/nexus/__init__.py",
+   "touches_banking": false
+  }
+ ]
+}
