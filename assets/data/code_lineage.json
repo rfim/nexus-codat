@@ -1,0 +1,1311 @@
+{
+ "nodes": [
+  {
+   "id": "landing.companies",
+   "layer": "landing",
+   "label": "companies",
+   "source": "sync.companies.v1"
+  },
+  {
+   "id": "bronze.company",
+   "layer": "bronze",
+   "label": "company"
+  },
+  {
+   "id": "landing.entitlements",
+   "layer": "landing",
+   "label": "entitlements",
+   "source": "consent.entitlements.v1"
+  },
+  {
+   "id": "bronze.company_entitlement",
+   "layer": "bronze",
+   "label": "company_entitlement"
+  },
+  {
+   "id": "landing.accounts",
+   "layer": "landing",
+   "label": "accounts",
+   "source": "sync.accounting.accounts.v2"
+  },
+  {
+   "id": "bronze.account",
+   "layer": "bronze",
+   "label": "account"
+  },
+  {
+   "id": "landing.ledgerone_invoices",
+   "layer": "landing",
+   "label": "ledgerone_invoices",
+   "source": "sync.accounting.ledgerone.invoices.v3"
+  },
+  {
+   "id": "bronze.ledgerone_invoice",
+   "layer": "bronze",
+   "label": "ledgerone_invoice"
+  },
+  {
+   "id": "landing.bookwise_invoices",
+   "layer": "landing",
+   "label": "bookwise_invoices",
+   "source": "sync.accounting.bookwise.invoices.v3"
+  },
+  {
+   "id": "bronze.bookwise_invoice",
+   "layer": "bronze",
+   "label": "bookwise_invoice"
+  },
+  {
+   "id": "landing.orbiterp_invoices",
+   "layer": "landing",
+   "label": "orbiterp_invoices",
+   "source": "sync.erp.orbiterp.ar_documents.v1"
+  },
+  {
+   "id": "bronze.orbiterp_invoice",
+   "layer": "bronze",
+   "label": "orbiterp_invoice"
+  },
+  {
+   "id": "landing.bank_transactions",
+   "layer": "landing",
+   "label": "bank_transactions",
+   "source": "sync.banking.transactions.v2"
+  },
+  {
+   "id": "bronze.bank_transaction",
+   "layer": "bronze",
+   "label": "bank_transaction"
+  },
+  {
+   "id": "landing.bank_balances",
+   "layer": "landing",
+   "label": "bank_balances",
+   "source": "sync.banking.balances.v1"
+  },
+  {
+   "id": "bronze.bank_balance",
+   "layer": "bronze",
+   "label": "bank_balance"
+  },
+  {
+   "id": "landing.commerce_payouts",
+   "layer": "landing",
+   "label": "commerce_payouts",
+   "source": "sync.commerce.shoplane.payouts.v1"
+  },
+  {
+   "id": "bronze.commerce_payout",
+   "layer": "bronze",
+   "label": "commerce_payout"
+  },
+  {
+   "id": "silver.invoice",
+   "layer": "silver",
+   "label": "invoice"
+  },
+  {
+   "id": "silver.invoice_quarantine",
+   "layer": "silver",
+   "label": "invoice_quarantine"
+  },
+  {
+   "id": "silver.account_mapping",
+   "layer": "silver",
+   "label": "account_mapping"
+  },
+  {
+   "id": "silver.bank_transaction",
+   "layer": "silver",
+   "label": "bank_transaction"
+  },
+  {
+   "id": "silver.bank_balance",
+   "layer": "silver",
+   "label": "bank_balance"
+  },
+  {
+   "id": "silver.commerce_payout",
+   "layer": "silver",
+   "label": "commerce_payout"
+  },
+  {
+   "id": "silver.company",
+   "layer": "silver",
+   "label": "company"
+  },
+  {
+   "id": "silver.company_entitlement",
+   "layer": "silver",
+   "label": "company_entitlement"
+  },
+  {
+   "id": "gold.fct_invoice",
+   "layer": "gold",
+   "label": "fct_invoice",
+   "product": false
+  },
+  {
+   "id": "gold.insights_revenue_monthly",
+   "layer": "gold",
+   "label": "insights_revenue_monthly",
+   "product": true
+  },
+  {
+   "id": "gold.insights_cash_flow_monthly",
+   "layer": "gold",
+   "label": "insights_cash_flow_monthly",
+   "product": true
+  },
+  {
+   "id": "gold.insights_dso_monthly",
+   "layer": "gold",
+   "label": "insights_dso_monthly",
+   "product": true
+  },
+  {
+   "id": "gold.insights_data_completeness",
+   "layer": "gold",
+   "label": "insights_data_completeness",
+   "product": true
+  },
+  {
+   "id": "gold.insights_commerce_monthly",
+   "layer": "gold",
+   "label": "insights_commerce_monthly",
+   "product": true
+  },
+  {
+   "id": "serve.semantic",
+   "layer": "serve",
+   "label": "semantic layer",
+   "source": "semantic/metrics.yml"
+  },
+  {
+   "id": "serve.contracts",
+   "layer": "serve",
+   "label": "contract checks (SQL)",
+   "source": "contracts/products/"
+  },
+  {
+   "id": "serve.gx",
+   "layer": "serve",
+   "label": "Great Expectations",
+   "source": "src/nexus/quality_gx.py"
+  },
+  {
+   "id": "serve.mcp",
+   "layer": "serve",
+   "label": "MCP server",
+   "source": "src/nexus/mcp_server.py"
+  },
+  {
+   "id": "serve.agent",
+   "layer": "serve",
+   "label": "on-call agent \u00b7 Claude",
+   "source": "src/nexus/oncall_agent.py"
+  },
+  {
+   "id": "serve.site",
+   "layer": "serve",
+   "label": "site data",
+   "source": "src/nexus/export.py"
+  }
+ ],
+ "edges": [
+  [
+   "landing.companies",
+   "bronze.company"
+  ],
+  [
+   "landing.entitlements",
+   "bronze.company_entitlement"
+  ],
+  [
+   "landing.accounts",
+   "bronze.account"
+  ],
+  [
+   "landing.ledgerone_invoices",
+   "bronze.ledgerone_invoice"
+  ],
+  [
+   "landing.bookwise_invoices",
+   "bronze.bookwise_invoice"
+  ],
+  [
+   "landing.orbiterp_invoices",
+   "bronze.orbiterp_invoice"
+  ],
+  [
+   "landing.bank_transactions",
+   "bronze.bank_transaction"
+  ],
+  [
+   "landing.bank_balances",
+   "bronze.bank_balance"
+  ],
+  [
+   "landing.commerce_payouts",
+   "bronze.commerce_payout"
+  ],
+  [
+   "bronze.ledgerone_invoice",
+   "silver.invoice"
+  ],
+  [
+   "bronze.bookwise_invoice",
+   "silver.invoice"
+  ],
+  [
+   "bronze.orbiterp_invoice",
+   "silver.invoice"
+  ],
+  [
+   "bronze.ledgerone_invoice",
+   "silver.invoice_quarantine"
+  ],
+  [
+   "bronze.bookwise_invoice",
+   "silver.invoice_quarantine"
+  ],
+  [
+   "bronze.orbiterp_invoice",
+   "silver.invoice_quarantine"
+  ],
+  [
+   "bronze.account",
+   "silver.account_mapping"
+  ],
+  [
+   "bronze.bank_transaction",
+   "silver.bank_transaction"
+  ],
+  [
+   "bronze.bank_balance",
+   "silver.bank_balance"
+  ],
+  [
+   "bronze.commerce_payout",
+   "silver.commerce_payout"
+  ],
+  [
+   "bronze.company",
+   "silver.company"
+  ],
+  [
+   "bronze.company_entitlement",
+   "silver.company_entitlement"
+  ],
+  [
+   "silver.account_mapping",
+   "gold.fct_invoice"
+  ],
+  [
+   "silver.invoice",
+   "gold.fct_invoice"
+  ],
+  [
+   "gold.fct_invoice",
+   "gold.insights_revenue_monthly"
+  ],
+  [
+   "silver.company_entitlement",
+   "gold.insights_revenue_monthly"
+  ],
+  [
+   "silver.bank_transaction",
+   "gold.insights_cash_flow_monthly"
+  ],
+  [
+   "silver.company_entitlement",
+   "gold.insights_cash_flow_monthly"
+  ],
+  [
+   "gold.fct_invoice",
+   "gold.insights_dso_monthly"
+  ],
+  [
+   "silver.company_entitlement",
+   "gold.insights_dso_monthly"
+  ],
+  [
+   "gold.fct_invoice",
+   "gold.insights_data_completeness"
+  ],
+  [
+   "silver.bank_transaction",
+   "gold.insights_data_completeness"
+  ],
+  [
+   "silver.company",
+   "gold.insights_data_completeness"
+  ],
+  [
+   "silver.company_entitlement",
+   "gold.insights_data_completeness"
+  ],
+  [
+   "silver.invoice_quarantine",
+   "gold.insights_data_completeness"
+  ],
+  [
+   "silver.bank_transaction",
+   "gold.insights_commerce_monthly"
+  ],
+  [
+   "silver.commerce_payout",
+   "gold.insights_commerce_monthly"
+  ],
+  [
+   "silver.company_entitlement",
+   "gold.insights_commerce_monthly"
+  ],
+  [
+   "gold.insights_cash_flow_monthly",
+   "serve.semantic"
+  ],
+  [
+   "gold.insights_commerce_monthly",
+   "serve.semantic"
+  ],
+  [
+   "gold.insights_data_completeness",
+   "serve.semantic"
+  ],
+  [
+   "gold.insights_dso_monthly",
+   "serve.semantic"
+  ],
+  [
+   "gold.insights_revenue_monthly",
+   "serve.semantic"
+  ],
+  [
+   "silver.bank_balance",
+   "serve.contracts"
+  ],
+  [
+   "silver.account_mapping",
+   "serve.contracts"
+  ],
+  [
+   "silver.invoice",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_cash_flow_monthly",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_commerce_monthly",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_data_completeness",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_dso_monthly",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_revenue_monthly",
+   "serve.contracts"
+  ],
+  [
+   "gold.insights_cash_flow_monthly",
+   "serve.gx"
+  ],
+  [
+   "gold.insights_commerce_monthly",
+   "serve.gx"
+  ],
+  [
+   "gold.insights_data_completeness",
+   "serve.gx"
+  ],
+  [
+   "gold.insights_dso_monthly",
+   "serve.gx"
+  ],
+  [
+   "gold.insights_revenue_monthly",
+   "serve.gx"
+  ],
+  [
+   "serve.semantic",
+   "serve.mcp"
+  ],
+  [
+   "serve.contracts",
+   "serve.mcp"
+  ],
+  [
+   "serve.mcp",
+   "serve.agent"
+  ],
+  [
+   "serve.contracts",
+   "serve.site"
+  ],
+  [
+   "serve.gx",
+   "serve.site"
+  ],
+  [
+   "serve.agent",
+   "serve.site"
+  ],
+  [
+   "gold.insights_cash_flow_monthly",
+   "serve.site"
+  ],
+  [
+   "gold.insights_commerce_monthly",
+   "serve.site"
+  ],
+  [
+   "gold.insights_data_completeness",
+   "serve.site"
+  ],
+  [
+   "gold.insights_dso_monthly",
+   "serve.site"
+  ],
+  [
+   "gold.insights_revenue_monthly",
+   "serve.site"
+  ]
+ ],
+ "products": [
+  "insights_cash_flow_monthly",
+  "insights_commerce_monthly",
+  "insights_data_completeness",
+  "insights_dso_monthly",
+  "insights_revenue_monthly"
+ ],
+ "files": {
+  "src/nexus/agent.py": {
+   "role": "routes an analyst's question to MCP tool calls",
+   "reads": [
+    "serve.mcp"
+   ],
+   "writes": []
+  },
+  "src/nexus/bronze.py": {
+   "role": "lands every feed with an ordered, replay-safe MERGE",
+   "reads": [
+    "landing.companies",
+    "landing.entitlements",
+    "landing.accounts",
+    "landing.ledgerone_invoices",
+    "landing.bookwise_invoices",
+    "landing.orbiterp_invoices",
+    "landing.bank_transactions",
+    "landing.bank_balances",
+    "landing.commerce_payouts"
+   ],
+   "writes": [
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.account",
+    "bronze.ledgerone_invoice",
+    "bronze.bookwise_invoice",
+    "bronze.orbiterp_invoice",
+    "bronze.bank_transaction",
+    "bronze.bank_balance",
+    "bronze.commerce_payout"
+   ]
+  },
+  "src/nexus/contracts.py": {
+   "role": "compiles each product contract to SQL checks",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.contracts"
+   ]
+  },
+  "src/nexus/export.py": {
+   "role": "exports products, checks and history for the site",
+   "reads": [
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.account",
+    "bronze.ledgerone_invoice",
+    "bronze.bookwise_invoice",
+    "bronze.orbiterp_invoice",
+    "bronze.bank_transaction",
+    "bronze.bank_balance",
+    "bronze.commerce_payout",
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly"
+   ],
+   "writes": [
+    "serve.site"
+   ]
+  },
+  "src/nexus/generate.py": {
+   "role": "writes the synthetic platform feeds",
+   "reads": [],
+   "writes": [
+    "landing.companies",
+    "landing.entitlements",
+    "landing.accounts",
+    "landing.ledgerone_invoices",
+    "landing.bookwise_invoices",
+    "landing.orbiterp_invoices",
+    "landing.bank_transactions",
+    "landing.bank_balances",
+    "landing.commerce_payouts"
+   ]
+  },
+  "src/nexus/gold.py": {
+   "role": "builds the fact and the consent-scoped Insights products",
+   "reads": [
+    "gold.fct_invoice",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ],
+   "writes": [
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly"
+   ]
+  },
+  "src/nexus/mcp_server.py": {
+   "role": "the MCP tools: metrics, lineage, checks, diagnostics",
+   "reads": [
+    "serve.semantic",
+    "serve.contracts"
+   ],
+   "writes": [
+    "serve.mcp"
+   ]
+  },
+  "src/nexus/oncall_agent.py": {
+   "role": "investigates a failed check over MCP and files an incident",
+   "reads": [
+    "serve.mcp"
+   ],
+   "writes": [
+    "serve.agent"
+   ]
+  },
+  "src/nexus/orchestration/assets.py": {
+   "role": "the Dagster assets: every step of the graph, with checks",
+   "reads": [],
+   "writes": [
+    "landing.companies",
+    "bronze.company",
+    "landing.entitlements",
+    "bronze.company_entitlement",
+    "landing.accounts",
+    "bronze.account",
+    "landing.ledgerone_invoices",
+    "bronze.ledgerone_invoice",
+    "landing.bookwise_invoices",
+    "bronze.bookwise_invoice",
+    "landing.orbiterp_invoices",
+    "bronze.orbiterp_invoice",
+    "landing.bank_transactions",
+    "bronze.bank_transaction",
+    "landing.bank_balances",
+    "bronze.bank_balance",
+    "landing.commerce_payouts",
+    "bronze.commerce_payout",
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly",
+    "serve.semantic",
+    "serve.contracts",
+    "serve.gx",
+    "serve.mcp",
+    "serve.agent",
+    "serve.site"
+   ]
+  },
+  "src/nexus/orchestration/definitions.py": {
+   "role": "the Dagster job, schedule and freshness check",
+   "reads": [
+    "landing.companies",
+    "bronze.company",
+    "landing.entitlements",
+    "bronze.company_entitlement",
+    "landing.accounts",
+    "bronze.account",
+    "landing.ledgerone_invoices",
+    "bronze.ledgerone_invoice",
+    "landing.bookwise_invoices",
+    "bronze.bookwise_invoice",
+    "landing.orbiterp_invoices",
+    "bronze.orbiterp_invoice",
+    "landing.bank_transactions",
+    "bronze.bank_transaction",
+    "landing.bank_balances",
+    "bronze.bank_balance",
+    "landing.commerce_payouts",
+    "bronze.commerce_payout",
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly",
+    "serve.semantic",
+    "serve.contracts",
+    "serve.gx",
+    "serve.mcp",
+    "serve.agent",
+    "serve.site"
+   ],
+   "writes": []
+  },
+  "src/nexus/orchestration/resources.py": {
+   "role": "the Spark resource for Dagster",
+   "reads": [],
+   "writes": []
+  },
+  "src/nexus/orchestration/run.py": {
+   "role": "materialises the Dagster graph and records the run",
+   "reads": [],
+   "writes": [
+    "landing.companies",
+    "bronze.company",
+    "landing.entitlements",
+    "bronze.company_entitlement",
+    "landing.accounts",
+    "bronze.account",
+    "landing.ledgerone_invoices",
+    "bronze.ledgerone_invoice",
+    "landing.bookwise_invoices",
+    "bronze.bookwise_invoice",
+    "landing.orbiterp_invoices",
+    "bronze.orbiterp_invoice",
+    "landing.bank_transactions",
+    "bronze.bank_transaction",
+    "landing.bank_balances",
+    "bronze.bank_balance",
+    "landing.commerce_payouts",
+    "bronze.commerce_payout",
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly",
+    "serve.semantic",
+    "serve.contracts",
+    "serve.gx",
+    "serve.mcp",
+    "serve.agent",
+    "serve.site"
+   ]
+  },
+  "src/nexus/paths.py": {
+   "role": "names every table: nexus_<layer>.<name>, or the Unity Catalog name",
+   "reads": [],
+   "writes": []
+  },
+  "src/nexus/pipeline.py": {
+   "role": "runs land \u2192 conform \u2192 publish \u2192 prove in order",
+   "reads": [
+    "landing.companies",
+    "landing.entitlements",
+    "landing.accounts",
+    "landing.ledgerone_invoices",
+    "landing.bookwise_invoices",
+    "landing.orbiterp_invoices",
+    "landing.bank_transactions",
+    "landing.bank_balances",
+    "landing.commerce_payouts"
+   ],
+   "writes": [
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.account",
+    "bronze.ledgerone_invoice",
+    "bronze.bookwise_invoice",
+    "bronze.orbiterp_invoice",
+    "bronze.bank_transaction",
+    "bronze.bank_balance",
+    "bronze.commerce_payout",
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_dso_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_commerce_monthly"
+   ]
+  },
+  "src/nexus/quality_gx.py": {
+   "role": "turns each contract into a Great Expectations suite",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly"
+   ],
+   "writes": [
+    "serve.gx"
+   ]
+  },
+  "src/nexus/semantic.py": {
+   "role": "certified metrics compiled to SQL with the tenant filter",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "src/nexus/silver.py": {
+   "role": "conforms bronze to the canonical model; quarantines what fails",
+   "reads": [
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.account",
+    "bronze.ledgerone_invoice",
+    "bronze.bookwise_invoice",
+    "bronze.orbiterp_invoice",
+    "bronze.bank_transaction",
+    "bronze.bank_balance",
+    "bronze.commerce_payout"
+   ],
+   "writes": [
+    "silver.invoice",
+    "silver.invoice_quarantine",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.bank_balance",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement"
+   ]
+  },
+  "src/nexus/silver_columns.py": {
+   "role": "the canonical invoice columns",
+   "reads": [],
+   "writes": [
+    "silver.invoice"
+   ]
+  },
+  "src/nexus/spark.py": {
+   "role": "the Spark session with Delta",
+   "reads": [],
+   "writes": []
+  },
+  "contracts/sources.yml": {
+   "role": "defines every feed and its bronze table",
+   "reads": [],
+   "writes": [
+    "landing.companies",
+    "landing.entitlements",
+    "landing.accounts",
+    "landing.ledgerone_invoices",
+    "landing.bookwise_invoices",
+    "landing.orbiterp_invoices",
+    "landing.bank_transactions",
+    "landing.bank_balances",
+    "landing.commerce_payouts",
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.account",
+    "bronze.ledgerone_invoice",
+    "bronze.bookwise_invoice",
+    "bronze.orbiterp_invoice",
+    "bronze.bank_transaction",
+    "bronze.bank_balance",
+    "bronze.commerce_payout",
+    "silver.invoice"
+   ]
+  },
+  "contracts/quality.yml": {
+   "role": "the quality gate on the canonical invoice",
+   "reads": [
+    "silver.invoice"
+   ],
+   "writes": [
+    "silver.invoice_quarantine"
+   ]
+  },
+  "contracts/products/insights_cash_flow_monthly.yml": {
+   "role": "the contract for insights_cash_flow_monthly",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "silver.bank_balance"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "contracts/products/insights_commerce_monthly.yml": {
+   "role": "the contract for insights_commerce_monthly",
+   "reads": [
+    "gold.insights_commerce_monthly"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "contracts/products/insights_data_completeness.yml": {
+   "role": "the contract for insights_data_completeness",
+   "reads": [
+    "gold.insights_data_completeness"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "contracts/products/insights_dso_monthly.yml": {
+   "role": "the contract for insights_dso_monthly",
+   "reads": [
+    "gold.insights_dso_monthly"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "contracts/products/insights_revenue_monthly.yml": {
+   "role": "the contract for insights_revenue_monthly",
+   "reads": [
+    "gold.insights_revenue_monthly",
+    "silver.account_mapping",
+    "silver.invoice"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "semantic/metrics.yml": {
+   "role": "the certified metrics",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "evals/questions.yml": {
+   "role": "questions the analyst agent must answer or refuse",
+   "reads": [
+    "serve.mcp"
+   ],
+   "writes": []
+  },
+  "examples/01_generate_feeds.py": {
+   "role": "runs generate",
+   "reads": [],
+   "writes": [
+    "landing.accounts",
+    "landing.bank_balances",
+    "landing.bank_transactions",
+    "landing.bookwise_invoices",
+    "landing.commerce_payouts",
+    "landing.companies",
+    "landing.entitlements",
+    "landing.ledgerone_invoices",
+    "landing.orbiterp_invoices"
+   ]
+  },
+  "examples/02_compile_a_contract.py": {
+   "role": "runs contracts",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.contracts"
+   ]
+  },
+  "examples/03_semantic_layer.py": {
+   "role": "runs semantic",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "examples/04_mcp_tools_as_two_customers.py": {
+   "role": "runs mcp_server",
+   "reads": [
+    "serve.contracts",
+    "serve.semantic"
+   ],
+   "writes": [
+    "serve.mcp"
+   ]
+  },
+  "examples/05_run_the_evals.py": {
+   "role": "runs agent, semantic",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "serve.mcp",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "tests/test_agent.py": {
+   "role": "tests agent",
+   "reads": [
+    "serve.mcp"
+   ],
+   "writes": []
+  },
+  "tests/test_bronze.py": {
+   "role": "tests bronze",
+   "reads": [
+    "landing.accounts",
+    "landing.bank_balances",
+    "landing.bank_transactions",
+    "landing.bookwise_invoices",
+    "landing.commerce_payouts",
+    "landing.companies",
+    "landing.entitlements",
+    "landing.ledgerone_invoices",
+    "landing.orbiterp_invoices"
+   ],
+   "writes": [
+    "bronze.account",
+    "bronze.bank_balance",
+    "bronze.bank_transaction",
+    "bronze.bookwise_invoice",
+    "bronze.commerce_payout",
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.ledgerone_invoice",
+    "bronze.orbiterp_invoice"
+   ]
+  },
+  "tests/test_contracts.py": {
+   "role": "tests contracts, silver_columns",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.contracts",
+    "silver.invoice"
+   ]
+  },
+  "tests/test_generate.py": {
+   "role": "tests generate",
+   "reads": [],
+   "writes": [
+    "landing.accounts",
+    "landing.bank_balances",
+    "landing.bank_transactions",
+    "landing.bookwise_invoices",
+    "landing.commerce_payouts",
+    "landing.companies",
+    "landing.entitlements",
+    "landing.ledgerone_invoices",
+    "landing.orbiterp_invoices"
+   ]
+  },
+  "tests/test_gold.py": {
+   "role": "tests gold",
+   "reads": [
+    "gold.fct_invoice",
+    "gold.insights_revenue_monthly",
+    "silver.account_mapping",
+    "silver.bank_transaction",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ],
+   "writes": [
+    "gold.fct_invoice",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly"
+   ]
+  },
+  "tests/test_mcp.py": {
+   "role": "tests agent, mcp_server, semantic",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "serve.contracts",
+    "serve.mcp",
+    "serve.semantic",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.mcp",
+    "serve.semantic"
+   ]
+  },
+  "tests/test_mini_warehouse.py": {
+   "role": "tests semantic",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "tests/test_oncall_agent.py": {
+   "role": "tests mcp_server, oncall_agent",
+   "reads": [
+    "serve.contracts",
+    "serve.mcp",
+    "serve.semantic"
+   ],
+   "writes": [
+    "serve.agent",
+    "serve.mcp"
+   ]
+  },
+  "tests/test_orchestration.py": {
+   "role": "tests contracts, definitions",
+   "reads": [
+    "bronze.account",
+    "bronze.bank_balance",
+    "bronze.bank_transaction",
+    "bronze.bookwise_invoice",
+    "bronze.commerce_payout",
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.ledgerone_invoice",
+    "bronze.orbiterp_invoice",
+    "gold.fct_invoice",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "landing.accounts",
+    "landing.bank_balances",
+    "landing.bank_transactions",
+    "landing.bookwise_invoices",
+    "landing.commerce_payouts",
+    "landing.companies",
+    "landing.entitlements",
+    "landing.ledgerone_invoices",
+    "landing.orbiterp_invoices",
+    "serve.agent",
+    "serve.contracts",
+    "serve.gx",
+    "serve.mcp",
+    "serve.semantic",
+    "serve.site",
+    "silver.account_mapping",
+    "silver.bank_balance",
+    "silver.bank_transaction",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ],
+   "writes": [
+    "serve.contracts"
+   ]
+  },
+  "tests/test_quality_gx.py": {
+   "role": "tests contracts, quality_gx",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.contracts",
+    "serve.gx"
+   ]
+  },
+  "tests/test_scd2.py": {
+   "role": "tests silver",
+   "reads": [
+    "bronze.account",
+    "bronze.bank_balance",
+    "bronze.bank_transaction",
+    "bronze.bookwise_invoice",
+    "bronze.commerce_payout",
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.ledgerone_invoice",
+    "bronze.orbiterp_invoice",
+    "silver.account_mapping"
+   ],
+   "writes": [
+    "silver.account_mapping",
+    "silver.bank_balance",
+    "silver.bank_transaction",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ]
+  },
+  "tests/test_semantic.py": {
+   "role": "tests semantic",
+   "reads": [
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement"
+   ],
+   "writes": [
+    "serve.semantic"
+   ]
+  },
+  "tests/test_silver.py": {
+   "role": "tests contracts, generate, silver",
+   "reads": [
+    "bronze.account",
+    "bronze.bank_balance",
+    "bronze.bank_transaction",
+    "bronze.bookwise_invoice",
+    "bronze.commerce_payout",
+    "bronze.company",
+    "bronze.company_entitlement",
+    "bronze.ledgerone_invoice",
+    "bronze.orbiterp_invoice",
+    "gold.insights_cash_flow_monthly",
+    "gold.insights_commerce_monthly",
+    "gold.insights_data_completeness",
+    "gold.insights_dso_monthly",
+    "gold.insights_revenue_monthly",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ],
+   "writes": [
+    "landing.accounts",
+    "landing.bank_balances",
+    "landing.bank_transactions",
+    "landing.bookwise_invoices",
+    "landing.commerce_payouts",
+    "landing.companies",
+    "landing.entitlements",
+    "landing.ledgerone_invoices",
+    "landing.orbiterp_invoices",
+    "serve.contracts",
+    "silver.account_mapping",
+    "silver.bank_balance",
+    "silver.bank_transaction",
+    "silver.commerce_payout",
+    "silver.company",
+    "silver.company_entitlement",
+    "silver.invoice",
+    "silver.invoice_quarantine"
+   ]
+  }
+ }
+}

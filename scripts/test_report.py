@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 SPARK = {"test_bronze", "test_scd2", "test_silver", "test_gold"}
 LOCAL = {"test_quality_gx", "test_oncall_agent", "test_orchestration"}
 ABOUT = {
+    "test_code_lineage": "The editor's Lineage tab matches the code and the exported lineage",
     "test_generate": "Synthetic feeds carry every planted problem",
     "test_bronze": "Replay-safe MERGE on Delta (Spark)",
     "test_silver": "Three schemas → one canonical invoice; quarantine (Spark)",

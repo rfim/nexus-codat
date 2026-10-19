@@ -228,6 +228,12 @@
   "lines": 19
  },
  {
+  "path": "tests/test_code_lineage.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 73
+ },
+ {
   "path": "tests/test_contracts.py",
   "folder": "tests",
   "runs": "tests",
@@ -312,16 +318,22 @@
   "lines": 11
  },
  {
+  "path": "scripts/code_lineage.py",
+  "folder": "scripts",
+  "runs": "view",
+  "lines": 139
+ },
+ {
   "path": "scripts/manifest.py",
   "folder": "scripts",
   "runs": "view",
-  "lines": 29
+  "lines": 31
  },
  {
   "path": "scripts/test_report.py",
   "folder": "scripts",
   "runs": "view",
-  "lines": 50
+  "lines": 51
  },
  {
   "path": "databricks.yml",

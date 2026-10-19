@@ -27,3 +27,5 @@ def manifest() -> list[dict]:
 if __name__ == "__main__":
     (ROOT / "assets" / "data" / "files.json").write_text(json.dumps(manifest(), indent=1))
     print(len(manifest()), "files")
+    import code_lineage  # the editor's Lineage tab
+    (ROOT / "assets" / "data" / "code_lineage.json").write_text(json.dumps(code_lineage.build(), indent=1))

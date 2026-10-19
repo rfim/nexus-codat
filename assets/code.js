@@ -23,6 +23,60 @@
   cm.setSize("100%", "100%");
   cm.on("change", () => { if (current) { edited[current] = cm.getValue(); $("dirty").hidden = edited[current] === original[current]; } });
 
+  // ---------- Lineage tab: where the open file sits in the table graph ----------
+  const LIN = await NX.get("assets/data/code_lineage.json");
+  const checks = await NX.get("assets/data/lineage.json").catch(() => ({}));
+  let view = "code", picked = null;
+  const COLS = ["landing", "bronze", "silver", "gold", "serve"], NW = 160, NH = 24, NG = 7, CX = (i) => 12 + i * 178, TOP = 34;
+  const at = {};
+  COLS.forEach((c, i) => LIN.nodes.filter((n) => n.layer === c).forEach((n, j) => (at[n.id] = { x: CX(i), y: TOP + j * (NH + NG) })));
+  const H = TOP + Math.max(...COLS.map((c) => LIN.nodes.filter((n) => n.layer === c).length)) * (NH + NG) + 8;
+  const up = {}, down = {};
+  LIN.edges.forEach(([a, b]) => { (down[a] ??= []).push(b); (up[b] ??= []).push(a); });
+  const walk = (id, g, seen = new Set()) => { (g[id] || []).forEach((x) => { if (!seen.has(x)) { seen.add(x); walk(x, g, seen); } }); return seen; };
+  const short = (n) => n.label.replace(/^insights_/, "");
+  const label = (id) => { const n = LIN.nodes.find((x) => x.id === id); return n ? (n.layer === "serve" ? n.label : `${n.layer}.${n.label}`) : id; };
+  function drawLineage() {
+    const f = LIN.files[current] || { role: "not part of the table graph", reads: [], writes: [] };
+    let R = new Set(f.reads), W = new Set(f.writes);
+    if (picked) { R = new Set([...walk(picked, up), ...walk(picked, down)]); W = new Set([picked]); }
+    const hot = ([a, b]) => picked ? (R.has(a) || a === picked) && (R.has(b) || b === picked) : (R.has(a) || W.has(a)) && W.has(b);
+    const edge = ([a, b]) => { const p = at[a], q = at[b], x1 = p.x + NW, y1 = p.y + NH / 2, x2 = q.x, y2 = q.y + NH / 2, same = p.x === q.x;
+      const d = same ? `M${p.x + NW} ${y1} C ${p.x + NW + 16} ${y1}, ${q.x + NW + 16} ${y2}, ${q.x + NW} ${y2}` : `M${x1} ${y1} C ${x1 + 9} ${y1}, ${x2 - 9} ${y2}, ${x2} ${y2}`;
+      return `<path class="le${hot([a, b]) ? " hot" : ""}" d="${d}"/>`; };
+    const node = (n) => { const p = at[n.id], ck = n.layer === "gold" && checks[n.label];
+      const cls = W.has(n.id) ? " w" : R.has(n.id) ? " r" : "";
+      return `<g class="ln${cls}${picked === n.id ? " sel" : ""}" data-node="${n.id}" transform="translate(${p.x},${p.y})"><title>${NX.esc(n.id)}${n.source ? " · " + NX.esc(n.source) : ""}</title>
+        <rect width="${NW}" height="${NH}" rx="6"/><text x="8" y="16">${NX.esc(short(n)).slice(0, ck ? 19 : 23)}</text>
+        ${ck ? `<text x="${NW - 6}" y="16" text-anchor="end" class="${ck.checks_passed === ck.checks_total ? "ok" : "bad"}">${ck.checks_passed === ck.checks_total ? "✓" : "✕"}${ck.checks_passed}/${ck.checks_total}</text>` : ""}</g>`; };
+    $("lin-svg").setAttribute("viewBox", `0 0 900 ${H}`);
+    $("lin-svg").innerHTML = COLS.map((c, i) => `<text x="${CX(i) + 2}" y="18" style="font:700 10px var(--mono);letter-spacing:.14em;fill:#8f92c4">${c.toUpperCase()}</text>`).join("") +
+      LIN.edges.filter((e) => !hot(e)).map(edge).join("") + LIN.edges.filter(hot).map(edge).join("") + LIN.nodes.map(node).join("");
+    const users = (id, k) => Object.entries(LIN.files).filter(([, v]) => v[k].includes(id)).map(([p]) => p);
+    const list = (ids) => ids.length ? `<ul>${ids.map((i) => `<li>${NX.esc(label(i))}</li>`).join("")}</ul>` : `<p style="color:#8f92c4">none</p>`;
+    const flist = (ps) => ps.length ? `<ul>${ps.map((p) => `<li><button data-lin-open="${NX.esc(p)}">${NX.esc(p)}</button></li>`).join("")}</ul>` : `<p style="color:#8f92c4">none</p>`;
+    const key = `<div class="lin-key"><span><i style="background:#5a1f4a;border:1px solid var(--pink)"></i>writes</span><span><i style="background:#24206e;border:1px solid #8f7dff"></i>reads</span><span><i style="background:#141650;border:1px solid #2f3270"></i>elsewhere</span></div>`;
+    $("lin-info").innerHTML = picked
+      ? `<b style="color:#fff">${NX.esc(picked)}</b> <button data-lin-clear>back to the file</button>
+         <h4>Upstream</h4>${list([...walk(picked, up)])}<h4>Downstream</h4>${list([...walk(picked, down)])}
+         <h4>Written by</h4>${flist(users(picked, "writes"))}<h4>Read by</h4>${flist(users(picked, "reads"))}`
+      : `<b style="color:#fff">${NX.esc(current)}</b><p style="margin:.3rem 0 0;color:#a9a8d8">${NX.esc(f.role)}</p>${key}
+         <h4>Writes</h4>${list(f.writes)}<h4>Reads</h4>${list(f.reads)}<p style="margin-top:.8rem;color:#8f92c4;font-size:.74rem">Click any table to trace it up and downstream. Built from the repo by <code>scripts/code_lineage.py</code>.</p>`;
+  }
+  function show(v) {
+    view = v;
+    document.querySelectorAll(".ide-tabs button").forEach((b) => { b.classList.toggle("on", b.dataset.view === v); b.setAttribute("aria-selected", b.dataset.view === v); });
+    $("editor").hidden = v !== "code"; $("lineage").hidden = v !== "lineage";
+    if (v === "lineage") drawLineage(); else cm.refresh();
+  }
+  document.querySelector(".ide-tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-view]"); if (b) show(b.dataset.view); });
+  $("lineage").addEventListener("click", (e) => {
+    const n = e.target.closest("[data-node]"), o = e.target.closest("[data-lin-open]");
+    if (o) { picked = null; open(o.dataset.linOpen); return; }
+    if (e.target.closest("[data-lin-clear]")) { picked = null; drawLineage(); return; }
+    if (n) { picked = picked === n.dataset.node ? null : n.dataset.node; drawLineage(); }
+  });
+
   async function open(path) {
     current = path; const f = byPath[path];
     if (!(path in original)) original[path] = await fetch(path).then((r) => r.text());
@@ -42,6 +96,7 @@
     if (f.runs === "spark") note(`<b>${NX.esc(path)}</b> needs PySpark and Delta, which can't run in a browser. ` +
       `It ran for real to produce every number on this page; run it yourself with <code>./scripts/build.sh</code>, or see the CI log.`);
     history.replaceState(null, "", `#code=${encodeURIComponent(path)}`);
+    if (view === "lineage") { picked = null; drawLineage(); }
   }
   $("tree").addEventListener("click", (e) => { const b = e.target.closest(".tree-file"); if (b) open(b.dataset.path); });
   $("reset").addEventListener("click", () => { if (current) { delete edited[current]; cm.setValue(original[current]); } });
@@ -110,7 +165,7 @@
     const box = $("t-live"); box.innerHTML = ""; $("t-run").disabled = true;
     try {
       const p = await boot();
-      const which = files.filter((f) => f.runs === "tests" && f.path.startsWith("tests/test_") && !["test_site.py"].includes(f.path.split("/").pop())).map((f) => f.path);
+      const which = files.filter((f) => f.runs === "tests" && f.path.startsWith("tests/test_") && !["test_site.py", "test_code_lineage.py"].includes(f.path.split("/").pop())).map((f) => f.path);
       p.globals.set("TEST_FILES", p.toPy(which));
       const t0 = performance.now();
       const res = p.runPython("import nexus_browser; [list(r) for r in nexus_browser.run_tests(TEST_FILES)]").toJs();

@@ -35,10 +35,11 @@
     <div class="ide">
       <nav class="tree" id="tree" aria-label="Repository files"></nav>
       <div class="ide-main">
-        <div class="ide-bar"><code id="fname"></code><span id="badge" class="badge"></span><span id="dirty" class="badge b-dirty" hidden>edited</span>
+        <div class="ide-bar"><div class="ide-tabs" role="tablist"><button role="tab" data-view="code" class="on" aria-selected="true">Code</button><button role="tab" data-view="lineage" aria-selected="false">Lineage</button></div><code id="fname"></code><span id="badge" class="badge"></span><span id="dirty" class="badge b-dirty" hidden>edited</span>
           <span class="grow"></span><button id="reset" class="ghost">Reset</button><a id="gh" class="ghost" href="#" target="_blank" rel="noopener">GitHub ↗</a>
           <button id="run" class="primary">▶ Run <kbd>Ctrl ↵</kbd></button></div>
         <div id="editor" class="editor"></div>
+        <div id="lineage" class="lineage" hidden><svg id="lin-svg" role="img" aria-label="Lineage of the open file"></svg><div id="lin-info" class="lin-info"></div></div>
         <pre id="out" class="console" aria-live="polite"><span class="o-note">Pick a file on the left. Files marked green run here; press Run. Start with examples/.</span></pre>
       </div>
     </div>
@@ -46,6 +47,13 @@
   </div>
 </section>
 
+<div class="strip-nav" id="strip-nav"><div class="shell" role="tablist" aria-label="How the data gets there, step by step">
+  <button class="arrow" data-step="prev" aria-label="Previous">←</button>
+  <button data-go="0"><b>1</b>The run</button><button data-go="1"><b>2</b>Land</button><button data-go="2"><b>3</b>Conform</button>
+  <button data-go="3"><b>4</b>History</button><button data-go="4"><b>5</b>Late corrections</button><button data-go="5"><b>6</b>Prove</button>
+  <button data-go="6"><b>7</b>Tests</button><span class="grow"></span><button class="arrow" data-step="next" aria-label="Next">→</button>
+</div></div>
+<div class="hstrip" id="strip">
 <section class="section alt">
   <div class="shell">
     <div class="index"><span>How the data gets there</span><span>the last run · PySpark + Delta</span></div>
@@ -116,6 +124,7 @@
     <div id="t-live"></div>
   </div>
 </section>
+</div>
 </main>
 <footer><div class="shell"><p><b style="color:#fff">From NEXUS, built in Lifepal:</b> best practices from my production work, applied to Codat-shaped data. Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
 <script src="assets/common.js"></script>
@@ -127,4 +136,5 @@
 <script src="assets/vendor/js-yaml.min.js"></script>
 <script src="assets/vendor/pyodide/pyodide.js"></script>
 <script src="assets/code.js"></script>
+<script src="assets/strip.js"></script>
 </body></html>

@@ -20,6 +20,6 @@ jobs:
       - name: Test report for the site
         run: python scripts/test_report.py target/junit.xml target/tests.json
       - name: The code editor's file list is current
-        run: python scripts/manifest.py && git diff --exit-code -- assets/data/files.json
+        run: python scripts/manifest.py && git diff --exit-code -- assets/data/files.json assets/data/code_lineage.json
       - name: The whole graph through Dagster (Spark + Delta, SQL + GX checks, the on-call agent over MCP), then the site data diff
         run: ./scripts/build.sh && git diff --stat -- assets/data
