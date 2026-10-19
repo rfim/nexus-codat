@@ -63,7 +63,7 @@
     const body = div.lastChild; body.textContent = "";
     for (let i = 0; i < text.length; i += 3) { body.textContent = text.slice(0, i + 3); $("wirelog").scrollTop = 1e6; await NX.sleep(12 * speed); }
   }
-  const caption = (html) => ($("caption").innerHTML = html);
+  const caption = (html) => { lastCaption.html = html; if (view === "codat") $("caption").innerHTML = html; };
   function drawTools(show) {
     const g = $("tools"); g.innerHTML = "";
     if (!show) return;
@@ -79,19 +79,26 @@
     const el = document.querySelector(`#tool-${t} rect`); if (el) el.setAttribute("fill", "#e8457f"); };
 
   // ---------- the script ----------
-  let steps = [], idx = -1, playing = false, run = 0;
+  let steps = [], idx = -1, playing = false, run = 0, view = "codat";
+  const VIEW = { lifepal: ["In Lifepal", "lp"], lesson: ["Lesson for Codat · hypothetical", "cx"] };
+  const lastCaption = { html: "" };
+  const showCaption = () => {
+    const st = steps[idx];
+    if (view === "codat" || !st) { $("caption").innerHTML = lastCaption.html; return; }
+    $("caption").innerHTML = `<b>${VIEW[view][0]}:</b> ${NX.esc(st[VIEW[view][1]])}`;
+  };
   function build() {
     const who = $("who").value, sc = SCENARIOS[+$("scenario").value];
     const customer = SEM.PRINCIPALS[who];
     const out = SEM.ask(sc.q, who), p = out.plan, res = out.result;
     const call = p.tool ? { jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: p.tool, arguments: p.args } } : null;
     const s = [];
-    s.push({ t: "Register the server", d: "One command adds nexus-insights to the agent's MCP config.", go: async () => {
+    s.push({ lp: "At Lifepal our MCP server ran beside Databricks and Airflow. Agents reached data only through it, by config, never with database credentials.", cx: "Ship one server with the platform, not one per team: one registration, one audit log of every tool call.", t: "Register the server", d: "One command adds nexus-insights to the agent's MCP config.", go: async () => {
       setNode("n-server", "on");
       log("agent config", `claude mcp add nexus-insights \\\n  --env NEXUS_CALLER=${who} \\\n  -- python -m nexus.mcp_server`, "res");
       caption(`The server is registered. It runs as a separate process and the agent can only reach data <b>through its tools</b>.`);
       $("agent-state").textContent = "configured"; setNode("n-agent", ""); } });
-    s.push({ t: "initialize", d: "Client and server agree a protocol version and capabilities.", go: async () => {
+    s.push({ lp: "The server's instructions carried the house rules: certified models only, always cite, never give advice to a policyholder.", cx: "Put Codat's rules in the instructions too: certified Insights only, cite the metric version, never give lending advice.", t: "initialize", d: "Client and server agree a protocol version and capabilities.", go: async () => {
       log("client → server", { jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "ai-agent", version: "1.0" } } });
       await fly("w-as", { color: "pv" });
       log("server → client", { jsonrpc: "2.0", id: 1, result: { protocolVersion: "2025-06-18", capabilities: { tools: { listChanged: false } }, serverInfo: { name: "nexus-insights" },
@@ -99,7 +106,7 @@
       await fly("w-as", { reverse: true, color: "pv" });
       $("agent-state").textContent = "connected"; setNode("n-agent", "on");
       caption(`Handshake done. The server's <b>instructions</b> travel with it: certified metrics only, always cite, never give advice.`); } });
-    s.push({ t: "tools/list", d: "The agent discovers four read-only tools and their schemas.", go: async () => {
+    s.push({ lp: "Agents discovered certified dbt models and read their lineage. No tool reached raw or silver tables.", cx: "Start with a few read-only tools. Add one only when an eval shows a real question the existing ones can't answer.", t: "tools/list", d: "The agent discovers four read-only tools and their schemas.", go: async () => {
       log("client → server", { jsonrpc: "2.0", method: "notifications/initialized" });
       log("client → server", { jsonrpc: "2.0", id: 2, method: "tools/list" });
       await fly("w-as", { color: "pv" });
@@ -112,22 +119,22 @@
       await fly("w-as", { reverse: true, color: "pv" });
       drawTools(true);
       caption(`MCP is enabled. Four tools, all <b>read-only</b>. There is no tool for raw tables, personal data or writes, so an agent can't ask for them.`); } });
-    s.push({ t: "The analyst asks", d: sc.q, go: async () => {
+    s.push({ lp: "Questions came from Finance, Marketing and Product, and through the RAG copilot, which served 1,000+ outcomes a day.", cx: "Expect lenders' analysts, platform teams and internal agents. Log every question; the misses become new eval cases.", t: "The analyst asks", d: sc.q, go: async () => {
       setNode("n-user", "on");
       log(`analyst (${customer})`, `“${sc.q}”`, "res");
       await fly("w-ua", { color: "pk" });
       caption(`<b>${customer === "northbank" ? "Northbank" : "Brightpay"}</b> asks: “${NX.esc(sc.q)}”`); } });
     if (!p.tool) {
-      s.push({ t: "No tool can answer", d: "The agent refuses before calling anything.", go: async () => {
+      s.push({ lp: "No tool exposed personal data, so the copilot could only refuse, and said why.", cx: "Keep personal and bank details out of tools entirely. A clear refusal is a feature, and it belongs in the eval set.", t: "No tool can answer", d: "The agent refuses before calling anything.", go: async () => {
         setNode("n-agent", "hot");
         log("agent", `refused: ${res.reason}\n${res.message}`, "err");
         caption(`<b>Refused (${res.reason.replace("_", " ")}).</b> ${NX.esc(res.message)}`); } });
     } else {
-      s.push({ t: `tools/call · ${p.tool}`, d: JSON.stringify(p.args), go: async () => {
+      s.push({ lp: "The caller's identity travelled with every call; there was no shared, broadly privileged service account.", cx: "Over HTTP, take the customer from the token, never from a tool argument the agent could change.", t: `tools/call · ${p.tool}`, d: JSON.stringify(p.args), go: async () => {
         hiTool(p.tool); log("client → server", call); await fly("w-as", { color: "pk" });
         setNode("n-server", "hot");
         caption(`The agent picks <code>${p.tool}</code> with <code>${NX.esc(JSON.stringify(p.args))}</code>. The server knows who is asking: <b>${who}</b>.`); } });
-      s.push({ t: "Semantic layer compiles", d: "Metric → one SQL statement from metrics.yml.", go: async () => {
+      s.push({ lp: "One definition per metric in the dbt semantic layer over Kimball stars. Agreeing “sale” took four workshops; the code took an afternoon.", cx: "Agree each Insights definition with its product owner before an agent can quote it. Uncertified metrics stay refused.", t: "Semantic layer compiles", d: "Metric → one SQL statement from metrics.yml.", go: async () => {
         await fly("w-ss", { color: "pk" }); setNode("n-sem", "hot");
         if (res.refused) {
           $("refuse-x").setAttribute("y", 150); $("refuse-x").style.transition = "opacity .3s"; $("refuse-x").setAttribute("opacity", 1);
@@ -140,16 +147,16 @@
         caption(p.tool === "query_metric" ? `One certified definition becomes one SQL statement. The consent predicate is added by the compiler, <b>never by the agent</b>.`
           : `Read from the catalogue: no data rows are touched.`); } });
       if (!res.refused && p.tool === "query_metric") {
-        s.push({ t: "Consent filter", d: `customer_id = '${customer}'`, go: async () => {
+        s.push({ lp: "Each insurer saw only its own applicants: a row policy on every product, applied before the first query.", cx: "Consent per customer and company, added by the compiler, never by the agent, and tested by a cross-tenant eval on every PR.", t: "Consent filter", d: `customer_id = '${customer}'`, go: async () => {
           await fly("w-sc", { color: "pk" }); setNode("n-con", "hot");
           $("con-label").textContent = `customer_id = '${customer}'`;
           caption(`The query is scoped to <b>${customer}</b>. Companies that haven't shared their data with ${customer}, or revoked it, are invisible, to people and agents alike.`); } });
-        s.push({ t: "Gold answers", d: `${res.rows.length} row(s) from ${res.citation.product}`, go: async () => {
+        s.push({ lp: "Agents queried certified gold only. Bronze and silver held no agent grants.", cx: "Watch cost and load: agent queries carry their own workload tag, and popular Insights can be cached per company.", t: "Gold answers", d: `${res.rows.length} row(s) from ${res.citation.product}`, go: async () => {
           await fly("w-cg", { color: "pk" }); setNode("n-gold", "hot");
           log("gold · Delta", { rows: res.rows.slice(0, 6), more: Math.max(0, res.rows.length - 6) }, "res");
           caption(`<code>${res.citation.product}</code> at Delta version <b>${res.citation.version}</b> returns ${res.rows.length} row(s).`); } });
       }
-      s.push({ t: "Result with citation", d: "Back to the agent: rows, SQL, citation, caveats.", go: async () => {
+      s.push({ lp: "An answer without a citation was logged as a failure, not shown as an answer.", cx: "Return the product version and freshness, so a lender can say exactly which number they relied on.", t: "Result with citation", d: "Back to the agent: rows, SQL, citation, caveats.", go: async () => {
         await fly(res.refused || p.tool !== "query_metric" ? "w-ss" : "w-gs", { reverse: true, color: "pv" });
         const body = res.refused ? { isError: false, structuredContent: res } : { structuredContent: p.tool === "query_metric"
           ? { rows: res.rows.slice(0, 3), citation: res.citation, caveats: res.caveats } : res };
@@ -159,7 +166,7 @@
         caption(res.refused ? `The refusal is a normal result with a reason, so the agent can explain it rather than guess.`
           : `Every result carries its citation: metric, product, version, owner and contract checks${res.citation ? ` (${res.citation.checks})` : ""}.`); } });
     }
-    s.push({ t: "The agent answers", d: "Cited, or refused with a reason.", go: async () => {
+    s.push({ lp: "Once people and agents shared one layer, ad-hoc requests fell 60%: 214 to 86 over two quarters.", cx: "Measure it: share of answers with a citation, refusals that were right, and analyst time saved, before widening access.", t: "The agent answers", d: "Cited, or refused with a reason.", go: async () => {
       await fly("w-ua", { reverse: true, color: "pv" });
       ["n-sem", "n-con", "n-gold", "n-server"].forEach((n) => setNode(n, n === "n-server" ? "on" : ""));
       const a = answerText(p, res);
@@ -169,7 +176,7 @@
 
   function renderSteps() {
     $("steps").innerHTML = steps.map((s, i) => `<li data-i="${i}" class="${i < idx ? "done" : i === idx ? "now" : ""}">
-      <span class="dot">${i < idx ? "✓" : i + 1}</span><span><b>${NX.esc(s.t)}</b>${NX.esc(s.d)}</span></li>`).join("");
+      <span class="dot">${i < idx ? "✓" : i + 1}</span><span><b>${NX.esc(s.t)}</b>${NX.esc(view === "codat" ? s.d : s[VIEW[view][1]])}</span></li>`).join("");
     $("steps").querySelectorAll("li").forEach((li) => li.addEventListener("click", () => jump(+li.dataset.i)));
   }
   function resetStage() {
@@ -187,6 +194,7 @@
     if (idx >= steps.length - 1) return false;
     idx++; renderSteps(); const my = run;
     await steps[idx].go();
+    showCaption();
     return my === run;
   }
   async function jump(target) {
@@ -204,6 +212,11 @@
     }
     if (my === run) { playing = false; $("play").textContent = "↻ Replay"; }
   }
+  document.querySelectorAll("#views [role=tab]").forEach((b) => b.addEventListener("click", () => {
+    view = b.dataset.view;
+    document.querySelectorAll("#views [role=tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
+    $("stage").dataset.view = view; renderSteps(); showCaption();
+  }));
   $("play").addEventListener("click", play);
   $("next").addEventListener("click", () => { playing = false; $("play").textContent = "▶ Play"; stepForward(); });
   $("prev").addEventListener("click", () => jump(Math.max(-1, idx - 1)));

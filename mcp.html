@@ -30,7 +30,12 @@
     <div class="head"><h2>Enabling MCP, <em>one message at a time.</em></h2>
       <p>An agent connects to the <code>nexus-insights</code> server, discovers four read-only tools, and asks a question. The semantic layer compiles it, the consent filter scopes it to the caller's customer, and gold answers with a citation, or the request is refused.</p></div>
 
-    <div class="stage" id="stage">
+    <div class="tabs" id="views" role="tablist" aria-label="Which version of the story">
+      <button role="tab" aria-selected="true" data-view="codat">Codat · this run</button>
+      <button role="tab" aria-selected="false" data-view="lifepal">In Lifepal · built</button>
+      <button role="tab" aria-selected="false" data-view="lesson">Lesson for Codat · hypothetical</button>
+    </div>
+    <div class="stage" id="stage" data-view="codat">
       <div class="svgwrap"><svg viewBox="0 0 1200 470" role="img" aria-labelledby="stage-title">
         <title id="stage-title">An agent, the MCP server, the semantic layer, the consent filter and the gold Delta tables, connected by wires that light up as messages travel.</title>
         <defs>

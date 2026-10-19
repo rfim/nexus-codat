@@ -154,6 +154,19 @@ footer a{color:#d9d6ff;text-decoration:underline;text-underline-offset:3px}
 .caption{padding:1rem 1.2rem;color:#eceaff;font-size:1rem;min-height:3.2rem;border-top:1px solid #2b2d63;background:#101140}
 .caption b{color:var(--pink)}
 
+/* story tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .8rem}
+.tabs [role=tab]{border:1px solid #3a3d86;background:#14164a;color:#cfcef2;border-radius:10px;padding:.6rem 1rem;font-weight:700;font-size:.88rem}
+.tabs [role=tab][aria-selected=true]{background:var(--violet);border-color:var(--violet);color:#fff}
+.tabs [role=tab][data-view=lifepal][aria-selected=true]{background:#1f6fe0;border-color:#1f6fe0}
+.tabs [role=tab][data-view=lesson][aria-selected=true]{background:var(--pink);border-color:var(--pink)}
+.stage[data-view=lifepal] .caption{background:#0f2a5c}.stage[data-view=lifepal] .caption b{color:#8fc2ff}
+.stage[data-view=lesson] .caption{background:#3a1240}
+.lesson{border-radius:12px;padding:.8rem 1rem;margin-top:.2rem}
+.lesson b{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.2rem}
+.lesson.lifepal{background:#e9f2ff;border-left:4px solid #1f6fe0}.lesson.lifepal b{color:#1f6fe0}
+.lesson.lesson{background:#ffeef4;border-left:4px solid var(--pink)}.lesson.lesson b{color:var(--pink)}
+
 /* chat */
 .chat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1rem}
 .asks{display:flex;flex-wrap:wrap;gap:.45rem}
