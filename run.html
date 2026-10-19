@@ -27,7 +27,26 @@
   </nav>
 </div></header>
 <main id="main">
-<section class="section dark" style="padding-top:3rem">
+<section class="section dark" id="code" style="padding-top:3rem">
+  <div class="shell">
+    <div class="index"><span>The code, runnable</span><span>Python in your browser · Pyodide</span></div>
+    <div class="head"><h2>Open it. Edit it. <em>Run it.</em></h2>
+      <p>Every file in the repository, as it is on GitHub. The pure-Python parts (the generator, contracts, the semantic layer, the MCP tools, the evals) run here in your browser. The Spark modules ran for real to make this page; they run in CI and with <code>./scripts/build.sh</code>.</p></div>
+    <div class="ide">
+      <nav class="tree" id="tree" aria-label="Repository files"></nav>
+      <div class="ide-main">
+        <div class="ide-bar"><code id="fname"></code><span id="badge" class="badge"></span><span id="dirty" class="badge b-dirty" hidden>edited</span>
+          <span class="grow"></span><button id="reset" class="ghost">Reset</button><a id="gh" class="ghost" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+          <button id="run" class="primary">▶ Run <kbd>Ctrl ↵</kbd></button></div>
+        <div id="editor" class="editor"></div>
+        <pre id="out" class="console" aria-live="polite"><span class="o-note">Pick a file on the left. Files marked green run here; press Run. Start with examples/.</span></pre>
+      </div>
+    </div>
+    <div class="legend"><span><i class="dot-browser"></i>runs in your browser</span><span><i class="dot-spark"></i>needs Spark · runs in CI</span><span><i class="dot-local"></i>Dagster · GX · MCP · Claude</span><span><i class="dot-tests"></i>tests</span><span><i class="dot-view"></i>read only</span></div>
+  </div>
+</section>
+
+<section class="section alt">
   <div class="shell">
     <div class="index"><span>How the data gets there</span><span>the last run · PySpark + Delta</span></div>
     <div class="head"><h2>Land, conform, prove, <em>then publish.</em></h2>
@@ -85,28 +104,10 @@
     <div id="contracts"></div>
   </div>
 </section>
-<section class="section dark" id="code">
-  <div class="shell">
-    <div class="index"><span>06 · The code, runnable</span><span>Python in your browser · Pyodide</span></div>
-    <div class="head"><h2>Open it. Edit it. <em>Run it.</em></h2>
-      <p>Every file in the repository, as it is on GitHub. The pure-Python parts (the generator, contracts, the semantic layer, the MCP tools, the evals) run here in your browser. The Spark modules ran for real to make this page; they run in CI and with <code>./scripts/build.sh</code>.</p></div>
-    <div class="ide">
-      <nav class="tree" id="tree" aria-label="Repository files"></nav>
-      <div class="ide-main">
-        <div class="ide-bar"><code id="fname"></code><span id="badge" class="badge"></span><span id="dirty" class="badge b-dirty" hidden>edited</span>
-          <span class="grow"></span><button id="reset" class="ghost">Reset</button><a id="gh" class="ghost" href="#" target="_blank" rel="noopener">GitHub ↗</a>
-          <button id="run" class="primary">▶ Run <kbd>Ctrl ↵</kbd></button></div>
-        <div id="editor" class="editor"></div>
-        <pre id="out" class="console" aria-live="polite"><span class="o-note">Pick a file on the left. Files marked green run here; press Run. Start with examples/.</span></pre>
-      </div>
-    </div>
-    <div class="legend"><span><i class="dot-browser"></i>runs in your browser</span><span><i class="dot-spark"></i>needs Spark · runs in CI</span><span><i class="dot-local"></i>Dagster · GX · MCP · Claude</span><span><i class="dot-tests"></i>tests</span><span><i class="dot-view"></i>read only</span></div>
-  </div>
-</section>
 
 <section class="section alt" id="tests">
   <div class="shell">
-    <div class="index"><span>07 · The tests</span><span>pytest · CI on every push</span></div>
+    <div class="index"><span>06 · The tests</span><span>pytest · CI on every push</span></div>
     <div class="head"><h2>Everything here is <em>tested.</em></h2>
       <p>The full suite, including the Spark tests, ran with pytest; the report below is its output. Run the pure-Python half again here, in your browser, against the same files.</p></div>
     <p id="t-sum"></p>
