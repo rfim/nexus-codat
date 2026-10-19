@@ -59,17 +59,17 @@ th{font-size:6.6pt}
   <div class="kicker light" style="position:relative">Platform built in</div>
   <div class="lp" style="margin-top:3mm;position:relative"><img src="lifepal.png" alt="Lifepal"></div>
   <div class="tag"><div class="t1">PRESENTED TO</div><div class="t2">Codat</div><div class="t3">DATA &amp; INSIGHTS</div></div>
-  <div style="margin-top:20mm;position:relative" class="kicker light">Data engineering · Fireside chat · Lifepal to Codat</div>
+  <div style="margin-top:20mm;position:relative" class="kicker light">Data engineering · Fireside chat · Nexus best practices from Lifepal</div>
   <h1>Nexus</h1>
   <div class="sub">Business data that people and AI can query, and trust</div>
-  <p class="desc">Four years leading, and writing the production Python for, the data platform at Lifepal, a regulated insurance marketplace. CDC into a Delta lakehouse on Databricks, dbt models with 500+ checks, a semantic layer with one definition per metric, and an MCP server so AI agents query certified data instead of raw tables. Here it is applied to Codat's Insights platform, built on the accounting, ERP, banking and commerce data Codat connects for SMBs. Every Lifepal figure traces to a run or a query.</p>
+  <p class="desc">Four years leading, and writing the production Python for, the data platform at Lifepal, a regulated insurance marketplace. CDC into a Delta lakehouse on Databricks, dbt models with 500+ checks, a semantic layer with one definition per metric, and an MCP server so AI agents query certified data instead of raw tables. Everything in this pack is a NEXUS best practice from Lifepal, applied to Codat's Insights platform, built on the accounting, ERP, banking and commerce data Codat connects for SMBs. Every Lifepal figure traces to a run or a query.</p>
   <div class="meta">
     <div><b>PRESENTED BY</b>R. Firman Insan Muhammad (Vim)<br>Senior Data Engineer · London</div>
     <div><b>TO</b>Data &amp; Insights<br>Codat</div>
     <div><b>ROLE</b>Senior Data Engineer<br>London hybrid / UK remote</div>
     <div><b>STACK</b>Python · Spark · Databricks · Delta<br>dbt · Dagster / Airflow · semantic layer · MCP</div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 01</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 01</span></div>
 </section>
 
 <!-- 02 CONTENTS -->
@@ -91,7 +91,7 @@ th{font-size:6.6pt}
     <div class="callout amber"><b>Limits are marked in amber</b> where the mechanism differs from what I ran in production, or where my depth is working-level. Anything about Codat is my reading of public material, shown as a proposal.</div>
   </div>
   <p class="src">Working code on synthetic data, and the live site: github.com/rfim/nexus-codat · rfim.github.io/nexus-codat</p>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 02</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 02</span></div>
 </section>
 
 <!-- 03 OUTCOMES -->
@@ -114,7 +114,7 @@ th{font-size:6.6pt}
     <div class="card"><h3>Why the basis matters more than the number</h3><p>A batch-window figure with no run count behind it is a claim. Thirty runs either side of one change is a measurement you can reproduce from the job history.</p><p style="margin-top:5px">The 72-hour lookback is the p99.5 of observed late-arrival delay: it comes from the data. The cost figure is a four-quarter average, so one good month doesn't flatter it.</p>
       <div class="callout amber" style="margin-top:6px"><b>On scale.</b> Lifepal is a mid-size marketplace: hundreds of millions of records a day under a $19K-a-month ceiling. Codat's volume and tenant count differ; the methods (contracts, layer rules, replay safety, cost attribution) are the same.</div></div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 03</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 03</span></div>
 </section>
 
 <!-- 04 FIT -->
@@ -135,7 +135,7 @@ th{font-size:6.6pt}
     <tr><td class="k">Set technical direction and standards</td><td>Set the platform's direction with written reasoning. Led 3–5 engineers: two promoted to Senior, onboarding 4 weeks → 2. Taught 100+ learners at Hacktiv8.</td><td>11–15</td></tr>
     <tr><td class="k">AI tools day to day</td><td>Claude Code and Cursor daily for code and tests; AI for research and domain learning; prototypes built to test an architecture before committing.</td><td>36</td></tr>
   </table>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 04</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 04</span></div>
 </section>
 
 <!-- 05 HOW I WORK -->
@@ -158,7 +158,7 @@ th{font-size:6.6pt}
         <li><b>Let them ask.</b> Three reports, three numbers for one metric. I agree one definition, publish it in the semantic layer, and an agent answers questions from it with a citation.</li></ol></div>
   </div>
   <div class="callout" style="margin-top:5mm"><b>The foundation.</b> Every page of rfim.github.io/nexus-codat reads the same run of the PySpark code in this repo, on synthetic SMB accounting, ERP, banking and commerce data, so the numbers agree from page to page. Start with <b>Enable MCP</b>: the protocol exchange, animated step by step.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 05</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 05</span></div>
 </section>
 
 <!-- 06 CODAT DATA -->
@@ -176,7 +176,7 @@ th{font-size:6.6pt}
   </div>
   <div class="callout" style="margin-top:4mm"><b>What Codat connects, as listed on codat.io:</b> accounting and ERP (Xero, QuickBooks Online, Sage, NetSuite, Dynamics 365 Business Central, FreeAgent), banking (open banking feeds, partly via Plaid and TrueLayer) and commerce (Shopify, Stripe, Square, Amazon Seller): more than 350,000 live connections, as the site states.</div>
   <div class="callout amber" style="margin-top:3mm">These are hypotheses from public material. I'd like to hear which match reality and which I've got wrong.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 06</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 06</span></div>
 </section>
 
 <!-- 07 WHO I SERVE -->
@@ -187,7 +187,7 @@ th{font-size:6.6pt}
   <table>
     <tr><th>Group</th><th>What they ask for</th><th>What I build for them</th><th>How I work with them</th></tr>
     <tr><td class="k">Insights product team</td><td>Products customers can rely on, shipped quickly.</td><td>Certified data products with contracts, SLOs and versioned metrics.</td><td>Product owns the definition; I own the pipeline. Definitions agreed in writing before code.</td></tr>
-    <tr><td class="k">Customers: lenders, banks, platforms</td><td>The same number every time they ask, fresh enough to decide on.</td><td>Stable APIs and exports over gold, with published freshness and change notes.</td><td>Breaking changes are versioned; restatements are explainable from history.</td></tr>
+    <tr><td class="k">Customers: lenders, banks, platforms <span style="font-weight:400;color:var(--muted)">(in Lifepal: insurers)</span></td><td>The same number every time they ask, fresh enough to decide on.</td><td>Stable APIs and exports over gold, with published freshness and change notes.</td><td>Breaking changes are versioned; restatements are explainable from history.</td></tr>
     <tr><td class="k">Data science and ML</td><td>Features without leakage, reproducible training sets.</td><td>Point-in-time feature views and as-of joins; snapshots by Delta version.</td><td>Shared conventions on keys and time; features reviewed like any other model.</td></tr>
     <tr><td class="k">Platform and API engineering</td><td>Clean events and schemas they can evolve safely.</td><td>Source contracts, schema-change checks, blast radius on the PR.</td><td>Embedded early; a new field is reviewed before it reaches a product.</td></tr>
     <tr><td class="k">Risk, security, compliance</td><td>Evidence: who saw what, why, and for how long it's kept.</td><td>Tenant isolation, masks, retention schedule, erasure runs, access logs.</td><td>Access is a business decision recorded in a governed table; engineering makes it a reviewed run.</td></tr>
@@ -195,7 +195,7 @@ th{font-size:6.6pt}
   </table>
   <div class="callout pink" style="margin-top:4mm"><b>The closest parallel from Lifepal: B2B.</b> Lifepal also connected SMBs to insurers: a small business shared its company and team data once, with consent, and several insurers, each with its own format, quoted on it. Collect once, map by contract, scope by consent, decide on one agreed number: the same shape as an SMB connecting its accounting, ERP, bank and commerce data to a lender through Codat.</div>
   <div class="callout" style="margin-top:3mm"><b>Data contracts.</b> Every conversation with a group ends in a data contract: definition, grain, freshness, quality rules and access, written as YAML and turned into tests (next page). They own the definition; I own the platform that keeps it true.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 07</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 07</span></div>
 </section>
 
 <!-- 08 CONTRACT -->
@@ -244,7 +244,7 @@ change:
       <p class="src">See the code: github.com/rfim/nexus-codat/src/nexus/contracts.py</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 08</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 08</span></div>
 </section>
 
 <!-- 09 REQUESTS -->
@@ -271,7 +271,7 @@ change:
     <tr><td class="k">Engineering manager, product</td><td>Predictable delivery, visible trade-offs</td><td>One weekly forum for incidents, delivery and cost together. Risks listed on the roadmap up front.</td><td>$11K against $19K for four quarters.</td></tr>
   </table>
   <div class="callout" style="margin-top:4mm"><b>Result at Lifepal.</b> Ad-hoc requests fell from 214 to 86, and data-trust escalations fell by 60%.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 09</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 09</span></div>
 </section>
 
 <!-- 10 METRIC CATALOGUE PROPOSAL -->
@@ -293,7 +293,7 @@ change:
     <div class="callout"><b>Why the last row matters.</b> A completeness score per company, published next to every metric, lets a lender tell "revenue fell" apart from "data stopped arriving". It is the cheapest way to prevent a wrong decision.</div>
     <div class="callout amber"><b>To validate.</b> I don't know which of these Codat already certifies, or how. This is where I'd start listening, not a plan to replace anything.</div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 10</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 10</span></div>
 </section>
 
 <!-- 11 TEAM -->
@@ -323,7 +323,7 @@ change:
       <li><b>Explained</b> to engineers and commercial leads in their terms: freshness, cost, risk.</li></ul></div>
     <div class="card"><h3>Reviews that teach</h3><p>On a new engineer's PR I flag the line, explain why it matters, and suggest the fix. Typical first-PR issues: a committed secret, personal data in gold, append instead of MERGE, <span class="mono">toPandas()</span> on a large table, no test. I prove the bug on data where I can, so the lesson sticks.</p></div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 11</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 11</span></div>
 </section>
 
 <!-- 12 CI GATE -->
@@ -366,7 +366,7 @@ jobs:
       <div class="callout" style="margin-top:6px"><b>Lifepal:</b> GitHub Actions, Docker images and Terraform-managed AWS (S3, Glue, Lambda, DMS, ECS), with review on every change.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 12</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 12</span></div>
 </section>
 
 <!-- 13 FIRST LIGHT -->
@@ -389,7 +389,7 @@ jobs:
     <div class="callout"><b>Every change is reviewed.</b> Every candle goes through the same CI gate (page 12).</div>
     <div class="callout"><b>Debt is written down</b> with an owner and a revisit date, reviewed in the weekly forum.</div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 13</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 13</span></div>
 </section>
 
 <!-- 14 FIRST LIGHT IN PRACTICE + TRIAGE -->
@@ -421,7 +421,7 @@ jobs:
       <p><b>2. What is the smallest answer that enables today's decision?</b> A query, a summary metric or an existing view. Polish later.</p>
       <p><b>3. Is this a one-way door?</b> Customer data leaving the boundary, a certified metric, an access grant, a widely used schema: escalate. Otherwise the author decides and moves.</p>
     </div></div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 14</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 14</span></div>
 </section>
 
 <!-- 15 STAKEHOLDER WEEK -->
@@ -438,7 +438,7 @@ jobs:
     <tr><td class="k">Security</td><td>"Can the new agent see other customers' companies?"</td><td>Show the tenant filter on every MCP tool and the eval case that tries to cross tenants and fails.</td><td>Evidence, not assurance.</td></tr>
     <tr><td class="k">Platform team</td><td>"We're renaming a field in the sync payload."</td><td>The schema check stops the load before writing; the blast radius lists affected products and owners; contract updated by PR.</td><td>No silent breakage.</td></tr>
   </table>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 15</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 15</span></div>
 </section>
 
 <!-- 16 SYSTEM OVERVIEW -->
@@ -462,7 +462,7 @@ jobs:
       <p style="color:#cfd0ee;font-size:8.8pt"><b style="color:#fff">Measure.</b> Freshness, volume and quality profiled on a schedule. Agent tools are governed functions.</p>
     </div></div>
   <div class="callout amber" style="margin-top:4mm"><b>Design constraint, to check.</b> I've drawn this on Databricks with Unity Catalog because the role names Databricks and Delta. If Codat's governance sits elsewhere, the four controls stay; only the mechanism changes.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 16</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 16</span></div>
 </section>
 
 <!-- 17 LAYERS -->
@@ -488,7 +488,7 @@ jobs:
       <p><b>Read by.</b> Insights APIs, BI, notebooks, MCP tools, with tenant filters.</p></div>
   </div>
   <div class="callout" style="margin-top:5mm"><b>Access is enforced by grants.</b> No reporting group, agent or service principal reads bronze or silver. Data moves between layers only through a reviewed model. Masks and tenant filters attach at silver and gold, so bronze is unexposed by construction, which is cheaper than masking it.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 17</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 17</span></div>
 </section>
 
 <!-- 18 TENANT ISOLATION -->
@@ -529,7 +529,7 @@ ALTER TABLE nexus.gold.insights_cash_flow_monthly
       <div class="callout amber"><b>Limitation.</b> I've shown Unity Catalog row filters. Codat's actual tenancy model may be enforced in the API layer instead; the principle, isolation as data plus one filter, carries over.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 18</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 18</span></div>
 </section>
 
 <!-- 19 CLASSIFY + MASK -->
@@ -573,7 +573,7 @@ WHERE t.tag_value IS NULL
       <div class="callout amber"><b>Limitation.</b> Pattern detection has false negatives; the sweep is a backstop. The primary control is that a source can't be onboarded until its contract declares the tags.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 19</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 19</span></div>
 </section>
 
 <!-- 20 LINEAGE -->
@@ -610,7 +610,7 @@ GROUP BY d.obj ORDER BY hops;</pre>
       <div class="callout amber"><b>Limitation.</b> Platform lineage stops at the workspace boundary. Lineage into APIs and BI is rebuilt from metadata: enough to route a change notice, not to present as a complete formal control.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 20</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 20</span></div>
 </section>
 
 <!-- 21 MONITORING -->
@@ -650,7 +650,7 @@ WorkspaceClient().quality_monitors.create(
       <p>Freshness breaches caught a median of <b>41 minutes earlier</b> than under the previous alerting. Data-trust escalations <b>−60%</b>, duplicate records <b>−40%</b>.</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 21</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 21</span></div>
 </section>
 
 <!-- 22 RETENTION -->
@@ -689,7 +689,7 @@ CREATE TABLE nexus.governance.retention_schedule (
       <div class="callout amber"><b>Limitation.</b> Erasure and retention can conflict. Which one wins for each data class is a call for privacy and compliance; engineering's job is to make either outcome one auditable run.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 22</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 22</span></div>
 </section>
 
 <!-- 23 SOURCE CONTRACT -->
@@ -738,7 +738,7 @@ CREATE TABLE nexus.governance.retention_schedule (
       <div class="callout amber"><b>Note.</b> Using <span class="mono">source_modified_at</span> as the ordering key assumes the source exposes a reliable modified time. Where it doesn't, the sync sequence orders versions instead. I'd confirm which per platform.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 23</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 23</span></div>
 </section>
 
 <!-- 24 DAGSTER -->
@@ -781,7 +781,7 @@ defs = dg.Definitions(assets=[asset_for(c) <span class="k">for</span> c <span cl
       <div class="callout amber"><b>Limitation.</b> Airflow is my production orchestrator; Dagster and Temporal I know at working level. The factory pattern is the same; I'd follow the team's conventions.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 24</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 24</span></div>
 </section>
 
 <!-- 25 INGEST -->
@@ -826,7 +826,7 @@ defs = dg.Definitions(assets=[asset_for(c) <span class="k">for</span> c <span cl
       <p>Sync events, internal CDC and partner files get the same contract, quality gate and owner record. <span class="mono">availableNow</span> lets the orchestrator run streaming code as a scheduled, bounded job.</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 25</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 25</span></div>
 </section>
 
 <!-- 26 CANONICAL MODEL -->
@@ -849,7 +849,7 @@ defs = dg.Definitions(assets=[asset_for(c) <span class="k">for</span> c <span cl
     <div class="card"><h3>New platforms are additive</h3><p>A new platform adds a staging model and mapping rows. It doesn't restructure a model that customers already depend on.</p></div>
   </div>
   <div class="callout amber" style="margin-top:4mm"><b>Note.</b> Codat already maintains a standardised data model across integrations. I'd learn it first and build Insights on it, not invent a parallel one. This page shows how I reason about the problem, not a redesign.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 26</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 26</span></div>
 </section>
 
 <!-- 27 MERGE -->
@@ -888,7 +888,7 @@ defs = dg.Definitions(assets=[asset_for(c) <span class="k">for</span> c <span cl
       <p>A company re-syncing its whole ledger, or a platform re-sending a page of invoices, must change nothing that hasn't changed. In github.com/rfim/nexus-codat, replaying every feed leaves bronze at exactly 2,335 rows: 0 changed.</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 27</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 27</span></div>
 </section>
 
 <!-- 28 TIME TRAVEL -->
@@ -930,7 +930,7 @@ WHERE n.amt &lt;&gt; coalesce(i.amt, 0) ORDER BY abs(delta) DESC;</pre></div>
       <div class="callout amber"><b>Limitation.</b> Time travel only answers within the history window. Older "as issued" figures come from insert-only history in silver, which is one reason I keep it.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 28</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 28</span></div>
 </section>
 
 <!-- 29 SCD2 -->
@@ -972,7 +972,7 @@ FROM {{ ref('snap_account_mapping') }}</pre></div>
       <p class="src">See the code: github.com/rfim/nexus-codat/src/nexus/silver.py (SCD2 on chart-of-accounts mappings)</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 29</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 29</span></div>
 </section>
 
 <!-- 30 INCREMENTAL -->
@@ -1016,7 +1016,7 @@ WHERE NOT j._deleted
       <div class="callout amber"><b>The trade-off.</b> Incremental models are harder to reason about and can drift. That's why the CI metric diff exists: the cost of incrementality is paid in tests, and it's worth paying. Backdating beyond the lookback is caught by a periodic full reconciliation.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 30</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 30</span></div>
 </section>
 
 <!-- 31 QUALITY AT INGESTION -->
@@ -1058,7 +1058,7 @@ WHERE NOT j._deleted
       <p class="src">In github.com/rfim/nexus-codat: 4 of 437 canonical invoices quarantined (2 unknown status, 1 bad currency, 1 due before issue); 36 of 37 contract checks pass, the failure being a planted £1,250 bank payment re-sent under a new id.</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 31</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 31</span></div>
 </section>
 
 <!-- 32 SEMANTIC LAYER -->
@@ -1107,7 +1107,7 @@ metrics:
       <div class="callout amber" style="margin-top:6px"><b>Limitation.</b> Additive metrics (revenue, cash flow) are safe to sum; balances are point-in-time and only read at one date. Making that explicit is half the value of a semantic layer.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 32</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 32</span></div>
 </section>
 
 <!-- 33 MCP -->
@@ -1153,7 +1153,7 @@ mcp = FastMCP(<span class="s">"nexus-insights"</span>)
       <p class="src">Simplified for the slide; the Lifepal server also exposes Databricks and Airflow metadata to agents.</p>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 33</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 33</span></div>
 </section>
 
 <!-- 34 EVALS -->
@@ -1200,7 +1200,7 @@ mcp = FastMCP(<span class="s">"nexus-insights"</span>)
       <div class="callout amber"><b>Limitation.</b> Evals cover the questions you thought of. Logged real questions are sampled weekly and the misses become new cases.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 34</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 34</span></div>
 </section>
 
 <!-- 35 ON-CALL AGENT -->
@@ -1221,7 +1221,7 @@ mcp = FastMCP(<span class="s">"nexus-insights"</span>)
     <div class="card"><h3>Where to start</h3><ul><li>One pipeline with frequent, well-understood failures.</li><li>Replay past incidents as an eval set before it ever pages anyone.</li><li>Widen only when the numbers say so.</li></ul></div>
   </div>
   <div class="callout amber" style="margin-top:4mm"><b>Proposal, not production.</b> I've built the pieces (contracts, lineage, quarantine with reasons, MCP, evals); I haven't run this exact agent in production. It's the first thing I'd prototype with the team.</div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 35</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 35</span></div>
 </section>
 
 <!-- 36 AI DAILY -->
@@ -1241,7 +1241,7 @@ mcp = FastMCP(<span class="s">"nexus-insights"</span>)
     <div class="card"><h3>AI in the product, not just the editor</h3><p>RAG copilot over certified data (1,000+ outcomes a day) and an MCP server for agents, both with evaluation and guardrails.</p></div>
     <div class="card"><h3>Guardrails I hold myself to</h3><ul><li>No secrets or customer data in prompts.</li><li>AI output goes through the same review and tests as anything else.</li><li>Measure the time saved; drop what doesn't help.</li></ul></div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 36</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 36</span></div>
 </section>
 
 <!-- 37 COST -->
@@ -1283,7 +1283,7 @@ GROUP BY ALL ORDER BY spend_90d DESC;</pre>
       <div class="callout"><b>For agents too.</b> Agent queries carry a workload tag, so the cost of AI usage is visible from day one.</div>
     </div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 37</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 37</span></div>
 </section>
 
 <!-- 38 90 DAYS -->
@@ -1306,7 +1306,7 @@ GROUP BY ALL ORDER BY spend_90d DESC;</pre>
       <li>How is data quality measured today, and who gets paged?</li>
       <li>What would make this hire a clear success after a year?</li></ul></div>
   </div>
-  <div class="foot"><span>Nexus · Lifepal to Codat</span><span>Vim · 38</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · applied to Codat</span><span>Vim · 38</span></div>
 </section>
 
 <!-- 39 SUMMARY -->
@@ -1327,6 +1327,6 @@ GROUP BY ALL ORDER BY spend_90d DESC;</pre>
       <div class="builtat" style="margin-top:8px"><span class="lp"><img src="lifepal.png" alt="Lifepal"></span><span class="arrow">→</span><span class="codat" style="font-size:15pt">Codat</span></div></div>
   </div>
   <p class="src" style="margin-top:4mm">R. Firman Insan Muhammad (Vim) · Senior Data Engineer · London · firman.insan.m@gmail.com · +44 747 061 4781 · right to work in the UK, no sponsorship required · code and live site: github.com/rfim/nexus-codat</p>
-  <div class="foot"><span>Nexus · Lifepal to Codat · independent application, not affiliated with Codat</span><span>Vim · 39</span></div>
+  <div class="foot"><span>Nexus · Lifepal best practices · independent application, not affiliated with Codat</span><span>Vim · 39</span></div>
 </section>
 </body></html>

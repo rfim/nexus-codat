@@ -34,10 +34,10 @@
       <i aria-hidden="true">→</i>
       <div><small>Presented to</small><b>Codat</b></div>
     </div>
-    <p class="kicker" style="color:var(--violet2)">Presented to Codat · Data &amp; Insights · Senior Data Engineer</p>
+    <p class="kicker" style="color:var(--violet2)">NEXUS best practices from Lifepal · applied to Codat · Senior Data Engineer</p>
     <h1>NEXUS</h1>
     <p class="sub">Business data from accounting, ERP, banking and commerce systems that people and AI can query, and trust.</p>
-    <p class="lede">I'm <b>Vim</b>, R. Firman Insan Muhammad, a Senior Data Engineer in London. For four years I led and wrote the data platform at Lifepal, an insurance marketplace for consumers and SMBs: CDC into Delta on Databricks, dbt with 500+ checks, a semantic layer, and an MCP server so AI agents query certified data instead of raw tables. This site applies the same methods to SMB data shaped like Codat's: synthetic, and runnable from this repository.</p>
+    <p class="lede">I'm <b>Vim</b>, R. Firman Insan Muhammad, a Senior Data Engineer in London. For four years I led and wrote the data platform at Lifepal, an insurance marketplace for consumers and SMBs: CDC into Delta on Databricks, dbt with 500+ checks, a semantic layer, and an MCP server so AI agents query certified data instead of raw tables. Everything on this site is from <b>NEXUS, the platform I built in Lifepal</b>: its best practices applied to SMB data shaped like Codat's, synthetic and runnable from this repository.</p>
     <div class="cta">
       <a class="button b-pink" href="mcp.html"><span class="live" aria-hidden="true"></span>Watch MCP being enabled →</a>
       <a class="button b-primary" href="run.html">How the data gets there →</a>
@@ -104,6 +104,7 @@
         <p>An SMB connects its accounting or ERP, bank and commerce accounts once. Each customer it shares with needs one trustworthy view, while the books keep changing.</p>
         <ul><li>Source contracts map each system onto one canonical model</li><li>Consent as data: one row filter on every product and tool</li><li>Re-syncs and backdated credit notes never double count</li><li>Revenue and cash flow defined once, for people and agents</li></ul></div>
     </div>
+    <div class="callout pink" style="margin-top:1rem"><b>In Lifepal, the other side was the insurers.</b> At Codat it's the lenders, banks and platforms. Same job: each one sees only the businesses that chose to share with it, and all of them get one agreed number.</div>
     <div class="grid g5" style="margin-top:1.2rem">
       <div class="card"><div class="big">6h → 90m</div><p>Nightly batch, median of 30 runs either side.</p></div>
       <div class="card"><div class="big p">99.7%</div><p>Reporting latency cut: 24 h → under 5 min on Kafka + Debezium.</p></div>
@@ -163,7 +164,8 @@
 </main>
 
 <footer><div class="shell">
-  <p><b style="color:#fff">Stated plainly.</b> Lifepal outcomes come from my CV and production work. The Codat side is built from outside, from the role and public information; integration names are as listed on codat.io, and every company, customer and system in the demo is fictional. No Codat systems or data were used. An independent application, not affiliated with or endorsed by Codat.</p>
+  <p><b style="color:#fff">From NEXUS, built in Lifepal.</b> The methods here are NEXUS best practices from my production work at Lifepal, applied to Codat-shaped data.</p>
+  <p style="margin-top:.6rem"><b style="color:#fff">Stated plainly.</b> Lifepal outcomes come from my CV and production work. The Codat side is built from outside, from the role and public information; integration names are as listed on codat.io, and every company, customer and system in the demo is fictional. No Codat systems or data were used. An independent application, not affiliated with or endorsed by Codat.</p>
   <p style="margin-top:.8rem">R. Firman Insan Muhammad (Vim) · Senior Data Engineer · London · <a href="mailto:firman.insan.m@gmail.com">firman.insan.m@gmail.com</a> · <a href="https://github.com/rfim/nexus-codat">github.com/rfim/nexus-codat</a></p>
 </div></footer>
 <script src="assets/common.js"></script>
