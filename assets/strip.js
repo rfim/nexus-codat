@@ -1,4 +1,4 @@
-// Run page: the seven sections under the editor sit side by side; scroll right, use the numbers, or ← →.
+// Run and Orchestrator pages: the sections under the first one sit side by side; scroll right, use the numbers, or ← →.
 (() => {
   const strip = document.getElementById("strip"), nav = document.getElementById("strip-nav");
   const slides = [...strip.children], pills = [...nav.querySelectorAll("[data-go]")];
