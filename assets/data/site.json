@@ -1,0 +1,1804 @@
+{
+ "run": {
+  "feeds": {
+   "companies": 12,
+   "entitlements": 14,
+   "accounts": 48,
+   "accounts_remapped": 1,
+   "ledgerone_invoices": 130,
+   "ledgerone_invoices_replayed": 60,
+   "bookwise_invoices": 153,
+   "bookwise_invoices_replayed": 60,
+   "orbiterp_invoices": 154,
+   "orbiterp_invoices_replayed": 60,
+   "bank_transactions": 1331,
+   "bank_balances": 12,
+   "commerce_payouts": 480,
+   "ledgerone_invoices_late": 9,
+   "bookwise_invoices_late": 10,
+   "orbiterp_invoices_late": 12,
+   "late_total": 31,
+   "planted_break": {
+    "company_id": "C-107",
+    "booked_date": "2026-08-14",
+    "amount": 1250.0
+   }
+  },
+  "bronze": {
+   "companies": 12,
+   "entitlements": 14,
+   "accounts": 49,
+   "ledgerone_invoices": 130,
+   "bookwise_invoices": 153,
+   "orbiterp_invoices": 154,
+   "bank_transactions": 1331,
+   "bank_balances": 12,
+   "commerce_payouts": 480
+  },
+  "bronze_after_replay": {
+   "companies": 12,
+   "entitlements": 14,
+   "accounts": 49,
+   "ledgerone_invoices": 130,
+   "bookwise_invoices": 153,
+   "orbiterp_invoices": 154,
+   "bank_transactions": 1331,
+   "bank_balances": 12,
+   "commerce_payouts": 480
+  },
+  "silver": {
+   "invoice": 433,
+   "invoice_quarantine": 4,
+   "account_mapping": 49,
+   "company": 12,
+   "company_entitlement": 14,
+   "commerce_payout": 480,
+   "bank_transaction": 1331,
+   "bank_balance": 12,
+   "quarantine_reasons": {
+    "due_after_issue": 1,
+    "currency_iso": 1,
+    "status_known": 2
+   }
+  },
+  "gold_fact": {
+   "rows": 433,
+   "rows_after_rerun": 433
+  },
+  "as_issued": {
+   "revenue_version": 0,
+   "contracts": [
+    {
+     "product": "insights_cash_flow_monthly",
+     "owner": "insights-product-lead@example.com",
+     "passed": 8,
+     "total": 9,
+     "failing": [
+      "reconcile net_movement_all to source within 0.01"
+     ]
+    },
+    {
+     "product": "insights_commerce_monthly",
+     "owner": "commerce-insights-lead@example.com",
+     "passed": 7,
+     "total": 7,
+     "failing": []
+    },
+    {
+     "product": "insights_data_completeness",
+     "owner": "data-quality-lead@example.com",
+     "passed": 5,
+     "total": 5,
+     "failing": []
+    },
+    {
+     "product": "insights_dso_monthly",
+     "owner": "credit-risk-lead@example.com",
+     "passed": 6,
+     "total": 6,
+     "failing": []
+    },
+    {
+     "product": "insights_revenue_monthly",
+     "owner": "insights-product-lead@example.com",
+     "passed": 10,
+     "total": 10,
+     "failing": []
+    }
+   ]
+  },
+  "late_batch": {
+   "ledgerone_invoices": 136,
+   "bookwise_invoices": 158,
+   "orbiterp_invoices": 158
+  },
+  "current": {
+   "revenue_version": 1,
+   "fct_invoice": 448
+  },
+  "tasks": [
+   {
+    "key": "generate",
+    "label": "Generate synthetic SMB feeds",
+    "start_s": 8.5,
+    "duration_s": 0.0
+   },
+   {
+    "key": "ingest",
+    "label": "Ingest every feed to bronze (MERGE)",
+    "start_s": 8.5,
+    "duration_s": 73.3
+   },
+   {
+    "key": "replay",
+    "label": "Replay every feed (should change nothing)",
+    "start_s": 81.9,
+    "duration_s": 37.2
+   },
+   {
+    "key": "silver",
+    "label": "Canonical invoice, quality split, SCD2, banking",
+    "start_s": 119.1,
+    "duration_s": 35.9
+   },
+   {
+    "key": "gold",
+    "label": "Invoice fact (incremental MERGE) and Insights products",
+    "start_s": 156.1,
+    "duration_s": 33.2
+   },
+   {
+    "key": "rerun",
+    "label": "Re-run the fact inside the lookback window",
+    "start_s": 189.3,
+    "duration_s": 6.0
+   },
+   {
+    "key": "check_issued",
+    "label": "Contract checks on the first publish",
+    "start_s": 195.7,
+    "duration_s": 55.0
+   },
+   {
+    "key": "late",
+    "label": "Late corrections to bronze (MERGE)",
+    "start_s": 251.6,
+    "duration_s": 14.0
+   },
+   {
+    "key": "restate",
+    "label": "Re-run silver and gold with the corrections",
+    "start_s": 265.6,
+    "duration_s": 62.4
+   },
+   {
+    "key": "check",
+    "label": "Contract checks on the restated products",
+    "start_s": 328.0,
+    "duration_s": 52.5
+   }
+  ],
+  "seconds": 381.4
+ },
+ "contracts": [
+  {
+   "product": "insights_cash_flow_monthly",
+   "owner": "insights-product-lead@example.com",
+   "passed": 8,
+   "total": 9,
+   "results": [
+    {
+     "check": "not_null: customer_id",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "accepted_values: customer_id",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: net_operating_cash_flow",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: operating_inflows",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "range: operating_inflows",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "kind": "grain",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "kind": "freshness",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "kind": "tenant",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "reconcile net_movement_all to source within 0.01",
+     "kind": "reconcile",
+     "status": "fail",
+     "failing_rows": 2,
+     "sample": [
+      {
+       "customer_id": "northbank",
+       "company_id": "C-107",
+       "published": 52866.69,
+       "expected": 51616.69,
+       "difference": 1250.0
+      },
+      {
+       "customer_id": "brightpay",
+       "company_id": "C-107",
+       "published": 52866.69,
+       "expected": 51616.69,
+       "difference": 1250.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "product": "insights_commerce_monthly",
+   "owner": "commerce-insights-lead@example.com",
+   "passed": 7,
+   "total": 7,
+   "results": [
+    {
+     "check": "not_null: net_sales",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "range: net_sales",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: payouts_in_bank_ratio",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "range: payouts_in_bank_ratio",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "kind": "grain",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "kind": "freshness",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "kind": "tenant",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    }
+   ]
+  },
+  {
+   "product": "insights_data_completeness",
+   "owner": "data-quality-lead@example.com",
+   "passed": 5,
+   "total": 5,
+   "results": [
+    {
+     "check": "not_null: completeness_score",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "range: completeness_score",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "unique grain: customer_id, company_id",
+     "kind": "grain",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "freshness: last_bank within 7 day(s) of the run",
+     "kind": "freshness",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "kind": "tenant",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    }
+   ]
+  },
+  {
+   "product": "insights_dso_monthly",
+   "owner": "credit-risk-lead@example.com",
+   "passed": 6,
+   "total": 6,
+   "results": [
+    {
+     "check": "range: dso_days",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: receivables",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "range: receivables",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "unique grain: customer_id, company_id, month",
+     "kind": "grain",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "kind": "freshness",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "kind": "tenant",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    }
+   ]
+  },
+  {
+   "product": "insights_revenue_monthly",
+   "owner": "insights-product-lead@example.com",
+   "passed": 10,
+   "total": 10,
+   "results": [
+    {
+     "check": "not_null: customer_id",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "accepted_values: customer_id",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: company_id",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: currency",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "accepted_values: currency",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "not_null: revenue",
+     "kind": "column",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "kind": "grain",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "kind": "freshness",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "kind": "tenant",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    },
+    {
+     "check": "reconcile revenue to source within 0.01",
+     "kind": "reconcile",
+     "status": "pass",
+     "failing_rows": 0,
+     "sample": []
+    }
+   ]
+  }
+ ],
+ "products": {
+  "insights_cash_flow_monthly": 52,
+  "insights_commerce_monthly": 16,
+  "insights_data_completeness": 13,
+  "insights_dso_monthly": 52,
+  "insights_revenue_monthly": 52
+ },
+ "evidence": {
+  "canonical_examples": {
+   "ledgerone": {
+    "raw": {
+     "AccountCode": "4000",
+     "AmountDue": 0.0,
+     "CompanyId": "C-101",
+     "CurrencyCode": "GBP",
+     "Date": "2026-07-20",
+     "DueDate": "2026-08-10",
+     "FullyPaidOnDate": "2026-08-19",
+     "InvoiceID": "0d247051-e66b-5456-919c-20bf01f643ed",
+     "Status": "PAID",
+     "SubTotal": 637.92,
+     "SyncSeq": 15,
+     "Total": 765.5,
+     "TotalTax": 127.58,
+     "Type": "ACCREC",
+     "UpdatedDateUTC": "2026-07-20T18:00:00Z"
+    },
+    "canonical": {
+     "source_platform": "ledgerone",
+     "company_id": "C-101",
+     "source_invoice_id": "047380ef-b511-5135-b34c-1a5ae80c78ae",
+     "doc_type": "invoice",
+     "status": "open",
+     "issue_date": "2026-09-03",
+     "due_date": "2026-09-24",
+     "subtotal": 810.68,
+     "tax": 162.14,
+     "amount_due": 972.82,
+     "currency": "GBP",
+     "account_id": "4100",
+     "paid_date": null,
+     "source_modified_at": "2026-09-03T18:00:00",
+     "sync_seq": 28,
+     "total": 972.82
+    }
+   },
+   "bookwise": {
+    "raw": {
+     "balance": 0.0,
+     "company": "C-102",
+     "currency_ref": "GBP",
+     "doc": "invoice",
+     "due": "2026-06-16",
+     "id": 10200010,
+     "income_account": "4100",
+     "last_updated": "2026-06-02T18:00:00Z",
+     "net": 1635.37,
+     "paid_on": null,
+     "state": "void",
+     "sync_seq": 33,
+     "txn_date": "2026-06-02",
+     "vat": 327.07
+    },
+    "canonical": {
+     "source_platform": "bookwise",
+     "company_id": "C-102",
+     "source_invoice_id": "10200010",
+     "doc_type": "invoice",
+     "status": "void",
+     "issue_date": "2026-06-02",
+     "due_date": "2026-06-16",
+     "subtotal": 1635.37,
+     "tax": 327.07,
+     "amount_due": 0.0,
+     "currency": "GBP",
+     "account_id": "4100",
+     "paid_date": null,
+     "source_modified_at": "2026-06-02T18:00:00",
+     "sync_seq": 33,
+     "total": 1962.44
+    }
+   },
+   "orbiterp": {
+    "raw": {
+     "company": "C-103",
+     "created": "2026-06-05T10:00:00Z",
+     "doc_number": 1,
+     "gl": "4000",
+     "ledger": "AR-TRADE",
+     "lines_total": 435.54,
+     "paid_at": "2026-08-08T12:00:00Z",
+     "paid_total": 522.65,
+     "series": "INV",
+     "status_code": 3,
+     "subsidiary": "UK01",
+     "sync_seq": 68,
+     "tax_total": 87.11,
+     "terms_days": 60
+    },
+    "canonical": {
+     "source_platform": "orbiterp",
+     "company_id": "C-103",
+     "source_invoice_id": "INV-1",
+     "doc_type": "invoice",
+     "status": "paid",
+     "issue_date": "2026-06-05",
+     "due_date": "2026-08-04",
+     "subtotal": 435.54,
+     "tax": 87.11,
+     "amount_due": 0.0,
+     "currency": "GBP",
+     "account_id": "4000",
+     "paid_date": "2026-08-08",
+     "source_modified_at": null,
+     "sync_seq": 68,
+     "total": 522.65
+    }
+   }
+  },
+  "quarantine": [
+   {
+    "source_platform": "bookwise",
+    "company_id": "C-102",
+    "source_invoice_id": "999999999",
+    "status": "pending",
+    "currency": "GBP",
+    "issue_date": "2026-06-02",
+    "due_date": "2026-06-16",
+    "_failed_rules": [
+     "status_known"
+    ]
+   },
+   {
+    "source_platform": "ledgerone",
+    "company_id": "C-101",
+    "source_invoice_id": "bad-currency",
+    "status": "paid",
+    "currency": "XX",
+    "issue_date": "2026-06-04",
+    "due_date": "2026-07-04",
+    "_failed_rules": [
+     "currency_iso"
+    ]
+   },
+   {
+    "source_platform": "ledgerone",
+    "company_id": "C-101",
+    "source_invoice_id": "bad-dates",
+    "status": "paid",
+    "currency": "GBP",
+    "issue_date": "2026-06-09",
+    "due_date": "2026-05-01",
+    "_failed_rules": [
+     "due_after_issue"
+    ]
+   },
+   {
+    "source_platform": "ledgerone",
+    "company_id": "C-101",
+    "source_invoice_id": "bad-status",
+    "status": "submitted",
+    "currency": "GBP",
+    "issue_date": "2026-06-03",
+    "due_date": "2026-06-10",
+    "_failed_rules": [
+     "status_known"
+    ]
+   }
+  ],
+  "scd2_c103": [
+   {
+    "company_id": "C-103",
+    "account_id": "4100",
+    "account_name": "Services",
+    "account_type": "revenue",
+    "valid_from": "2026-05-20",
+    "valid_to": "2026-09-01",
+    "is_current": false
+   },
+   {
+    "company_id": "C-103",
+    "account_id": "4100",
+    "account_name": "Services (grant-funded)",
+    "account_type": "other_income",
+    "valid_from": "2026-09-01",
+    "valid_to": "9999-12-31",
+    "is_current": true
+   }
+  ],
+  "c103_revenue": [
+   {
+    "month": "2026-06-01",
+    "revenue": 3943.04
+   },
+   {
+    "month": "2026-07-01",
+    "revenue": 2924.02
+   },
+   {
+    "month": "2026-08-01",
+    "revenue": 1071.27
+   },
+   {
+    "month": "2026-09-01",
+    "revenue": 1606.43
+   }
+  ],
+  "restatement": [
+   {
+    "customer_id": "northbank",
+    "company_id": "C-105",
+    "month": "2026-08-01",
+    "issued": 16241.53,
+    "now": 11883.09,
+    "delta": -4358.44
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-102",
+    "month": "2026-08-01",
+    "issued": 17143.46,
+    "now": 13182.61,
+    "delta": -3960.85
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-104",
+    "month": "2026-08-01",
+    "issued": 15184.1,
+    "now": 11253.92,
+    "delta": -3930.18
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-103",
+    "month": "2026-08-01",
+    "issued": 2532.46,
+    "now": 1071.27,
+    "delta": -1461.19
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-108",
+    "month": "2026-08-01",
+    "issued": 6069.63,
+    "now": 5259.7,
+    "delta": -809.93
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-108",
+    "month": "2026-08-01",
+    "issued": 6069.63,
+    "now": 5259.7,
+    "delta": -809.93
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-107",
+    "month": "2026-08-01",
+    "issued": 1667.62,
+    "now": 1098.78,
+    "delta": -568.84
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-107",
+    "month": "2026-08-01",
+    "issued": 1667.62,
+    "now": 1098.78,
+    "delta": -568.84
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-106",
+    "month": "2026-08-01",
+    "issued": 1089.24,
+    "now": 715.31,
+    "delta": -373.93
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-101",
+    "month": "2026-08-01",
+    "issued": 5013.86,
+    "now": 4734.31,
+    "delta": -279.55
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-109",
+    "month": "2026-08-01",
+    "issued": 1632.13,
+    "now": 1361.73,
+    "delta": -270.4
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-111",
+    "month": "2026-08-01",
+    "issued": 5138.57,
+    "now": 4972.75,
+    "delta": -165.82
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-110",
+    "month": "2026-08-01",
+    "issued": 3697.82,
+    "now": 3533.73,
+    "delta": -164.09
+   }
+  ],
+  "entitlements": [
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-107",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-108",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-109",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-110",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-111",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "brightpay",
+    "company_id": "C-112",
+    "purpose": "merchant_insights",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": "2026-09-12T16:40:00"
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-101",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-102",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-103",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-104",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-105",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-106",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-107",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   },
+   {
+    "customer_id": "northbank",
+    "company_id": "C-108",
+    "purpose": "lending_assessment",
+    "granted_at": "2026-05-20T09:00:00",
+    "revoked_at": null
+   }
+  ],
+  "companies": [
+   {
+    "company_id": "C-101",
+    "company_name": "Coffee roaster Ltd (synthetic)",
+    "industry": "Coffee roaster",
+    "platform": "ledgerone",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-102",
+    "company_name": "Joinery Ltd (synthetic)",
+    "industry": "Joinery",
+    "platform": "bookwise",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-103",
+    "company_name": "Design studio Ltd (synthetic)",
+    "industry": "Design studio",
+    "platform": "orbiterp",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-104",
+    "company_name": "Bike repair Ltd (synthetic)",
+    "industry": "Bike repair",
+    "platform": "ledgerone",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-105",
+    "company_name": "Florist Ltd (synthetic)",
+    "industry": "Florist",
+    "platform": "bookwise",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-106",
+    "company_name": "IT support Ltd (synthetic)",
+    "industry": "IT support",
+    "platform": "orbiterp",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-107",
+    "company_name": "Bakery Ltd (synthetic)",
+    "industry": "Bakery",
+    "platform": "ledgerone",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-108",
+    "company_name": "Dental lab Ltd (synthetic)",
+    "industry": "Dental lab",
+    "platform": "bookwise",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-109",
+    "company_name": "Print shop Ltd (synthetic)",
+    "industry": "Print shop",
+    "platform": "orbiterp",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-110",
+    "company_name": "Catering Ltd (synthetic)",
+    "industry": "Catering",
+    "platform": "ledgerone",
+    "currency": "EUR"
+   },
+   {
+    "company_id": "C-111",
+    "company_name": "Physio clinic Ltd (synthetic)",
+    "industry": "Physio clinic",
+    "platform": "bookwise",
+    "currency": "GBP"
+   },
+   {
+    "company_id": "C-112",
+    "company_name": "Garden centre Ltd (synthetic)",
+    "industry": "Garden centre",
+    "platform": "orbiterp",
+    "currency": "GBP"
+   }
+  ],
+  "break_c107": [
+   {
+    "company_id": "C-107",
+    "txn_id": "C-107-T00120",
+    "booked_date": "2026-08-14",
+    "amount": 1250.0,
+    "description": "Customer payment",
+    "category": "receipt",
+    "sync_seq": 121
+   },
+   {
+    "company_id": "C-107",
+    "txn_id": "C-107-T00120-R",
+    "booked_date": "2026-08-14",
+    "amount": 1250.0,
+    "description": "Customer payment",
+    "category": "receipt",
+    "sync_seq": 10121
+   }
+  ],
+  "break_dupes": [
+   {
+    "company_id": "C-107",
+    "booked_date": "2026-08-14",
+    "amount": 1250.0,
+    "n": 2,
+    "txn_ids": [
+     "C-107-T00120",
+     "C-107-T00120-R"
+    ]
+   }
+  ],
+  "c107_balance": [
+   {
+    "company_id": "C-107",
+    "account_id": "C-107-CUR",
+    "opening_balance": 17570.96,
+    "closing_balance": 69187.65,
+    "balance_movement": 51616.69
+   }
+  ],
+  "daily_volume_c107": [
+   {
+    "booked_date": "2026-06-01",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-02",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-03",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-04",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-05",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-06",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-07",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-08",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-09",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-10",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-11",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-12",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-13",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-14",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-15",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-16",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-17",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-18",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-19",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-20",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-21",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-22",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-23",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-24",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-25",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-26",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-27",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-28",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-06-29",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-06-30",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-01",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-07-02",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-03",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-04",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-05",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-06",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-07",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-07-08",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-09",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-10",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-11",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-12",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-13",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-14",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-07-15",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-07-16",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-17",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-18",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-19",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-20",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-21",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-22",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-07-23",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-24",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-25",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-26",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-27",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-07-28",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-29",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-30",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-07-31",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-01",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-02",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-03",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-04",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-05",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-06",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-08-07",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-08",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-09",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-08-10",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-11",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-12",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-13",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-14",
+    "n": 4
+   },
+   {
+    "booked_date": "2026-08-15",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-16",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-17",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-18",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-19",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-08-20",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-21",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-08-22",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-23",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-24",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-25",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-26",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-27",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-08-28",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-29",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-30",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-08-31",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-01",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-02",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-03",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-04",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-05",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-06",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-07",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-09-08",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-09",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-10",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-11",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-12",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-13",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-14",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-09-15",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-16",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-17",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-18",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-19",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-20",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-21",
+    "n": 3
+   },
+   {
+    "booked_date": "2026-09-22",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-23",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-24",
+    "n": 2
+   },
+   {
+    "booked_date": "2026-09-25",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-26",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-27",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-28",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-29",
+    "n": 1
+   },
+   {
+    "booked_date": "2026-09-30",
+    "n": 1
+   }
+  ]
+ },
+ "history": {
+  "bronze.ledgerone_invoice": [
+   {
+    "version": 0,
+    "operation": "CREATE TABLE AS SELECT",
+    "rows_out": "0",
+    "rows_updated": null,
+    "rows_inserted": null
+   },
+   {
+    "version": 1,
+    "operation": "MERGE",
+    "rows_out": "130",
+    "rows_updated": "0",
+    "rows_inserted": "130"
+   },
+   {
+    "version": 2,
+    "operation": "MERGE",
+    "rows_out": "130",
+    "rows_updated": "0",
+    "rows_inserted": "0"
+   },
+   {
+    "version": 3,
+    "operation": "MERGE",
+    "rows_out": "136",
+    "rows_updated": "3",
+    "rows_inserted": "6"
+   }
+  ],
+  "bronze.bank_transaction": [
+   {
+    "version": 0,
+    "operation": "CREATE TABLE AS SELECT",
+    "rows_out": "0",
+    "rows_updated": null,
+    "rows_inserted": null
+   },
+   {
+    "version": 1,
+    "operation": "MERGE",
+    "rows_out": "1331",
+    "rows_updated": "0",
+    "rows_inserted": "1331"
+   },
+   {
+    "version": 2,
+    "operation": "MERGE",
+    "rows_out": "1331",
+    "rows_updated": "0",
+    "rows_inserted": "0"
+   }
+  ],
+  "gold.fct_invoice": [
+   {
+    "version": 0,
+    "operation": "CREATE TABLE AS SELECT",
+    "rows_out": "433",
+    "rows_updated": null,
+    "rows_inserted": null
+   },
+   {
+    "version": 1,
+    "operation": "MERGE",
+    "rows_out": "433",
+    "rows_updated": "433",
+    "rows_inserted": "0"
+   },
+   {
+    "version": 2,
+    "operation": "MERGE",
+    "rows_out": "448",
+    "rows_updated": "433",
+    "rows_inserted": "15"
+   }
+  ],
+  "gold.insights_revenue_monthly": [
+   {
+    "version": 0,
+    "operation": "CREATE OR REPLACE TABLE AS SELECT",
+    "rows_out": "52",
+    "rows_updated": null,
+    "rows_inserted": null
+   },
+   {
+    "version": 1,
+    "operation": "CREATE OR REPLACE TABLE AS SELECT",
+    "rows_out": "52",
+    "rows_updated": null,
+    "rows_inserted": null
+   }
+  ]
+ },
+ "compiled": {
+  "insights_cash_flow_monthly": {
+   "checks": [
+    {
+     "check": "not_null: customer_id",
+     "sql": "SELECT * FROM nexus_gold.insights_cash_flow_monthly WHERE customer_id IS NULL"
+    },
+    {
+     "check": "accepted_values: customer_id",
+     "sql": "SELECT * FROM nexus_gold.insights_cash_flow_monthly WHERE customer_id NOT IN ('northbank', 'brightpay')"
+    },
+    {
+     "check": "not_null: net_operating_cash_flow",
+     "sql": "SELECT * FROM nexus_gold.insights_cash_flow_monthly WHERE net_operating_cash_flow IS NULL"
+    },
+    {
+     "check": "not_null: operating_inflows",
+     "sql": "SELECT * FROM nexus_gold.insights_cash_flow_monthly WHERE operating_inflows IS NULL"
+    },
+    {
+     "check": "range: operating_inflows",
+     "sql": "SELECT * FROM nexus_gold.insights_cash_flow_monthly WHERE operating_inflows < 0"
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "sql": "SELECT customer_id, company_id, currency, month, count(*) AS n FROM nexus_gold.insights_cash_flow_monthly GROUP BY customer_id, company_id, currency, month HAVING count(*) > 1"
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "sql": "SELECT max(month) AS latest FROM nexus_gold.insights_cash_flow_monthly HAVING max(month) < DATE'2026-09-30' - INTERVAL 45 DAYS"
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "sql": "SELECT p.customer_id, p.company_id FROM nexus_gold.insights_cash_flow_monthly p LEFT JOIN nexus_silver.company_entitlement e USING (customer_id, company_id) WHERE e.company_id IS NULL OR e.revoked_at IS NOT NULL"
+    },
+    {
+     "check": "reconcile net_movement_all to source within 0.01",
+     "sql": "WITH p AS (SELECT customer_id, company_id, round(sum(net_movement_all), 2) AS published FROM nexus_gold.insights_cash_flow_monthly GROUP BY ALL), x AS (SELECT company_id, balance_movement AS expected FROM nexus_silver.bank_balance) SELECT p.customer_id, p.company_id, p.published, round(x.expected, 2) AS expected, round(p.published - x.expected, 2) AS difference FROM p JOIN x USING (company_id) WHERE abs(p.published - x.expected) > 0.01"
+    }
+   ],
+   "governance": "-- generated from contracts/products/insights_cash_flow_monthly.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_cash_flow_monthly SET OWNER TO `insights-product-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_cash_flow_monthly IS 'Net operating cash flow = bank inflows minus outflows for the month, excluding transfers between the company''s own accounts and loan drawdowns.';\nALTER TABLE nexus.gold.insights_cash_flow_monthly SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id, currency, month');\nGRANT SELECT ON TABLE nexus.gold.insights_cash_flow_monthly TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_cash_flow_monthly TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_cash_flow_monthly SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
+   "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_cash_flow_monthly.yml: do not edit by hand\nRULES = {\n    \"customer_id_not_null\": \"customer_id IS NOT NULL\",\n    \"customer_id_accepted_values\": \"customer_id IN ('northbank', 'brightpay')\",\n    \"net_operating_cash_flow_not_null\": \"net_operating_cash_flow IS NOT NULL\",\n    \"operating_inflows_not_null\": \"operating_inflows IS NOT NULL\",\n    \"operating_inflows_range\": \"operating_inflows >= 0\",\n}\n\n@dp.materialized_view(name=\"insights_cash_flow_monthly\", comment=\"Net operating cash flow = bank inflows minus outflows for the month, excluding transfers between the company's own accounts and loan drawdowns.\")\n@dp.expect_all_or_fail(RULES)\ndef insights_cash_flow_monthly():\n    return build_insights_cash_flow_monthly()\n"
+  },
+  "insights_commerce_monthly": {
+   "checks": [
+    {
+     "check": "not_null: net_sales",
+     "sql": "SELECT * FROM nexus_gold.insights_commerce_monthly WHERE net_sales IS NULL"
+    },
+    {
+     "check": "range: net_sales",
+     "sql": "SELECT * FROM nexus_gold.insights_commerce_monthly WHERE net_sales < 0"
+    },
+    {
+     "check": "not_null: payouts_in_bank_ratio",
+     "sql": "SELECT * FROM nexus_gold.insights_commerce_monthly WHERE payouts_in_bank_ratio IS NULL"
+    },
+    {
+     "check": "range: payouts_in_bank_ratio",
+     "sql": "SELECT * FROM nexus_gold.insights_commerce_monthly WHERE payouts_in_bank_ratio < 0.98 OR payouts_in_bank_ratio > 1"
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "sql": "SELECT customer_id, company_id, currency, month, count(*) AS n FROM nexus_gold.insights_commerce_monthly GROUP BY customer_id, company_id, currency, month HAVING count(*) > 1"
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "sql": "SELECT max(month) AS latest FROM nexus_gold.insights_commerce_monthly HAVING max(month) < DATE'2026-09-30' - INTERVAL 45 DAYS"
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "sql": "SELECT p.customer_id, p.company_id FROM nexus_gold.insights_commerce_monthly p LEFT JOIN nexus_silver.company_entitlement e USING (customer_id, company_id) WHERE e.company_id IS NULL OR e.revoked_at IS NOT NULL"
+    }
+   ],
+   "governance": "-- generated from contracts/products/insights_commerce_monthly.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_commerce_monthly SET OWNER TO `commerce-insights-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_commerce_monthly IS 'Commerce net sales = gross sales minus refunds, before platform fees, by sales month. Every payout must be found in the bank feed within three days of its arrival date.';\nALTER TABLE nexus.gold.insights_commerce_monthly SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id, currency, month');\nGRANT SELECT ON TABLE nexus.gold.insights_commerce_monthly TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_commerce_monthly TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_commerce_monthly SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
+   "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_commerce_monthly.yml: do not edit by hand\nRULES = {\n    \"net_sales_not_null\": \"net_sales IS NOT NULL\",\n    \"net_sales_range\": \"net_sales >= 0\",\n    \"payouts_in_bank_ratio_not_null\": \"payouts_in_bank_ratio IS NOT NULL\",\n    \"payouts_in_bank_ratio_range\": \"payouts_in_bank_ratio >= 0.98 AND payouts_in_bank_ratio <= 1\",\n}\n\n@dp.materialized_view(name=\"insights_commerce_monthly\", comment='Commerce net sales = gross sales minus refunds, before platform fees, by sales month. Every payout must be found in the bank feed within three days of its arrival date.')\n@dp.expect_all_or_fail(RULES)\ndef insights_commerce_monthly():\n    return build_insights_commerce_monthly()\n"
+  },
+  "insights_data_completeness": {
+   "checks": [
+    {
+     "check": "not_null: completeness_score",
+     "sql": "SELECT * FROM nexus_gold.insights_data_completeness WHERE completeness_score IS NULL"
+    },
+    {
+     "check": "range: completeness_score",
+     "sql": "SELECT * FROM nexus_gold.insights_data_completeness WHERE completeness_score < 0 OR completeness_score > 1"
+    },
+    {
+     "check": "unique grain: customer_id, company_id",
+     "sql": "SELECT customer_id, company_id, count(*) AS n FROM nexus_gold.insights_data_completeness GROUP BY customer_id, company_id HAVING count(*) > 1"
+    },
+    {
+     "check": "freshness: last_bank within 7 day(s) of the run",
+     "sql": "SELECT max(last_bank) AS latest FROM nexus_gold.insights_data_completeness HAVING max(last_bank) < DATE'2026-09-30' - INTERVAL 7 DAYS"
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "sql": "SELECT p.customer_id, p.company_id FROM nexus_gold.insights_data_completeness p LEFT JOIN nexus_silver.company_entitlement e USING (customer_id, company_id) WHERE e.company_id IS NULL OR e.revoked_at IS NOT NULL"
+    }
+   ],
+   "governance": "-- generated from contracts/products/insights_data_completeness.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_data_completeness SET OWNER TO `data-quality-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_data_completeness IS 'How far a company''s insights can be trusted: bank coverage x share of invoices that passed the quality gate. Published next to every metric, so \"revenue fell\" can be told apart from \"data stopped arriving\".';\nALTER TABLE nexus.gold.insights_data_completeness SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id');\nGRANT SELECT ON TABLE nexus.gold.insights_data_completeness TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_data_completeness TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_data_completeness SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
+   "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_data_completeness.yml: do not edit by hand\nRULES = {\n    \"completeness_score_not_null\": \"completeness_score IS NOT NULL\",\n    \"completeness_score_range\": \"completeness_score >= 0 AND completeness_score <= 1\",\n}\n\n@dp.materialized_view(name=\"insights_data_completeness\", comment='How far a company\\'s insights can be trusted: bank coverage x share of invoices that passed the quality gate. Published next to every metric, so \"revenue fell\" can be told apart from \"data stopped arriving\".')\n@dp.expect_all_or_fail(RULES)\ndef insights_data_completeness():\n    return build_insights_data_completeness()\n"
+  },
+  "insights_dso_monthly": {
+   "checks": [
+    {
+     "check": "range: dso_days",
+     "sql": "SELECT * FROM nexus_gold.insights_dso_monthly WHERE dso_days < 0 OR dso_days > 365"
+    },
+    {
+     "check": "not_null: receivables",
+     "sql": "SELECT * FROM nexus_gold.insights_dso_monthly WHERE receivables IS NULL"
+    },
+    {
+     "check": "range: receivables",
+     "sql": "SELECT * FROM nexus_gold.insights_dso_monthly WHERE receivables < 0"
+    },
+    {
+     "check": "unique grain: customer_id, company_id, month",
+     "sql": "SELECT customer_id, company_id, month, count(*) AS n FROM nexus_gold.insights_dso_monthly GROUP BY customer_id, company_id, month HAVING count(*) > 1"
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "sql": "SELECT max(month) AS latest FROM nexus_gold.insights_dso_monthly HAVING max(month) < DATE'2026-09-30' - INTERVAL 45 DAYS"
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "sql": "SELECT p.customer_id, p.company_id FROM nexus_gold.insights_dso_monthly p LEFT JOIN nexus_silver.company_entitlement e USING (customer_id, company_id) WHERE e.company_id IS NULL OR e.revoked_at IS NOT NULL"
+    }
+   ],
+   "governance": "-- generated from contracts/products/insights_dso_monthly.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_dso_monthly SET OWNER TO `credit-risk-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_dso_monthly IS 'Days sales outstanding = receivables at month end / invoices billed in the 90 days to month end x 90. A point-in-time ratio: never summed across companies or months.';\nALTER TABLE nexus.gold.insights_dso_monthly SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id, month');\nGRANT SELECT ON TABLE nexus.gold.insights_dso_monthly TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_dso_monthly TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_dso_monthly SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
+   "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_dso_monthly.yml: do not edit by hand\nRULES = {\n    \"dso_days_range\": \"dso_days >= 0 AND dso_days <= 365\",\n    \"receivables_not_null\": \"receivables IS NOT NULL\",\n    \"receivables_range\": \"receivables >= 0\",\n}\n\n@dp.materialized_view(name=\"insights_dso_monthly\", comment='Days sales outstanding = receivables at month end / invoices billed in the 90 days to month end x 90. A point-in-time ratio: never summed across companies or months.')\n@dp.expect_all_or_fail(RULES)\ndef insights_dso_monthly():\n    return build_insights_dso_monthly()\n"
+  },
+  "insights_revenue_monthly": {
+   "checks": [
+    {
+     "check": "not_null: customer_id",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE customer_id IS NULL"
+    },
+    {
+     "check": "accepted_values: customer_id",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE customer_id NOT IN ('northbank', 'brightpay')"
+    },
+    {
+     "check": "not_null: company_id",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE company_id IS NULL"
+    },
+    {
+     "check": "not_null: currency",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE currency IS NULL"
+    },
+    {
+     "check": "accepted_values: currency",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE currency NOT IN ('GBP', 'EUR', 'USD')"
+    },
+    {
+     "check": "not_null: revenue",
+     "sql": "SELECT * FROM nexus_gold.insights_revenue_monthly WHERE revenue IS NULL"
+    },
+    {
+     "check": "unique grain: customer_id, company_id, currency, month",
+     "sql": "SELECT customer_id, company_id, currency, month, count(*) AS n FROM nexus_gold.insights_revenue_monthly GROUP BY customer_id, company_id, currency, month HAVING count(*) > 1"
+    },
+    {
+     "check": "freshness: month within 45 day(s) of the run",
+     "sql": "SELECT max(month) AS latest FROM nexus_gold.insights_revenue_monthly HAVING max(month) < DATE'2026-09-30' - INTERVAL 45 DAYS"
+    },
+    {
+     "check": "tenant: every row belongs to a customer with active consent",
+     "sql": "SELECT p.customer_id, p.company_id FROM nexus_gold.insights_revenue_monthly p LEFT JOIN nexus_silver.company_entitlement e USING (customer_id, company_id) WHERE e.company_id IS NULL OR e.revoked_at IS NOT NULL"
+    },
+    {
+     "check": "reconcile revenue to source within 0.01",
+     "sql": "WITH p AS (SELECT customer_id, company_id, month, round(sum(revenue), 2) AS published FROM nexus_gold.insights_revenue_monthly GROUP BY ALL), x AS (SELECT company_id, trunc(issue_date, 'MM') AS month, sum(subtotal) AS expected FROM nexus_silver.invoice i JOIN nexus_silver.account_mapping a USING (company_id, account_id) WHERE i.status IN ('open','paid') AND a.account_type = 'revenue'\n  AND i.issue_date >= a.valid_from AND i.issue_date < a.valid_to GROUP BY 1, 2) SELECT p.customer_id, p.company_id, p.month, p.published, round(x.expected, 2) AS expected, round(p.published - x.expected, 2) AS difference FROM p JOIN x USING (company_id, month) WHERE abs(p.published - x.expected) > 0.01"
+    }
+   ],
+   "governance": "-- generated from contracts/products/insights_revenue_monthly.yml: do not edit by hand\nALTER TABLE nexus.gold.insights_revenue_monthly SET OWNER TO `insights-product-lead@example.com`;\nCOMMENT ON TABLE nexus.gold.insights_revenue_monthly IS 'Revenue = net invoiced amount (excluding tax) on accounts mapped to revenue at the issue date, for open and paid documents. Credit notes net off; void and draft documents are excluded.';\nALTER TABLE nexus.gold.insights_revenue_monthly SET TAGS ('team' = 'Insights', 'grain' = 'customer_id, company_id, currency, month');\nGRANT SELECT ON TABLE nexus.gold.insights_revenue_monthly TO `grp_insights_api`;\nGRANT SELECT ON TABLE nexus.gold.insights_revenue_monthly TO `grp_risk_analysts`;\nALTER TABLE nexus.gold.insights_revenue_monthly SET ROW FILTER nexus.governance.tenant_filter ON (customer_id, company_id);\n",
+   "expectations": "from pyspark import pipelines as dp\n\n# generated from contracts/products/insights_revenue_monthly.yml: do not edit by hand\nRULES = {\n    \"customer_id_not_null\": \"customer_id IS NOT NULL\",\n    \"customer_id_accepted_values\": \"customer_id IN ('northbank', 'brightpay')\",\n    \"company_id_not_null\": \"company_id IS NOT NULL\",\n    \"currency_not_null\": \"currency IS NOT NULL\",\n    \"currency_accepted_values\": \"currency IN ('GBP', 'EUR', 'USD')\",\n    \"revenue_not_null\": \"revenue IS NOT NULL\",\n}\n\n@dp.materialized_view(name=\"insights_revenue_monthly\", comment='Revenue = net invoiced amount (excluding tax) on accounts mapped to revenue at the issue date, for open and paid documents. Credit notes net off; void and draft documents are excluded.')\n@dp.expect_all_or_fail(RULES)\ndef insights_revenue_monthly():\n    return build_insights_revenue_monthly()\n"
+  }
+ }
+}

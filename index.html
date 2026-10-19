@@ -1,15 +1,171 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NEXUS × Codat</title>
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center;
-           font-family: system-ui, sans-serif; background: #f7f7f5; color: #1a1a1a; }
-    @media (prefers-color-scheme: dark) { body { background: #161616; color: #eee; } }
-    main { padding: 16px; text-align: center; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS for Codat · Vim</title>
+<meta name="description" content="An independent Senior Data Engineer portfolio by R. Firman Insan Muhammad (Vim): replay-safe pipelines on SMB accounting, ERP, banking and commerce data, certified Insights, a semantic layer and an MCP server.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 </head>
-<body><main><h1>NEXUS × Codat</h1><p>Coming soon.</p></main></body>
-</html>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell">
+  <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>NEXUS <small>for Codat</small></span></a>
+  <nav aria-label="Primary">
+    <a href="#sources">Sources</a>
+    <a href="#lifepal">Built at Lifepal</a>
+    <a href="#run">The run</a>
+    <a href="mcp.html" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
+    <a href="run.html"><span class="live" aria-hidden="true"></span>How the data gets there</a>
+    <a href="oncall.html">On call</a>
+    <a href="https://github.com/rfim/nexus-codat" class="nav-code keep">Code ↗</a>
+  </nav>
+</div></header>
+
+<main id="main">
+<section class="hero" id="top">
+  <canvas id="hero-net" aria-hidden="true"></canvas>
+  <div class="shell">
+    <div class="built" aria-label="Built at Lifepal, presented to Codat">
+      <div><small>Built at</small><span class="logo-tile"><img src="assets/lifepal.png" alt="Lifepal" width="120" height="43"></span></div>
+      <i aria-hidden="true">→</i>
+      <div><small>Presented to</small><b>Codat</b></div>
+    </div>
+    <p class="kicker" style="color:var(--violet2)">Presented to Codat · Data &amp; Insights · Senior Data Engineer</p>
+    <h1>NEXUS</h1>
+    <p class="sub">Business data from accounting, ERP, banking and commerce systems that people and AI can query, and trust.</p>
+    <p class="lede">I'm <b>Vim</b>, R. Firman Insan Muhammad, a Senior Data Engineer in London. For four years I led and wrote the data platform at Lifepal, an insurance marketplace for consumers and SMBs: CDC into Delta on Databricks, dbt with 500+ checks, a semantic layer, and an MCP server so AI agents query certified data instead of raw tables. This site applies the same methods to SMB data shaped like Codat's: synthetic, and runnable from this repository.</p>
+    <div class="cta">
+      <a class="button b-pink" href="mcp.html"><span class="live" aria-hidden="true"></span>Watch MCP being enabled →</a>
+      <a class="button b-primary" href="run.html">How the data gets there →</a>
+      <a class="button b-ghost" href="assets/Nexus_Codat_VIM.pdf">Fireside deck (PDF) ↓</a>
+      <a class="button b-ghost" href="assets/VIM_Codat_one_page.pdf">One page (PDF) ↓</a>
+      <a class="button b-ghost" href="assets/VIM_Codat_companion_note.pdf">Companion note (PDF) ↓</a>
+    </div>
+    <div class="proof"><b>PROVEN AT LIFEPAL</b>
+      <span class="chip dark">6h → 90m batch</span><span class="chip dark">24h → &lt;5m reporting</span>
+      <span class="chip dark">512 assertions, 47 sources</span><span class="chip dark">−60% ad-hoc requests</span>
+      <span class="chip dark">$11k vs $19k budget</span><span class="chip dark">1,000+ copilot outcomes / day</span></div>
+  </div>
+</section>
+
+<section class="section" id="path">
+  <div class="shell">
+    <div class="index"><span>01 · The path</span><span>what runs in this repo</span></div>
+    <div class="head"><h2>One definition per number. <em>Correct under replay.</em></h2>
+      <p>Five steps from an agreement with a product owner to an answer an agent can cite. Every number on this page comes from the last run of the Python in this repository.</p></div>
+    <div class="path">
+      <div class="step"><div class="n">01 · AGREE</div><div class="big">YAML</div><p>Each metric agreed with its owner as a contract: definition, grain, freshness, access.</p></div>
+      <div class="step"><div class="n">02 · LAND</div><div class="big">MERGE</div><p>Every sync lands by MERGE; replaying every feed changed <b data-k="replay_delta">0</b> rows.</p></div>
+      <div class="step"><div class="n">03 · PROTECT</div><div class="big">Consent</div><p>Products keyed by customer and company; a revoked connection disappears everywhere.</p></div>
+      <div class="step"><div class="n">04 · PROVE</div><div class="big" data-k="checks">–/–</div><p>Checks on every load. The one failure is a real bank break at C-107.</p></div>
+      <div class="step"><div class="n">05 · SERVE</div><div class="big">MCP</div><p>Four read-only tools that run as the caller, cite their source or refuse.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sources">
+  <div class="shell">
+    <div class="index"><span>02 · What Codat connects</span><span>as listed on codat.io</span></div>
+    <div class="head"><h2>Many systems, <em>one model.</em></h2>
+      <p>Codat lists integrations across accounting and ERP, banking and commerce, with more than 350,000 live connections to business customers' finance systems. The demo uses fictional systems of each kind.</p></div>
+    <div class="integrations">
+      <div class="integration"><h3>Accounting and ERP</h3>
+        <span class="chip">Xero</span><span class="chip">QuickBooks Online</span><span class="chip">Sage</span><span class="chip">NetSuite</span><span class="chip">Dynamics 365 Business Central</span><span class="chip">FreeAgent</span>
+        <p style="margin-top:.8rem">Here: <b>LedgerOne</b> and <b>BookWise</b> (accounting) and <b>OrbitERP</b> (a mid-market ERP), each sending invoices in its own schema.</p></div>
+      <div class="integration"><h3>Banking</h3>
+        <span class="chip">Open banking feeds</span><span class="chip">Plaid</span><span class="chip">TrueLayer</span>
+        <p style="margin-top:.8rem">Here: a bank feed and a reported balance per company. Every line together must explain the balance.</p></div>
+      <div class="integration"><h3>Commerce</h3>
+        <span class="chip">Shopify</span><span class="chip">Stripe</span><span class="chip">Square</span><span class="chip">Amazon Seller</span>
+        <p style="margin-top:.8rem">Here: <b>ShopLane</b> payouts, each looked for in the bank within three days.</p></div>
+    </div>
+    <h3 style="margin:2rem 0 .8rem;color:#fff">Three systems, one canonical invoice</h3>
+    <div class="grid g3" id="canonical"></div>
+    <p style="font-size:.85rem;margin-top:.8rem">The mapping lives in each source's contract (<code>contracts/sources.yml</code>), not in scattered CASE statements. A new system is a new contract entry and a new staging rule.</p>
+  </div>
+</section>
+
+<section class="section alt" id="lifepal">
+  <div class="shell">
+    <div class="index"><span>03 · Built at Lifepal</span><span>consumer and B2B</span></div>
+    <div class="head"><h2>Different market, <em>same job.</em></h2>
+      <p>Lifepal sat between people and SMBs and the insurers that cover them. Codat sits between SMBs' finance systems and the lenders and platforms that serve them. The data problems are the same.</p></div>
+    <div class="grid g2">
+      <div class="card top-v"><div class="kicker">Lifepal B2B · SMB → insurers</div>
+        <h3 style="margin:.4rem 0">Collect once, serve many insurers</h3>
+        <p>A small business shared its company and team data once, with consent. Several insurers, each with its own format, quoted on it, and statuses came back late, for days.</p>
+        <ul><li>Mapped to each insurer by contract, not by hand</li><li>Each insurer saw only the SMBs that applied to it</li><li>Newest status wins; a 72-hour lookback from measured delay</li><li>"Bind" agreed once; ad-hoc requests −60%</li></ul></div>
+      <div class="card top-p"><div class="kicker" style="color:var(--pink)">Codat · SMB → lenders and platforms</div>
+        <h3 style="margin:.4rem 0">Connect once, decide on one number</h3>
+        <p>An SMB connects its accounting or ERP, bank and commerce accounts once. Each customer it shares with needs one trustworthy view, while the books keep changing.</p>
+        <ul><li>Source contracts map each system onto one canonical model</li><li>Consent as data: one row filter on every product and tool</li><li>Re-syncs and backdated credit notes never double count</li><li>Revenue and cash flow defined once, for people and agents</li></ul></div>
+    </div>
+    <div class="grid g5" style="margin-top:1.2rem">
+      <div class="card"><div class="big">6h → 90m</div><p>Nightly batch, median of 30 runs either side.</p></div>
+      <div class="card"><div class="big p">99.7%</div><p>Reporting latency cut: 24 h → under 5 min on Kafka + Debezium.</p></div>
+      <div class="card"><div class="big">$11k</div><p>Monthly cost against a $19k forecast, four quarters.</p></div>
+      <div class="card"><div class="big p">−60%</div><p>Ad-hoc requests after the semantic layer: 214 → 86.</p></div>
+      <div class="card"><div class="big">512</div><p>Quality assertions across 47 sources in CI.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="run">
+  <div class="shell">
+    <div class="index"><span>04 · The last run</span><span>PySpark + Delta, synthetic data</span></div>
+    <div class="head"><h2>What the run <em>actually did.</em></h2>
+      <p>Twelve synthetic SMBs, two fictional customers (a lender and a payments platform), three accounting and ERP systems, a bank feed and a commerce feed. The figures below are read from <code>assets/data/site.json</code>, written by the run.</p></div>
+    <div class="grid g4" id="run-tiles"></div>
+    <div class="grid g2" style="margin-top:1rem">
+      <div class="card"><h3>Contracts on the restated products</h3><div id="contract-list" style="margin-top:.5rem"></div></div>
+      <div class="card"><h3>What the planted problems tested</h3><ul id="lessons" style="margin-top:.5rem;padding-left:1.1rem"></ul></div>
+    </div>
+    <div class="cta"><a class="button b-primary" href="run.html">Open the full run →</a><a class="button b-light" href="oncall.html">See the break investigated →</a></div>
+  </div>
+</section>
+
+<section class="section dark" id="mcp">
+  <div class="shell">
+    <div class="index"><span>05 · Semantic layer and MCP</span><span>in production at Lifepal</span></div>
+    <div class="head"><h2>People and AI query <em>the same truth.</em></h2>
+      <p>The role asks for foundations for a semantic layer and MCP, so people and AI systems can query and reason over the data. That's the work I have in production. Here it is, step by step.</p></div>
+    <div class="grid g4">
+      <div class="card"><div class="kicker" style="color:var(--violet2)">Tool</div><h3><code>list_metrics</code></h3><p>Certified metrics an agent may quote, with owner, grain and freshness.</p></div>
+      <div class="card"><div class="kicker" style="color:var(--violet2)">Tool</div><h3><code>describe_metric</code></h3><p>Definition, allowed dimensions, and whether it can be summed.</p></div>
+      <div class="card"><div class="kicker" style="color:var(--violet2)">Tool</div><h3><code>get_lineage</code></h3><p>Upstream sources and the contract checks that guard the number.</p></div>
+      <div class="card"><div class="kicker" style="color:var(--violet2)">Tool</div><h3><code>query_metric</code></h3><p>Compiled by the semantic layer, run as the caller, returned with a citation.</p></div>
+    </div>
+    <div class="cta"><a class="button b-pink" href="mcp.html"><span class="live" aria-hidden="true"></span>Watch it being enabled, then ask it →</a></div>
+  </div>
+</section>
+
+<section class="section alt" id="role">
+  <div class="shell">
+    <div class="index"><span>06 · The role, line by line</span><span>where I've done it before</span></div>
+    <div class="head"><h2>Hands-on, <em>and setting direction.</em></h2><p>Every row points to working code or a page on this site.</p></div>
+    <div class="tablewrap"><table>
+      <tr><th>The role asks for</th><th>What I've done (Lifepal unless stated)</th><th>Here</th></tr>
+      <tr><td class="k">Production Python most days</td><td>Wrote the platform's Python: config-driven ingestion, CDC merge logic, FastAPI services, pytest.</td><td><a href="https://github.com/rfim/nexus-codat/tree/main/src/nexus"><code>src/nexus</code></a></td></tr>
+      <tr><td class="k">Pipelines from scratch</td><td>Kafka + Debezium, DMS and Airflow into Delta on Databricks, modelled in dbt.</td><td><a href="run.html">The run</a></td></tr>
+      <tr><td class="k">Spark, Databricks / Delta, dbt, orchestration</td><td>All in production; 140 Airflow jobs generated from contracts.</td><td><code>databricks.yml</code></td></tr>
+      <tr><td class="k">Testing, observability, quality</td><td>512 assertions in CI, freshness SLOs, 2σ volume holds, runbooks.</td><td><a href="oncall.html">On call</a></td></tr>
+      <tr><td class="k">Semantic layer and MCP</td><td>A dbt semantic layer over Kimball stars; an MCP server for governed agent queries.</td><td><a href="mcp.html">Enable MCP</a></td></tr>
+      <tr><td class="k">Agents that diagnose pipelines</td><td>Read-only tools, a drafted fix as a PR, a human approves.</td><td><a href="oncall.html">On call</a></td></tr>
+      <tr><td class="k">CI/CD, Docker, cloud</td><td>GitHub Actions, Docker, Terraform on AWS; Kubernetes at Deloitte.</td><td><code>.github/workflows</code></td></tr>
+      <tr><td class="k">Technical direction</td><td>Batch → lakehouse with written reasoning; 3–5 engineers, two promoted.</td><td><a href="assets/Nexus_Codat_VIM.pdf">Deck</a></td></tr>
+    </table></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="shell">
+  <p><b style="color:#fff">Stated plainly.</b> Lifepal outcomes come from my CV and production work. The Codat side is built from outside, from the role and public information; integration names are as listed on codat.io, and every company, customer and system in the demo is fictional. No Codat systems or data were used. An independent application, not affiliated with or endorsed by Codat.</p>
+  <p style="margin-top:.8rem">R. Firman Insan Muhammad (Vim) · Senior Data Engineer · London · <a href="mailto:firman.insan.m@gmail.com">firman.insan.m@gmail.com</a> · <a href="https://github.com/rfim/nexus-codat">github.com/rfim/nexus-codat</a></p>
+</div></footer>
+<script src="assets/common.js"></script>
+<script src="assets/home.js"></script>
+</body></html>

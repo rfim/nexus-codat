@@ -1,0 +1,9 @@
+# the quality gate on the canonical invoice, before anything reaches gold
+invoice_quality:
+  on_failure: quarantine
+  rules:
+    ids_present: "company_id IS NOT NULL AND source_invoice_id IS NOT NULL"
+    status_known: "status IN ('draft','open','paid','void')"
+    currency_iso: "currency IN ('GBP','EUR','USD')"
+    due_after_issue: "due_date IS NULL OR due_date >= issue_date"
+    not_far_future: "issue_date <= DATE'2026-09-30' + INTERVAL 366 DAYS"

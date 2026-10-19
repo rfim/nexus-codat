@@ -1,0 +1,18 @@
+product: insights_commerce_monthly
+team: Insights
+owner: commerce-insights-lead@example.com
+engineer: vim@example.com
+definition: >
+  Commerce net sales = gross sales minus refunds, before platform fees, by sales month.
+  Every payout must be found in the bank feed within three days of its arrival date.
+grain: [customer_id, company_id, currency, month]
+freshness: {column: month, max_lag_days: 45}
+columns:
+  - name: net_sales
+    tests: [not_null, {range: {min: 0}}]
+  - name: payouts_in_bank_ratio
+    tests: [not_null, {range: {min: 0.98, max: 1}}]
+access:
+  read: [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id
+change: {breaking: owner_approval}

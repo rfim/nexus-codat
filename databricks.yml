@@ -1,0 +1,28 @@
+# Databricks Asset Bundle: the same package as a job. Each pipeline step is a task.
+bundle:
+  name: nexus-codat
+variables:
+  catalog: {default: nexus}
+resources:
+  jobs:
+    nexus_insights:
+      name: nexus-insights
+      tags: {owning_team: data-insights, workload: transform}
+      tasks:
+        - task_key: pipeline
+          spark_python_task: {python_file: src/nexus/pipeline.py}
+          environment_key: default
+        - task_key: export
+          depends_on: [{task_key: pipeline}]
+          spark_python_task: {python_file: src/nexus/export.py}
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec: {client: "2", dependencies: [pyyaml, duckdb, "mcp>=2.3"]}
+      health:
+        rules: [{metric: RUN_DURATION_SECONDS, op: GREATER_THAN, value: 1800}]
+targets:
+  dev: {mode: development, default: true}
+  prod:
+    mode: production
+    variables: {catalog: nexus}

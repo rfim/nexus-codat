@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On call · NEXUS for Codat</title>
+<meta name="description" content="07:02, on call: a cash-flow insight fails its bank reconciliation. A read-only agent gathers the evidence and drafts a fix as a pull request; a human approves.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>NEXUS <small>for Codat</small></span></a>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="mcp.html" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
+    <a href="run.html">How the data gets there</a>
+    <a href="oncall.html" aria-current="page">On call</a>
+    <a href="https://github.com/rfim/nexus-codat/blob/main/contracts/products/insights_cash_flow_monthly.yml" class="nav-code keep">The contract ↗</a>
+  </nav>
+</div></header>
+<main id="main">
+<section class="section dark" style="padding-top:3rem">
+  <div class="shell">
+    <div class="index"><span>Keep it running · agents that diagnose pipelines</span><span>a proposal, built on the run's real evidence</span></div>
+    <div class="head"><h2>Monday, 07:02. <em>A cash-flow insight is £1,250 out.</em></h2>
+      <p>The role mentions agents that help diagnose and fix pipeline issues. This is how I'd start: read-only tools, evidence first, a fix proposed as a pull request, and a human who approves it.</p></div>
+    <div class="controls" style="border:1px solid #2b2d63;border-radius:12px">
+      <button class="primary" id="go">▶ Start the shift</button><button id="all">Show everything</button>
+      <span class="grow"></span><span style="font-size:.8rem;color:#a9a8d8">Time to a drafted fix: <b id="ttd" style="color:#fff">–</b></span>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="shell grid oncall-grid">
+    <div class="timeline" id="tl"></div>
+    <aside>
+      <div class="card top-p"><h3>Guardrails</h3><ul style="padding-left:1.1rem;margin-top:.4rem">
+        <li>Tools read metadata, contract results and lineage; customer rows only through aggregates.</li>
+        <li>The only write is a pull request. A human merges.</li>
+        <li>Every tool call is logged with its inputs.</li>
+        <li>The runbook is always the fallback.</li></ul></div>
+      <div class="card top-v" style="margin-top:1rem"><h3>How I'd measure it</h3><ul style="padding-left:1.1rem;margin-top:.4rem">
+        <li>Time to diagnose, before and after.</li><li>How often the top hypothesis was right.</li>
+        <li>Proposed PRs merged unchanged.</li><li>Replayed past incidents as an eval set before it ever pages anyone.</li></ul></div>
+      <div class="callout amber" style="margin-top:1rem"><b>Proposal, not production.</b> The evidence below is real output from this run. The agent's reasoning is scripted to show the shape; I've built the pieces (contracts, lineage, quarantine with reasons, MCP, evals), not this exact agent.</div>
+      <h3 style="margin:1.4rem 0 .5rem">Why volume isn't the pager</h3>
+      <div class="card"><svg id="zplot" viewBox="0 0 400 170" style="width:100%;height:auto" role="img" aria-label="Daily bank line counts for C-107 as z-scores, with 2 and 3 sigma lines"></svg>
+        <p id="zcap" style="font-size:.85rem"></p></div>
+    </aside>
+  </div>
+</section>
+</main>
+<footer><div class="shell"><p>Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
+<script src="assets/common.js"></script>
+<script src="assets/oncall.js"></script>
+</body></html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Nexus for Codat · Companion note</title>
+<link rel="stylesheet" href="style.css">
+<style>
+@page{size:238mm 520mm;margin:0}
+body{width:238mm;position:relative}
+body::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6mm;background:linear-gradient(180deg,var(--navy) 0 40%,var(--violet) 40% 75%,var(--violet2) 75% 100%)}
+.page{padding:9mm 11mm 8mm 15mm}
+.top{display:grid;grid-template-columns:1fr 64mm;gap:8mm;align-items:end}
+.top h1{font-size:34pt;line-height:1.05;margin:3mm 0 1mm}
+.top .tl{font-size:11.5pt;font-weight:800}
+.top p{font-size:9pt;color:var(--ink2);margin-top:3mm}
+.sec{margin-top:6mm}
+.map td{font-size:8pt}
+.map td:first-child,.map td:nth-child(2){width:46mm}
+.b2bt td{width:auto!important}.b2bt td:first-child{width:26mm!important}
+.map td b{display:block;font-size:8.4pt;margin-bottom:2px}
+.carry{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.b2b{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.lane{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.lane div{border:1px solid var(--line);border-top:3px solid var(--violet);padding:6px 7px;font-size:7.8pt;background:#fff;position:relative}
+.lane div:not(:last-child)::after{content:"→";position:absolute;right:-8px;top:38%;color:var(--violet);font-weight:800}
+.lane div b{display:block;font-size:8.4pt}
+.lane.codat div{border-top-color:var(--pink)}
+.lane.codat div:not(:last-child)::after{color:var(--pink)}
+.who{font-family:var(--mono);font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-top:6px}
+.ints{display:grid;grid-template-columns:1.35fr 1fr 1fr .9fr;gap:6px}
+.ints .card{border-top-color:var(--violet)}
+.ints .card:nth-child(4){background:var(--navy);color:#fff;border-color:var(--navy)}
+.ints .card:nth-child(4) p{color:#d9d6ff}
+</style></head><body><div class="page">
+
+<div class="kicker">Companion note · prepared for Data &amp; Insights · Senior Data Engineer</div>
+<div class="top">
+  <div>
+    <h1>Different market, <b>same job.</b></h1>
+    <div class="tl">Why Lifepal's insurance marketplace, consumer and B2B, maps onto Codat's business-data platform.</div>
+    <p>Both businesses sit in the middle. Lifepal connected people and SMBs with the insurers that cover them; Codat connects SMBs' accounting, ERP, banking and commerce data with the lenders, banks and platforms that serve them. In both, many partners describe the same thing differently, data changes after the fact, each party may only see what it was shown, and a real financial decision depends on the number being right. The data problems that follow are the ones NEXUS was built to solve.</p>
+  </div>
+  <div>
+    <div class="tiles"><span>Accounting · ERP</span><span>Banking</span><span>Commerce</span><span>Insights</span><span>MCP</span></div>
+    <div class="built"><div><div class="k2">Built at</div><img src="lifepal.png" alt="Lifepal"></div><span class="arrow">→</span><div><div class="k2" style="text-align:right">Presented to</div><span class="codat">Codat</span></div></div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>One flow, two businesses</b><i>Codat side from public material</i></div>
+  <div class="spheres" style="grid-template-columns:repeat(5,1fr)">
+    <div class="sph"><div class="ball"><small>01</small><b>Source</b></div><div class="lbl"><b>Lifepal</b> · insurer systems, partner files</div><div class="lbl c"><b>Codat</b> · accounting, ERP, bank, commerce</div></div>
+    <div class="sph"><div class="ball"><small>02</small><b>Connect</b></div><div class="lbl"><b>Lifepal</b> · a customer or SMB applies once</div><div class="lbl c"><b>Codat</b> · an SMB connects its systems once</div></div>
+    <div class="sph"><div class="ball"><small>03</small><b>Record</b></div><div class="lbl"><b>Lifepal</b> · application, quote, policy</div><div class="lbl c"><b>Codat</b> · invoice, payment, bank line, payout</div></div>
+    <div class="sph"><div class="ball"><small>04</small><b>Change</b></div><div class="lbl"><b>Lifepal</b> · CDC and late insurer statuses</div><div class="lbl c"><b>Codat</b> · re-syncs, edits, backdated entries</div></div>
+    <div class="sph"><div class="ball"><small>05</small><b>Decide</b></div><div class="lbl"><b>Lifepal</b> · insurer quotes and binds</div><div class="lbl c"><b>Codat</b> · lender or platform decides</div></div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>The closest parallel: Lifepal B2B</b><i>SMBs connected to insurers</i></div>
+  <div class="b2b">
+    <div>
+      <div class="who" style="color:var(--violet)">Lifepal B2B · SMB → insurer</div>
+      <div class="lane">
+        <div><b>SMB</b>A small business needs cover for itself and its team.</div>
+        <div><b>Shares once</b>Company and team data, with consent, in one place.</div>
+        <div><b>Many insurers</b>Each needs it in its own format to quote.</div>
+        <div><b>Decision</b>Quote, bind, renew. Late status updates arrive for days.</div>
+      </div>
+      <div class="who" style="color:var(--pink);margin-top:8px">Codat · SMB → lender or platform</div>
+      <div class="lane codat">
+        <div><b>SMB</b>A small business applies for credit or a service.</div>
+        <div><b>Connects once</b>Its accounting or ERP, bank and commerce accounts.</div>
+        <div><b>Standard model</b>Many systems mapped to one data model.</div>
+        <div><b>Decision</b>Underwrite, monitor, reconcile. Books keep changing.</div>
+      </div>
+    </div>
+    <div>
+      <table class="map b2bt">
+        <tr><th>The same problem</th><th>How I handled it at Lifepal</th><th>Where it shows here</th></tr>
+        <tr><td><b>Collect once, serve many</b></td><td>One application, mapped to each insurer's format by contract, not by hand.</td><td>Source contracts map each platform onto one canonical invoice.</td></tr>
+        <tr><td><b>Consent per party</b></td><td>Each insurer saw only the SMBs that applied to it: a row policy.</td><td>Consent row filter; a revoked connection disappears everywhere.</td></tr>
+        <tr><td><b>Late, changing statuses</b></td><td>Newest status wins; 72-hour lookback, the p99.5 of insurer delay.</td><td>Ordered MERGE; backdated credit notes restate, v0 stays queryable.</td></tr>
+        <tr><td><b>One number for both sides</b></td><td>"Bind" agreed once with insurers and finance; requests −60%.</td><td>Semantic layer and MCP: one revenue, one cash flow.</td></tr>
+      </table>
+      <p class="src" style="margin-top:5px">Described at the level I can share publicly; I'm happy to walk through the details in conversation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>What Codat connects</b><i>as listed on codat.io · data here is synthetic</i></div>
+  <div class="ints">
+    <div class="card"><div class="kicker">Accounting and ERP</div><p><span class="chip">Xero</span><span class="chip">QuickBooks Online</span><span class="chip">Sage</span><span class="chip">NetSuite</span><span class="chip">Dynamics 365 Business Central</span><span class="chip">FreeAgent</span></p><p style="margin-top:4px">Here: two fictional accounting platforms and a fictional mid-market ERP, each with its own invoice schema.</p></div>
+    <div class="card"><div class="kicker">Banking</div><p><span class="chip">Open banking feeds</span><span class="chip">Plaid</span><span class="chip">TrueLayer</span></p><p style="margin-top:4px">Here: one bank feed per company, reconciled to the reported balance.</p></div>
+    <div class="card"><div class="kicker">Commerce</div><p><span class="chip">Shopify</span><span class="chip">Stripe</span><span class="chip">Square</span><span class="chip">Amazon Seller</span></p><p style="margin-top:4px">Here: a fictional payouts feed, matched to the bank within three days.</p></div>
+    <div class="card"><div class="kicker" style="color:var(--violet2)">Scale</div><div class="big" style="color:#fff;font-size:20pt">350,000+</div><p>live connections to business customers' finance systems, as Codat's site states.</p></div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>Concept map</b><i>same grain, different names</i></div>
+  <table class="map">
+    <tr><th>Lifepal · insurance marketplace</th><th>Codat · business data (my reading)</th><th>Grain</th><th>Shared data problem</th></tr>
+    <tr><td><b>Insurer partner</b><span class="chip">consumer insurers</span><span class="chip">SMB insurers</span></td><td><b>Connected system</b><span class="chip dark">accounting · ERP</span><span class="chip dark">bank</span><span class="chip dark">commerce</span></td><td class="g">one row per source record</td><td>Conform many schemas to one model before anyone reads it</td></tr>
+    <tr><td><b>Insurer sees its own applicants</b><span class="chip">row access policy</span></td><td><b>Customer sees consented companies</b><span class="chip dark">customer × company</span></td><td class="g">one row per (customer, company)</td><td>Isolation by policy, not by copying data</td></tr>
+    <tr><td><b>Application → decision</b><span class="chip">declined</span><span class="chip">approved, 2nd try</span></td><td><b>Invoice → payment</b><span class="chip dark">open</span><span class="chip dark">paid</span><span class="chip dark">voided later</span></td><td class="g">one row per document version</td><td>Newest version wins; replays never double count</td></tr>
+    <tr><td><b>Bind rate</b><span class="chip">bound ÷ applications</span></td><td><b>Revenue, cash flow, DSO</b><span class="chip dark">one definition each</span></td><td class="g">company × month</td><td>One definition that reconciles to source</td></tr>
+    <tr><td><b>Plan version</b><span class="chip">price changes mid-year</span></td><td><b>Chart of accounts</b><span class="chip dark">account remapped</span></td><td class="g">account × version (SCD2)</td><td>Join the version in force at the time</td></tr>
+    <tr><td><b>Late insurer feeds</b><span class="chip">status up to 72h late</span></td><td><b>Backdated entries</b><span class="chip dark">credit notes after close</span></td><td class="g">one row per event</td><td>Restated, with time travel showing what was issued</td></tr>
+    <tr><td><b>Partner reporting</b><span class="chip">insurer performance pack</span></td><td><b>Insights</b><span class="chip dark">lenders</span><span class="chip dark">platforms</span></td><td class="g">one product per audience</td><td>Many audiences, one number</td></tr>
+    <tr><td><b>RAG copilot, MCP agents</b><span class="chip">1,000+ outcomes a day</span></td><td><b>AI systems over business data</b><span class="chip dark">semantic layer + MCP</span></td><td class="g">one certified metric</td><td>Agents query the same truth as people, with permissions</td></tr>
+  </table>
+  <p class="src">Lifepal examples are from my own work. Codat examples come from the role, public information, and the synthetic data in this project.</p>
+</div>
+
+<div class="sec"><div class="sh"><b>What carries over directly</b><i>proven at Lifepal</i></div>
+  <div class="carry">
+    <div class="card"><h3>One definition per metric</h3><p><b>Lifepal:</b> agreeing "bind" took four workshops; ad-hoc requests then fell 60%.</p><div class="here"><b>Here:</b> revenue and cash flow agreed once, in a contract, before any API or dashboard.</div></div>
+    <div class="card"><h3>Isolation by policy</h3><p><b>Lifepal:</b> a row access policy scoped every insurer to its own data.</p><div class="here"><b>Here:</b> each customer sees only consented companies; agents inherit it.</div></div>
+    <div class="card"><h3>Late data, measured</h3><p><b>Lifepal:</b> lookback set at 72 hours, the p99.5 of partner delay.</p><div class="here"><b>Here:</b> lookback sized from real re-sync and backdating lag per source.</div></div>
+    <div class="card"><h3>History, not overwrite</h3><p><b>Lifepal:</b> changing attributes kept as SCD2, joined at the time they applied.</p><div class="here"><b>Here:</b> account remaps can't rewrite last month's revenue.</div></div>
+    <div class="card"><h3>Tests before trust</h3><p><b>Lifepal:</b> 500+ checks in production; data-trust escalations −60%.</p><div class="here"><b>Here:</b> every contract compiles into checks; the bank break stays red.</div></div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>What is different, and how I would adapt</b><i></i></div>
+  <table>
+    <tr><th>Difference</th><th>Lifepal</th><th>Codat</th><th>How I would adapt</th></tr>
+    <tr><td class="k">Sources</td><td>Tens of insurers, a few internal systems</td><td>Many accounting, ERP, bank and commerce integrations</td><td>Learn Codat's standard data model first and build Insights on it; source contracts per integration</td></tr>
+    <tr><td class="k">Scale</td><td>A mid-size marketplace</td><td>350,000+ live connections, as Codat states</td><td>Same contracts and tests; incremental builds and clustering by company from day one</td></tr>
+    <tr><td class="k">Tenancy</td><td>Insurers and internal teams</td><td>Many customers, each with consented companies</td><td>Consent as data, one row filter, a tenant check on every product and every agent tool</td></tr>
+    <tr><td class="k">Orchestration</td><td>Airflow in production</td><td>Dagster, Airflow or Temporal</td><td>Same principles: assets from contracts, retries, idempotency; follow the team's conventions</td></tr>
+    <tr><td class="k">Who reads it</td><td>Internal teams and insurer partners</td><td>External customers through products, APIs and agents</td><td>Versioned metrics, owner approval on breaking changes, published freshness</td></tr>
+  </table>
+</div>
+
+<div class="sec plain"><b>Stated plainly.</b> Lifepal outcomes come from my own record of the work. The Codat side is built from outside, from the role and public information; integration names are as listed on codat.io, and every company, customer and platform in the demo is fictional. No Codat systems or data were used.<br><b>Open questions for week one:</b> which Insights metrics customers rely on most, who owns each definition, and how a restatement is explained to a customer today.</div>
+<div class="sec footline"><span>R. Firman Insan Muhammad (Vim) · Senior Data Engineer · London · firman.insan.m@gmail.com</span><span>Companion to <b>Nexus for Codat</b> · 19 October 2026</span></div>
+</div></body></html>

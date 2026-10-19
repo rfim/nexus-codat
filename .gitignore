@@ -1,0 +1,9 @@
+target/
+landing/
+spark-warehouse/
+metastore_db/
+derby.log
+__pycache__/
+.pytest_cache/
+*.pyc
+target.log

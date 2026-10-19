@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enable MCP · NEXUS for Codat</title>
+<meta name="description" content="Step by step: an MCP server in front of a semantic layer, so AI agents query certified SMB Insights as the caller, with a citation, or are refused.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>NEXUS <small>for Codat</small></span></a>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="mcp.html" aria-current="page" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
+    <a href="run.html">How the data gets there</a>
+    <a href="oncall.html">On call</a>
+    <a href="https://github.com/rfim/nexus-codat/blob/main/src/nexus/mcp_server.py" class="nav-code keep">Server code ↗</a>
+  </nav>
+</div></header>
+
+<main id="main">
+<section class="section dark" style="padding-top:3rem">
+  <div class="shell">
+    <div class="index"><span>Semantic layer and MCP · step by step</span><span>the protocol messages are real MCP JSON-RPC</span></div>
+    <div class="head"><h2>Enabling MCP, <em>one message at a time.</em></h2>
+      <p>An agent connects to the <code>nexus-insights</code> server, discovers four read-only tools, and asks a question. The semantic layer compiles it, the consent filter scopes it to the caller's customer, and gold answers with a citation, or the request is refused.</p></div>
+
+    <div class="stage" id="stage">
+      <div class="svgwrap"><svg viewBox="0 0 1200 470" role="img" aria-labelledby="stage-title">
+        <title id="stage-title">An agent, the MCP server, the semantic layer, the consent filter and the gold Delta tables, connected by wires that light up as messages travel.</title>
+        <defs>
+          <radialGradient id="pk" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#ff4f8b"/><stop offset="1" stop-color="#ff4f8b" stop-opacity="0"/></radialGradient>
+          <radialGradient id="pv" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#8a73ff"/><stop offset="1" stop-color="#8a73ff" stop-opacity="0"/></radialGradient>
+          <linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#5b3df5"/><stop offset="1" stop-color="#ff4f8b"/></linearGradient>
+        </defs>
+        <path id="w-ua" class="wire" d="M150 235 L220 235"/>
+        <path id="w-as" class="wire" d="M390 235 L470 235"/>
+        <path id="w-ss" class="wire" d="M690 205 C 740 160, 760 120, 800 112"/>
+        <path id="w-sc" class="wire" d="M890 150 L890 300"/>
+        <path id="w-cg" class="wire" d="M980 340 C 1020 330, 1030 300, 1045 270"/>
+        <path id="w-gs" class="wire" d="M1045 200 C 1000 60, 760 40, 650 190"/>
+
+        <g class="node" id="n-user" transform="translate(30,190)"><rect width="120" height="90" rx="14"/>
+          <text x="60" y="40" text-anchor="middle">Analyst</text><text class="sm" x="60" y="62" text-anchor="middle" id="persona-label">Northbank</text></g>
+        <g class="node off" id="n-agent" transform="translate(220,180)"><rect width="170" height="110" rx="14"/>
+          <text x="85" y="42" text-anchor="middle">AI agent</text><text class="sm" x="85" y="62" text-anchor="middle">MCP client</text>
+          <text class="sm" x="85" y="84" text-anchor="middle" id="agent-state">not connected</text></g>
+        <g class="node off" id="n-server" transform="translate(470,160)"><rect width="220" height="150" rx="16"/>
+          <text x="110" y="34" text-anchor="middle">nexus-insights</text><text class="sm" x="110" y="52" text-anchor="middle">MCP server · stdio · read-only</text>
+          <g id="tools"></g></g>
+        <g class="node" id="n-sem" transform="translate(800,70)"><rect width="180" height="80" rx="14"/>
+          <text x="90" y="34" text-anchor="middle">Semantic layer</text><text class="sm" x="90" y="56" text-anchor="middle">semantic/metrics.yml</text></g>
+        <g class="node" id="n-con" transform="translate(800,300)"><rect width="180" height="80" rx="14"/>
+          <text x="90" y="34" text-anchor="middle">Consent filter</text><text class="sm" x="90" y="56" text-anchor="middle" id="con-label">customer_id = ?</text></g>
+        <g class="node" id="n-gold" transform="translate(1045,180)"><rect width="135" height="110" rx="14"/>
+          <text x="67" y="40" text-anchor="middle">Gold</text><text class="sm" x="67" y="60" text-anchor="middle">Delta · Insights</text>
+          <text class="sm" x="67" y="80" text-anchor="middle">5 products</text></g>
+        <circle id="packet" class="packet" r="11" fill="url(#pk)" cx="-50" cy="-50"/>
+        <text id="refuse-x" x="890" y="232" text-anchor="middle" font-size="64" font-weight="800" fill="#ff4f8b" opacity="0">✕</text>
+      </svg></div>
+      <div class="caption" id="caption" aria-live="polite">Press <b>Play</b> to enable MCP.</div>
+      <div class="stage-ui">
+        <ol class="steps-list" id="steps"></ol>
+        <div class="wirelog" id="wirelog" aria-label="JSON-RPC messages"></div>
+      </div>
+      <div class="controls">
+        <button class="primary" id="play">▶ Play</button>
+        <button id="prev" aria-label="Previous step">←</button>
+        <button id="next" aria-label="Next step">→</button>
+        <button id="reset">↺ Reset</button>
+        <span class="grow"></span>
+        <label for="who">Ask as</label>
+        <select id="who"><option value="analyst@northbank.example">Northbank analyst (lender)</option><option value="analyst@brightpay.example">Brightpay analyst (payments platform)</option></select>
+        <label for="scenario">Question</label>
+        <select id="scenario"></select>
+        <label for="speed">Speed</label>
+        <select id="speed"><option value="1.6">Slow</option><option value="1" selected>Normal</option><option value=".55">Fast</option></select>
+      </div>
+    </div>
+    <p style="font-size:.85rem;margin-top:.8rem">The messages follow the MCP JSON-RPC shapes (<code>initialize</code>, <code>tools/list</code>, <code>tools/call</code>). Tool names, schemas, SQL and rows are the real ones from <code>src/nexus/mcp_server.py</code>, computed in your browser from the run's exported gold tables.</p>
+  </div>
+</section>
+
+<section class="section" id="ask">
+  <div class="shell">
+    <div class="index"><span>Ask it yourself</span><span>same tools, same consent filter</span></div>
+    <div class="head"><h2>Now you ask. <em>It answers as you.</em></h2>
+      <p>A small rule-based planner stands in for the LLM, so answers are deterministic. In CI, the same questions run through the Python MCP server as an eval set (<code>evals/questions.yml</code>).</p></div>
+    <div class="chat">
+      <div>
+        <div class="persona" id="persona2"></div>
+        <div class="asks" id="asks"></div>
+        <form class="chatbox" id="chatform"><input id="q" placeholder="e.g. Revenue by month for C-104" aria-label="Your question"><button class="button b-primary" type="submit">Ask</button></form>
+        <div class="callout" style="margin-top:1rem">Try asking as Brightpay about <b>C-101</b>: Brightpay has no consent for it, so the answer is empty. Ask about <b>C-112</b>: its consent was revoked in September. Ask about <b>gross margin</b>: it isn't certified yet.</div>
+        <h3 style="margin:1.4rem 0 .6rem">Enable it in your client</h3>
+<pre><span class="c"># Claude Code, from a clone of this repo</span>
+claude mcp add nexus-insights \
+  --env NEXUS_CALLER=analyst@northbank.example \
+  -- python -m nexus.mcp_server
+
+<span class="c"># or any MCP client, as JSON</span>
+{ <span class="s">"mcpServers"</span>: { <span class="s">"nexus-insights"</span>: {
+    <span class="s">"command"</span>: <span class="s">"python"</span>, <span class="s">"args"</span>: [<span class="s">"-m"</span>, <span class="s">"nexus.mcp_server"</span>],
+    <span class="s">"env"</span>: { <span class="s">"PYTHONPATH"</span>: <span class="s">"src"</span>, <span class="s">"NEXUS_CALLER"</span>: <span class="s">"analyst@northbank.example"</span> } } } }</pre>
+        <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem">Over stdio the caller comes from the environment; over HTTP it would come from the token, and the consent filter would be the same.</p>
+      </div>
+      <div class="answer" id="answer"><p style="color:var(--muted)">Pick a question or type one.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="shell">
+    <div class="index"><span>Why this shape</span><span>design commitments</span></div>
+    <div class="grid g4" style="margin-top:1.2rem">
+      <div class="card top-v"><h3>Grounded</h3><p>Answers come from certified metrics, so an agent can't invent a definition.</p></div>
+      <div class="card top-p"><h3>Permissioned</h3><p>Every query runs as the caller. No broadly privileged service principal: that route turns every control into decoration.</p></div>
+      <div class="card top-v"><h3>Cited</h3><p>Every answer names its metric, product version, freshness and contract results.</p></div>
+      <div class="card top-p"><h3>Evaluated</h3><p>The question set runs in CI: values, tool choice, citations, consent and refusals.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="shell"><p>Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
+<script src="assets/common.js"></script>
+<script src="assets/semantic.js"></script>
+<script src="assets/mcp.js"></script>
+</body></html>

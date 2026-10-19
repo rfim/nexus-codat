@@ -1,0 +1,31 @@
+product: insights_revenue_monthly
+team: Insights
+owner: insights-product-lead@example.com     # signs off the definition
+engineer: vim@example.com                    # owns the pipeline
+definition: >
+  Revenue = net invoiced amount (excluding tax) on accounts mapped to revenue at the issue date,
+  for open and paid documents. Credit notes net off; void and draft documents are excluded.
+grain: [customer_id, company_id, currency, month]
+freshness: {column: month, max_lag_days: 45}
+columns:
+  - name: customer_id
+    tests: [not_null, {accepted_values: [northbank, brightpay]}]
+  - name: company_id
+    tests: [not_null]
+  - name: currency
+    tests: [not_null, {accepted_values: [GBP, EUR, USD]}]
+  - name: revenue
+    tests: [not_null]
+reconcile:
+  against_sql: >
+    SELECT company_id, trunc(issue_date, 'MM') AS month, sum(subtotal) AS expected
+    FROM {silver.invoice} i JOIN {silver.account_mapping} a USING (company_id, account_id)
+    WHERE i.status IN ('open','paid') AND a.account_type = 'revenue'
+      AND i.issue_date >= a.valid_from AND i.issue_date < a.valid_to GROUP BY 1, 2
+  match_on: [company_id, month]
+  measure: revenue
+  tolerance: 0.01
+access:
+  read: [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id
+change: {breaking: owner_approval}

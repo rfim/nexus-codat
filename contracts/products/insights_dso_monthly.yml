@@ -1,0 +1,18 @@
+product: insights_dso_monthly
+team: Insights
+owner: credit-risk-lead@example.com
+engineer: vim@example.com
+definition: >
+  Days sales outstanding = receivables at month end / invoices billed in the 90 days to month end x 90.
+  A point-in-time ratio: never summed across companies or months.
+grain: [customer_id, company_id, month]
+freshness: {column: month, max_lag_days: 45}
+columns:
+  - name: dso_days
+    tests: [{range: {min: 0, max: 365}}]
+  - name: receivables
+    tests: [not_null, {range: {min: 0}}]
+access:
+  read: [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id
+change: {breaking: owner_approval}

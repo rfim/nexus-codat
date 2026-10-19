@@ -1,0 +1,102 @@
+# The semantic layer: each Insights metric defined once. Reports, APIs, notebooks and agents all read this.
+# `certified: false` metrics exist for discussion only; the MCP server refuses to quote them.
+metrics:
+  - name: revenue
+    label: Revenue
+    product: insights_revenue_monthly
+    expr: sum(revenue)
+    kind: additive              # safe to sum across companies and months
+    unit: currency
+    dimensions: [company_id, month, currency]
+    owner: insights-product-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: >
+      Net invoiced amount excluding tax, on accounts mapped to revenue at the issue date.
+      Credit notes net off; void and draft documents are excluded.
+    caveats: [Backdated credit notes can restate past months; the issued version stays queryable.]
+    synonyms: [revenue, sales, turnover, invoiced]
+
+  - name: revenue_growth_mom
+    label: Revenue growth (month on month)
+    product: insights_revenue_monthly
+    expr: (sum(revenue) - lag(sum(revenue)) OVER (PARTITION BY company_id ORDER BY month)) / nullif(lag(sum(revenue)) OVER (PARTITION BY company_id ORDER BY month), 0)
+    kind: derived
+    unit: ratio
+    dimensions: [company_id, month]
+    requires: [company_id, month]
+    owner: insights-product-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: (revenue this month - revenue last month) / revenue last month, per company.
+    caveats: [Undefined for a company's first month.]
+    synonyms: [growth, revenue growth, mom]
+
+  - name: net_operating_cash_flow
+    label: Net operating cash flow
+    product: insights_cash_flow_monthly
+    expr: sum(net_operating_cash_flow)
+    kind: additive
+    unit: currency
+    dimensions: [company_id, month, currency]
+    owner: insights-product-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: >
+      Bank inflows minus outflows for the month, excluding transfers between the company's own
+      accounts and loan drawdowns.
+    caveats: [C-107 currently fails its bank reconciliation by 1,250.00; see the contract results.]
+    synonyms: [cash flow, operating cash, cashflow, burn]
+
+  - name: dso_days
+    label: Days sales outstanding
+    product: insights_dso_monthly
+    expr: max(dso_days)
+    kind: point_in_time         # a ratio at one date: never summed across companies or months
+    unit: days
+    dimensions: [company_id, month]
+    requires: [company_id, month]
+    owner: credit-risk-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: Receivables at month end / invoices billed in the 90 days to month end x 90.
+    caveats: [Point in time; compare companies month by month, never average across them.]
+    synonyms: [dso, days sales outstanding, debtor days, how quickly customers pay]
+
+  - name: data_completeness
+    label: Data completeness
+    product: insights_data_completeness
+    expr: max(completeness_score)
+    kind: point_in_time
+    unit: score
+    dimensions: [company_id]
+    requires: [company_id]
+    owner: data-quality-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: Bank coverage x share of the company's invoices that passed the quality gate.
+    caveats: [Read it next to any other metric before acting on a change.]
+    synonyms: [completeness, data quality, can I trust, trust]
+
+  - name: commerce_net_sales
+    label: Commerce net sales
+    product: insights_commerce_monthly
+    expr: sum(net_sales)
+    kind: additive
+    unit: currency
+    dimensions: [company_id, month, currency]
+    owner: commerce-insights-lead@example.com
+    certified: true
+    freshness_hours: 24
+    definition: Online gross sales minus refunds, before platform fees, by sales month.
+    caveats: [Only companies that sell through a connected commerce platform have this metric.]
+    synonyms: [online sales, commerce, shop sales, payouts, ecommerce]
+
+  - name: gross_margin
+    label: Gross margin
+    product: null
+    kind: derived
+    owner: insights-product-lead@example.com
+    certified: false            # chart-of-accounts mapping for cost of sales not yet agreed
+    definition: Draft. Needs an agreed cost-of-sales mapping across platforms before it can be certified.
+    synonyms: [margin, gross margin, profitability]

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Nexus for Codat · One page</title>
+<link rel="stylesheet" href="style.css">
+<style>
+@page{size:238mm 560mm;margin:0}
+body{width:238mm;position:relative}
+body::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6mm;background:linear-gradient(180deg,var(--navy) 0 40%,var(--violet) 40% 75%,var(--violet2) 75% 100%)}
+.page{padding:9mm 11mm 8mm 15mm}
+.top{display:grid;grid-template-columns:1fr 64mm;gap:8mm;align-items:end}
+.top h1{font-size:34pt;line-height:1.05;margin:3mm 0 1mm}
+.top .tl{font-size:11.5pt;font-weight:800}
+.top p{font-size:9pt;color:var(--ink2);margin-top:3mm}
+.sec{margin-top:6mm}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.feat td{font-size:8pt;padding:5px 7px}
+.feat td.k{font-family:var(--mono);font-size:7.4pt;width:28mm}
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.days .card h3{font-size:9.5pt}
+.days .n{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:var(--navy);color:#fff;font-size:7pt;font-weight:800;margin-right:4px}
+</style></head><body><div class="page">
+
+<div class="kicker">Fireside chat · prepared for Data &amp; Insights · Senior Data Engineer</div>
+<div class="top">
+  <div>
+    <h1>Nexus, <b>for Codat.</b></h1>
+    <div class="tl">One definition per number. Correct under replay. One truth for people and AI.</div>
+    <p><b>NEXUS</b> is the platform I built and ran at Lifepal, an insurance marketplace serving consumers and SMBs: Python on Databricks and Delta, contract-driven and tested end to end, with a dbt semantic layer and an MCP server so people and AI agents query the same certified numbers. Here it is applied to Codat's Insights on SMB data from accounting and ERP systems, bank feeds and commerce platforms: every metric agreed once with its owner, every sync landed replay-safe, every customer's view filtered by consent, and every load checked. Everything below runs at <b>rfim.github.io/nexus-codat</b>.</p>
+  </div>
+  <div>
+    <div class="tiles"><span>Accounting · ERP</span><span>Banking</span><span>Commerce</span><span>Insights</span><span>MCP</span></div>
+    <div class="built"><div><div class="k2">Built at</div><img src="lifepal.png" alt="Lifepal"></div><span class="arrow">→</span><div><div class="k2" style="text-align:right">Presented to</div><span class="codat">Codat</span></div></div>
+  </div>
+</div>
+
+<div class="sec spheres" style="grid-template-columns:repeat(5,1fr)">
+  <div class="sph"><div class="ball"><small>01 · AGREE</small><b>YAML</b><i>signed by the owner</i></div><p>Every metric conversation ends in a contract: definition, grain, owner, freshness, access.</p></div>
+  <div class="sph"><div class="ball"><small>02 · LAND</small><b>MERGE</b><i>replay changes 0 rows</i></div><p>Each sync lands by MERGE on its key, newest version wins; replaying every feed changed nothing.</p></div>
+  <div class="sph"><div class="ball"><small>03 · PROTECT</small><b>CONSENT</b><i>a row filter per customer</i></div><p>Every product is keyed by customer and company; a revoked consent drops the company everywhere.</p></div>
+  <div class="sph"><div class="ball"><small>04 · PROVE</small><b>{{passed}}/{{total}}</b><i>checks on every load</i></div><p>Each contract compiles into checks. The one failure is a real {{break_amt}} bank break at C-107.</p></div>
+  <div class="sph"><div class="ball"><small>05 · SERVE</small><b>MCP</b><i>4 read-only tools</i></div><p>Agents discover certified metrics and query as the caller, with a citation, or are refused.</p></div>
+</div>
+
+<div class="sec proof"><span class="kicker">Proven at Lifepal</span>
+  <span><b>6h → 90m</b> batch</span><span><b>24h → &lt;5m</b> latency</span><span><b>512</b> assertions, 47 sources</span><span><b>−60%</b> ad-hoc requests</span><span><b>$11k</b> vs $19k budget</span></div>
+
+<div class="sec"><div class="sh"><b>If I joined your team</b><i>the first 90 days</i></div>
+  <div class="days">
+    <div class="card"><div class="kicker"><span class="n">1</span>Days 1–30</div><h3>Listen and ship</h3><p>Learn the Insights products, Codat's standard data model and its integrations from their owners. A small fix in production early. Change nothing big.</p></div>
+    <div class="card"><div class="kicker"><span class="n">2</span>Days 31–60</div><h3>Own a pipeline</h3><p>Run one Insights pipeline end to end and join its on-call. Write contracts for the rules that live in someone's head.</p></div>
+    <div class="card"><div class="kicker"><span class="n">3</span>Days 61–90</div><h3>Lay the foundation</h3><p>First certified metrics in the semantic layer; an MCP prototype over them with an eval set in CI.</p></div>
+    <div class="card"><div class="kicker"><span class="n">4</span>Day 90</div><h3>Measured</h3><p>Fewer incidents reaching customers, faster diagnosis, and team standards running as code.</p></div>
+  </div>
+  <div class="callout" style="margin-top:7px"><b>Every day after that:</b> write production Python, hold the quality bar, and explain the why to engineers and commercial teams alike. Each part of the role is a page you can open at rfim.github.io/nexus-codat.</div>
+</div>
+
+<div class="sec cols">
+  <div>
+    <div class="sh"><b>Databricks, feature by feature</b><i></i></div>
+    <table class="feat">
+      <tr><th>Built at Nexus · Lifepal</th><th>Applied to Codat, in this repo</th></tr>
+      <tr><td class="k">Delta MERGE</td><td>Every feed lands by MERGE on its key, newest sync sequence wins. Replaying every feed changed <b>0 rows</b>.</td></tr>
+      <tr><td class="k">canonical model</td><td>Two accounting platforms and an ERP describe one invoice three ways; their contracts map them onto <b>one canonical invoice</b>.</td></tr>
+      <tr><td class="k">SCD2 + as-of</td><td>Chart-of-accounts mappings kept as history and joined at the issue date, never today's mapping.</td></tr>
+      <tr><td class="k">quarantine</td><td>The quality contract splits bad rows out with the failed rule attached: <b>{{quarantined}} of {{canonical}}</b>.</td></tr>
+      <tr><td class="k">consent filter</td><td>Products keyed by (customer, company) through active consent; a check fails any row without it.</td></tr>
+      <tr><td class="k">time travel</td><td>{{late_total}} late corrections restated revenue as Delta version 1; <b>VERSION AS OF 0</b> still shows what was issued.</td></tr>
+      <tr><td class="k">semantic layer</td><td>Each Insights metric defined once, with owner, grain, freshness and whether it can be summed.</td></tr>
+      <tr><td class="k">MCP + evals</td><td>Four read-only tools, run as the caller; <b>{{evals}}</b> eval questions in CI, refusals included.</td></tr>
+    </table>
+
+    <div class="sh" style="margin-top:6mm"><b>Data contract</b><i>contracts/products/</i></div>
+    <p style="font-size:8.4pt;color:var(--ink2);margin-bottom:5px">The product owner owns the definition; the platform checks it. This YAML compiles into SQL checks, expectations, grants and the consent row filter.</p>
+<pre>product:   insights_cash_flow_monthly
+owner:     insights-product-lead@example.com   <span class="c"># signs off</span>
+definition: Bank inflows minus outflows, excluding own-account
+            transfers and loan drawdowns.
+grain:     [customer_id, company_id, currency, month]
+reconcile:
+  against_sql: SELECT company_id, balance_movement ...
+               FROM {silver.bank_balance}
+  measure:   net_movement_all
+  tolerance: 0.01
+access:
+  read:          [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id       <span class="c"># row filter on every read</span>
+change: {breaking: owner_approval}  <span class="c"># blast radius on the PR</span></pre>
+
+    <div class="sh" style="margin-top:6mm"><b>CI gate</b><i>.github/workflows/ci.yml</i></div>
+    <p style="font-size:8.4pt;color:var(--ink2);margin-bottom:5px">Every pull request runs the tests, the contracts and the agent evals before anything merges.</p>
+<pre>on: pull_request
+steps:
+  - run: pytest -q                  <span class="c"># replay, SCD2, contracts, semantic</span>
+  - run: pytest tests/test_mcp.py   <span class="c"># tools, tenant, {{evals}} evals</span>
+  - run: ./scripts/build.sh         <span class="c"># Spark run, then the site data</span></pre>
+  </div>
+
+  <div>
+    <div class="sh"><b>Numbers, done honestly</b><i>worked examples from the run</i></div>
+    <div class="numbers">
+      <div class="nh"><b>Reconciliation</b><span>{{break_amt}} at C-107</span></div>
+      <div class="formula">| Σ bank lines − Δ bank balance | ≤ 0.01 → <b>1 company fails</b></div>
+      <div class="hbar"><span class="lab">bank lines</span><span class="b" style="width:{{w_pub}}%">{{pub}}</span></div>
+      <div class="hbar"><span class="lab">bank balance Δ</span><span class="b p" style="width:{{w_exp}}%">{{exp}}</span></div>
+      <p>One payment re-sent under a new id: the key can't catch it, the reconciliation does. The cash-flow check stays red for C-107 until the source is fixed (see the on-call page).</p>
+
+      <div class="nh"><b>Restatement</b><span>{{restated_rows}} rows restated</span></div>
+      <div class="formula">Δ = revenue<sub>now</sub> − revenue<sub>v0</sub> = <b>{{restate_total}}</b></div>
+      <div class="hbar"><span class="lab">as issued (v0)</span><span class="b v" style="width:96%">{{aug_v0}}</span></div>
+      <div class="hbar"><span class="lab">now (v1)</span><span class="b" style="width:{{w_aug1}}%">{{aug_v1}}</span></div>
+      <p>August revenue across both customers after {{late_total}} backdated credit notes and late voids. The change is {{restate_pct}}; the issued version stays queryable for any lender who asks.</p>
+
+      <div class="nh"><b>Consent</b><span>{{nb}} + {{bp}} companies</span></div>
+      <div class="formula">visible(c) = { k : (c, k) ∈ E ∧ revoked<sub>c,k</sub> = ∅ }</div>
+      <div class="hbar"><span class="lab">Northbank</span><span class="b" style="width:{{w_nb}}%">{{nb}} companies</span></div>
+      <div class="hbar"><span class="lab">Brightpay</span><span class="b v" style="width:{{w_bp}}%">{{bp}} companies, C-112 revoked</span></div>
+      <p>Two companies are shared by both customers; each sees its own consented view, and agents inherit the same filter.</p>
+
+      <div class="nh"><b>Commerce</b><span>{{po_ratio}} in bank</span></div>
+      <div class="formula">match = payouts found in bank ≤ 3 days ÷ payouts = <b>{{po_ratio}}</b></div>
+      <p>Every commerce payout is looked for in the bank feed: a cross-source check no single integration can give.</p>
+
+      <div class="nh"><b>Alerting</b><span>hold at 2σ</span></div>
+      <div class="formula">z = (n − μ<sub>30</sub>) ÷ σ<sub>30</sub></div>
+      <div class="vbars">{{zbars}}</div>
+      <div class="vlabels"><span>&gt; 2σ</span><span>&gt; 2.5σ</span><span>&gt; 3σ</span><span>real break</span></div>
+      <p>On C-107's daily bank volume, a 2σ page would fire {{z2}} times in four months with one real break behind them. Volume goes to a digest; pages are for SLO and reconciliation breaches.</p>
+
+      <div class="nh"><b>As-of joins</b><span>C-103 · account 4100</span></div>
+      <div class="hbar"><span class="lab">until 31 Aug</span><span class="b" style="width:62%">revenue</span></div>
+      <div class="hbar"><span class="lab">from 1 Sep</span><span class="b p" style="width:34%">other income</span></div>
+      <p>✓ as-of join: August keeps its revenue ({{c103_aug}}). ✗ current join would quietly move it to other income.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec"><div class="sh"><b>The code behind it</b><i>github.com/rfim/nexus-codat</i></div>
+  <div class="cols">
+    <div><p style="font-size:8.4pt"><b>Delta MERGE · src/nexus/bronze.py</b><br><span style="color:var(--ink2)">Bronze is written by MERGE, never INSERT, so a replayed sync page changes nothing.</span></p>
+<pre><span class="k">def</span> upsert_bronze(spark, batch, cfg):
+    keys, order, target = cfg[<span class="s">"merge_keys"</span>], cfg[<span class="s">"ordering_key"</span>], cfg[<span class="s">"table"</span>]
+    <span class="c"># dedupe inside the batch, so a replayed page can't apply twice</span>
+    w = Window.partitionBy(*keys).orderBy(F.col(order).desc())
+    latest = batch.withColumn(<span class="s">"_rn"</span>, F.row_number().over(w)).filter(<span class="s">"_rn = 1"</span>)
+    cond = <span class="s">" AND "</span>.join(f<span class="s">"t.{k} = s.{k}"</span> <span class="k">for</span> k <span class="k">in</span> keys)
+    (DeltaTable.forName(spark, target).alias(<span class="s">"t"</span>)
+        .merge(latest.alias(<span class="s">"s"</span>), cond)
+        .whenMatchedUpdateAll(condition=f<span class="s">"s.{order} &gt; t.{order}"</span>)  <span class="c"># newest wins</span>
+        .whenNotMatchedInsertAll()
+        .execute())</pre></div>
+    <div><p style="font-size:8.4pt"><b>MCP · src/nexus/mcp_server.py</b><br><span style="color:var(--ink2)">Agents get governed, read-only tools that run as the caller and cite their source.</span></p>
+<pre>@mcp.tool()
+<span class="k">def</span> query_metric(name, group_by=None, company_id=None,
+                 month_from=None, month_to=None) -&gt; dict:
+    <span class="s">"""Compile through the semantic layer; run AS THE CALLER."""</span>
+    customer = semantic.customer_for(caller())    <span class="c"># consent scope</span>
+    sql = semantic.compile_sql(name, group_by <span class="k">or</span> [], customer,
+                               company_id, months)
+    rows = warehouse.run(sql)
+    <span class="k">return</span> {<span class="s">"rows"</span>: rows, <span class="s">"sql"</span>: sql,
+            <span class="s">"citation"</span>: {<span class="s">"metric"</span>: name, <span class="s">"version"</span>: ...}}
+<span class="c"># refused by design: uncertified metrics, personal data, writes</span></pre></div>
+  </div>
+</div>
+
+<div class="sec plain"><b>Stated plainly.</b> Lifepal outcomes come from my CV and production work. The Codat side is built from outside, from the role and public information, on synthetic data: the platforms are fictional and no Codat systems or data were used. The numbers in the worked examples are from that synthetic run. Not affiliated with Codat.</div>
+<div class="sec footline"><span>R. Firman Insan Muhammad (Vim) · Senior Data Engineer · London · firman.insan.m@gmail.com</span><span><b>rfim.github.io/nexus-codat</b> · 19 October 2026</span></div>
+</div></body></html>

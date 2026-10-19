@@ -1,0 +1,26 @@
+product: insights_cash_flow_monthly
+team: Insights
+owner: insights-product-lead@example.com
+engineer: vim@example.com
+definition: >
+  Net operating cash flow = bank inflows minus outflows for the month, excluding transfers between
+  the company's own accounts and loan drawdowns.
+grain: [customer_id, company_id, currency, month]
+freshness: {column: month, max_lag_days: 45}
+columns:
+  - name: customer_id
+    tests: [not_null, {accepted_values: [northbank, brightpay]}]
+  - name: net_operating_cash_flow
+    tests: [not_null]
+  - name: operating_inflows
+    tests: [not_null, {range: {min: 0}}]
+reconcile:
+  # every bank line together must explain the balance the bank reports
+  against_sql: "SELECT company_id, balance_movement AS expected FROM {silver.bank_balance}"
+  match_on: [company_id]
+  measure: net_movement_all
+  tolerance: 0.01
+access:
+  read: [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id
+change: {breaking: owner_approval}

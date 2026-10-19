@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the data gets there · NEXUS for Codat</title>
+<meta name="description" content="The last run of the NEXUS pipeline on synthetic SMB data: replay-safe ingestion, one canonical invoice, quarantine, SCD2, restatement and contract checks.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>NEXUS <small>for Codat</small></span></a>
+  <nav aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="mcp.html" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
+    <a href="run.html" aria-current="page">How the data gets there</a>
+    <a href="oncall.html">On call</a>
+    <a href="https://github.com/rfim/nexus-codat/blob/main/src/nexus/pipeline.py" class="nav-code keep">Pipeline code ↗</a>
+  </nav>
+</div></header>
+<main id="main">
+<section class="section dark" style="padding-top:3rem">
+  <div class="shell">
+    <div class="index"><span>How the data gets there</span><span>the last run · PySpark + Delta</span></div>
+    <div class="head"><h2>Land, conform, prove, <em>then publish.</em></h2>
+      <p>Each task below is a step of <code>src/nexus/pipeline.py</code>, the same entry point a Databricks job calls. Durations are from the run on a laptop-sized Spark session.</p></div>
+    <div class="card" style="background:#101140"><div class="bars" id="tasks"></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell">
+    <div class="index"><span>01 · Land</span><span>src/nexus/bronze.py</span></div>
+    <div class="head"><h2>Replay every feed. <em>Nothing changes.</em></h2>
+      <p>Each system re-sent its last sync page (60 records). Bronze is written by MERGE on the source key, newest sync sequence wins, so the replay is a no-op.</p></div>
+    <div id="bronze"></div>
+    <details><summary>Delta history: bronze.ledgerone_invoice</summary><div id="hist-bronze"></div></details>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="shell">
+    <div class="index"><span>02 · Conform</span><span>contracts/sources.yml · src/nexus/silver.py</span></div>
+    <div class="head"><h2>Three schemas, <em>one invoice.</em></h2>
+      <p>Each source contract carries a <code>canonical</code> mapping. Silver applies it, then the quality contract splits bad rows out with the failed rule attached.</p></div>
+    <div class="grid g2">
+      <div><h3 style="margin-bottom:.6rem">Quarantine</h3><div id="quarantine"></div></div>
+      <div><h3 style="margin-bottom:.6rem">The quality contract</h3><pre id="quality"></pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell">
+    <div class="index"><span>03 · History, not overwrite</span><span>SCD2 + as-of join</span></div>
+    <div class="head"><h2>A remap in September <em>can't rewrite August.</em></h2>
+      <p>C-103 reclassified account 4100 from revenue to other income on 1 September. The fact joins the mapping in force on each invoice's issue date.</p></div>
+    <div class="grid g2"><div id="scd2"></div><div id="c103"></div></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="shell">
+    <div class="index"><span>04 · Late corrections</span><span>time travel · VERSION AS OF 0</span></div>
+    <div class="head"><h2>Restated, <em>with what was issued still queryable.</em></h2>
+      <p>A day later, the systems sent backdated credit notes and late voids for August. They merged into the same bronze tables; revenue was republished as Delta version 1.</p></div>
+    <div id="restatement"></div>
+    <details><summary>Delta history: gold.insights_revenue_monthly</summary><div id="hist-gold"></div></details>
+  </div>
+</section>
+
+<section class="section">
+  <div class="shell">
+    <div class="index"><span>05 · Prove</span><span>src/nexus/contracts.py</span></div>
+    <div class="head"><h2>Every contract, <em>checked on every load.</em></h2>
+      <p>Each product contract compiles into SQL checks: columns, grain, freshness, consent and reconciliation to source. A failing check keeps the evidence.</p></div>
+    <div id="contracts"></div>
+  </div>
+</section>
+</main>
+<footer><div class="shell"><p>Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
+<script src="assets/common.js"></script>
+<script src="assets/run.js"></script>
+</body></html>

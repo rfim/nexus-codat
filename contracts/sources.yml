@@ -1,0 +1,112 @@
+# Source contracts: the whole interface to the platform. Adding a feed is a change here and nowhere else.
+# `canonical` maps a platform's own schema onto the one canonical invoice (silver). The platforms are fictional.
+- feed: companies
+  domain: connections
+  owner: connections-data@example.com
+  source: {type: events, topic: sync.companies.v1}
+  target: {table: company, merge_keys: [company_id], ordering_key: sync_seq}
+  governance: {data_class: company_record}
+
+- feed: entitlements
+  domain: consent
+  owner: consent-data@example.com
+  source: {type: cdc, topic: consent.entitlements.v1}
+  target: {table: company_entitlement, merge_keys: [customer_id, company_id]}
+  governance: {data_class: consent}
+
+- feed: accounts
+  domain: accounting
+  owner: accounting-data@example.com
+  source: {type: events, topic: sync.accounting.accounts.v2}
+  # one row per source record version: the SCD2 mapping in silver needs every version
+  target: {table: account, merge_keys: [company_id, account_id, updated_at]}
+  governance: {data_class: accounting}
+
+- feed: ledgerone_invoices
+  domain: accounting
+  platform: ledgerone
+  owner: accounting-data@example.com
+  source: {type: events, topic: sync.accounting.ledgerone.invoices.v3}
+  target: {table: ledgerone_invoice, merge_keys: [CompanyId, InvoiceID], ordering_key: SyncSeq}
+  canonical:
+    company_id: CompanyId
+    source_invoice_id: InvoiceID
+    doc_type: "CASE WHEN Type = 'ACCRECCREDIT' THEN 'credit_note' ELSE 'invoice' END"
+    status: "CASE Status WHEN 'DRAFT' THEN 'draft' WHEN 'AUTHORISED' THEN 'open' WHEN 'PAID' THEN 'paid' WHEN 'VOIDED' THEN 'void' ELSE lower(Status) END"
+    issue_date: "to_date(Date)"
+    due_date: "to_date(DueDate)"
+    subtotal: "CASE WHEN Type = 'ACCRECCREDIT' THEN -SubTotal ELSE SubTotal END"
+    tax: "CASE WHEN Type = 'ACCRECCREDIT' THEN -TotalTax ELSE TotalTax END"
+    amount_due: AmountDue
+    currency: CurrencyCode
+    account_id: AccountCode
+    paid_date: "to_date(FullyPaidOnDate)"
+    source_modified_at: "to_timestamp(UpdatedDateUTC)"
+    sync_seq: SyncSeq
+
+- feed: bookwise_invoices
+  domain: accounting
+  platform: bookwise
+  owner: accounting-data@example.com
+  source: {type: events, topic: sync.accounting.bookwise.invoices.v3}
+  target: {table: bookwise_invoice, merge_keys: [company, id], ordering_key: sync_seq}
+  canonical:
+    company_id: company
+    source_invoice_id: "cast(id AS STRING)"
+    doc_type: "CASE WHEN doc = 'credit_memo' THEN 'credit_note' ELSE 'invoice' END"
+    status: "CASE state WHEN 'closed' THEN 'paid' ELSE state END"
+    issue_date: "to_date(txn_date)"
+    due_date: "to_date(due)"
+    subtotal: net
+    tax: vat
+    amount_due: balance
+    currency: currency_ref
+    account_id: income_account
+    paid_date: "to_date(paid_on)"
+    source_modified_at: "to_timestamp(last_updated)"
+    sync_seq: sync_seq
+
+- feed: orbiterp_invoices
+  domain: accounting
+  platform: orbiterp
+  owner: accounting-data@example.com
+  source: {type: events, topic: sync.erp.orbiterp.ar_documents.v1}
+  target: {table: orbiterp_invoice, merge_keys: [company, series, doc_number], ordering_key: sync_seq}
+  canonical:
+    company_id: company
+    source_invoice_id: "concat(series, '-', cast(doc_number AS STRING))"
+    doc_type: "CASE WHEN series = 'CN' THEN 'credit_note' ELSE 'invoice' END"
+    status: "CASE status_code WHEN 0 THEN 'draft' WHEN 1 THEN 'open' WHEN 2 THEN 'open' WHEN 3 THEN 'paid' WHEN 4 THEN 'void' END"
+    issue_date: "to_date(created)"
+    due_date: "date_add(to_date(created), CAST(terms_days AS INT))"
+    subtotal: "CASE WHEN series = 'CN' THEN -lines_total ELSE lines_total END"
+    tax: "CASE WHEN series = 'CN' THEN -tax_total ELSE tax_total END"
+    amount_due: "CASE WHEN status_code IN (3, 4) OR series = 'CN' THEN 0.0 ELSE lines_total + tax_total - paid_total END"
+    currency: "'GBP'"                       # OrbitERP sends no currency: the company default applies
+    account_id: gl
+    paid_date: "to_date(paid_at)"
+    source_modified_at: "CAST(NULL AS TIMESTAMP)"   # not provided: the sync sequence orders versions
+    sync_seq: sync_seq
+
+- feed: bank_transactions
+  domain: banking
+  owner: banking-data@example.com
+  source: {type: events, topic: sync.banking.transactions.v2}
+  target: {table: bank_transaction, merge_keys: [company_id, txn_id], ordering_key: sync_seq}
+  governance:
+    data_class: bank_transaction
+    pii: {counterparty_iban: iban}
+
+- feed: bank_balances
+  domain: banking
+  owner: banking-data@example.com
+  source: {type: events, topic: sync.banking.balances.v1}
+  target: {table: bank_balance, merge_keys: [company_id, account_id]}
+  governance: {data_class: bank_transaction}
+
+- feed: commerce_payouts
+  domain: commerce
+  owner: commerce-data@example.com
+  source: {type: events, topic: sync.commerce.shoplane.payouts.v1}
+  target: {table: commerce_payout, merge_keys: [merchant_id, payout_id]}
+  governance: {data_class: commerce}

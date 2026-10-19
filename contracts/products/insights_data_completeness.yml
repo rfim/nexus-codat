@@ -1,0 +1,16 @@
+product: insights_data_completeness
+team: Insights
+owner: data-quality-lead@example.com
+engineer: vim@example.com
+definition: >
+  How far a company's insights can be trusted: bank coverage x share of invoices that passed the quality gate.
+  Published next to every metric, so "revenue fell" can be told apart from "data stopped arriving".
+grain: [customer_id, company_id]
+freshness: {column: last_bank, max_lag_days: 7}
+columns:
+  - name: completeness_score
+    tests: [not_null, {range: {min: 0, max: 1}}]
+access:
+  read: [grp_insights_api, grp_risk_analysts]
+  tenant_column: customer_id
+change: {breaking: owner_approval}

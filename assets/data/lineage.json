@@ -1,0 +1,271 @@
+{
+  "insights_revenue_monthly": {
+    "product": "gold.insights_revenue_monthly",
+    "upstream": [
+      "gold.fct_invoice",
+      "silver.invoice",
+      "silver.account_mapping",
+      "bronze.ledgerone_invoice",
+      "bronze.bookwise_invoice",
+      "bronze.orbiterp_invoice",
+      "bronze.account",
+      "silver.company_entitlement"
+    ],
+    "version": 1,
+    "checks_passed": 10,
+    "checks_total": 10,
+    "checks": [
+      {
+        "check": "not_null: customer_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "accepted_values: customer_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: company_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: currency",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "accepted_values: currency",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: revenue",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "unique grain: customer_id, company_id, currency, month",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "freshness: month within 45 day(s) of the run",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "tenant: every row belongs to a customer with active consent",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "reconcile revenue to source within 0.01",
+        "status": "pass",
+        "failing_rows": 0
+      }
+    ],
+    "contract": "contracts/products/insights_revenue_monthly.yml"
+  },
+  "insights_cash_flow_monthly": {
+    "product": "gold.insights_cash_flow_monthly",
+    "upstream": [
+      "silver.bank_transaction",
+      "silver.bank_balance",
+      "bronze.bank_transaction",
+      "bronze.bank_balance",
+      "silver.company_entitlement"
+    ],
+    "version": 1,
+    "checks_passed": 8,
+    "checks_total": 9,
+    "checks": [
+      {
+        "check": "not_null: customer_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "accepted_values: customer_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: net_operating_cash_flow",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: operating_inflows",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "range: operating_inflows",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "unique grain: customer_id, company_id, currency, month",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "freshness: month within 45 day(s) of the run",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "tenant: every row belongs to a customer with active consent",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "reconcile net_movement_all to source within 0.01",
+        "status": "fail",
+        "failing_rows": 2
+      }
+    ],
+    "contract": "contracts/products/insights_cash_flow_monthly.yml"
+  },
+  "insights_dso_monthly": {
+    "product": "gold.insights_dso_monthly",
+    "upstream": [
+      "gold.fct_invoice",
+      "silver.invoice",
+      "bronze.ledgerone_invoice",
+      "bronze.bookwise_invoice",
+      "bronze.orbiterp_invoice",
+      "silver.company_entitlement"
+    ],
+    "version": 1,
+    "checks_passed": 6,
+    "checks_total": 6,
+    "checks": [
+      {
+        "check": "range: dso_days",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: receivables",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "range: receivables",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "unique grain: customer_id, company_id, month",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "freshness: month within 45 day(s) of the run",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "tenant: every row belongs to a customer with active consent",
+        "status": "pass",
+        "failing_rows": 0
+      }
+    ],
+    "contract": "contracts/products/insights_dso_monthly.yml"
+  },
+  "insights_commerce_monthly": {
+    "product": "gold.insights_commerce_monthly",
+    "upstream": [
+      "silver.commerce_payout",
+      "silver.bank_transaction",
+      "bronze.commerce_payout",
+      "bronze.bank_transaction",
+      "silver.company_entitlement"
+    ],
+    "version": 1,
+    "checks_passed": 7,
+    "checks_total": 7,
+    "checks": [
+      {
+        "check": "not_null: net_sales",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "range: net_sales",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "not_null: payouts_in_bank_ratio",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "range: payouts_in_bank_ratio",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "unique grain: customer_id, company_id, currency, month",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "freshness: month within 45 day(s) of the run",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "tenant: every row belongs to a customer with active consent",
+        "status": "pass",
+        "failing_rows": 0
+      }
+    ],
+    "contract": "contracts/products/insights_commerce_monthly.yml"
+  },
+  "insights_data_completeness": {
+    "product": "gold.insights_data_completeness",
+    "upstream": [
+      "gold.fct_invoice",
+      "silver.invoice_quarantine",
+      "silver.bank_transaction",
+      "silver.company",
+      "silver.company_entitlement"
+    ],
+    "version": 1,
+    "checks_passed": 5,
+    "checks_total": 5,
+    "checks": [
+      {
+        "check": "not_null: completeness_score",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "range: completeness_score",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "unique grain: customer_id, company_id",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "freshness: last_bank within 7 day(s) of the run",
+        "status": "pass",
+        "failing_rows": 0
+      },
+      {
+        "check": "tenant: every row belongs to a customer with active consent",
+        "status": "pass",
+        "failing_rows": 0
+      }
+    ],
+    "contract": "contracts/products/insights_data_completeness.yml"
+  }
+}
