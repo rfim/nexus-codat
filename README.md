@@ -21,7 +21,10 @@ The repository runs the methods I used at Lifepal on SMB data shaped like Codat'
 | `semantic/metrics.yml`, `src/nexus/semantic.py` | The semantic layer: each metric defined once, compiled to SQL with the consent filter always applied; point-in-time metrics can't be summed. |
 | `src/nexus/mcp_server.py` | The MCP server (`mcp` 2.x): `list_metrics`, `describe_metric`, `get_lineage`, `query_metric`. Read-only, runs as the caller, cites its source. |
 | `src/nexus/agent.py`, `evals/questions.yml` | A rule-based planner that stands in for the LLM, and the eval set that runs in CI: values, tool choice, citations, consent and refusals. |
-| `index.html`, `mcp.html`, `run.html`, `oncall.html` | The site. `mcp.html` animates the MCP exchange step by step, then lets you ask as either customer. |
+| `examples/` | Five short scripts (generate, compile a contract, the semantic layer, the MCP tools as two customers, the evals) that run locally and in the browser. |
+| `tests/` | 375 tests across every layer: generator, Spark bronze/silver/gold, contracts, semantic layer, the browser evaluator against DuckDB, planner, MCP tools and evals, the published data, and the site. `scripts/test_report.py` turns the run into `assets/data/tests.json`. |
+| `index.html`, `mcp.html`, `run.html`, `oncall.html` | The site. `mcp.html` animates the MCP exchange step by step (with Lifepal and lesson-for-Codat tabs). `run.html` ends with a code editor that opens every file in the repo and runs the pure-Python parts in your browser (Pyodide), plus the test report and a button to run the tests in the browser. |
+| `assets/vendor/`, `assets/pyshims/` | Pyodide, CodeMirror and js-yaml, served from the repo; and the small stand-ins (yaml, pytest, MCPServer) that let the same Python run unchanged in the browser. |
 
 ## The last run
 
@@ -37,7 +40,7 @@ Python 3.12+ and Java 17+:
 
 ```bash
 pip install -r requirements.txt
-PYTHONPATH=src python -m pytest -q        # unit tests, MCP tools and evals
+PYTHONPATH=src python -m pytest -q        # 375 tests: Spark, contracts, semantic layer, MCP, evals, data, site
 ./scripts/build.sh                        # the Spark run; rewrites assets/data/
 python -m http.server 8000                # then open http://localhost:8000/
 ```

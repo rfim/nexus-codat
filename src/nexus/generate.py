@@ -17,7 +17,7 @@ import uuid
 from datetime import date, timedelta
 from pathlib import Path
 
-from nexus.spark import ROOT
+from nexus.paths import ROOT
 
 LANDING = ROOT / "landing"
 RUN_DATE = date(2026, 9, 30)

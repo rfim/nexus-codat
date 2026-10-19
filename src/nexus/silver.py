@@ -7,8 +7,7 @@ from pyspark.sql import functions as F
 
 from nexus.spark import ROOT, table
 
-CANONICAL = ["company_id", "source_invoice_id", "doc_type", "status", "issue_date", "due_date", "subtotal", "tax",
-             "amount_due", "currency", "account_id", "paid_date", "source_modified_at", "sync_seq"]
+from nexus.silver_columns import CANONICAL
 
 
 def _write(df: DataFrame, layer: str, name: str) -> int:

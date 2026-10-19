@@ -28,6 +28,7 @@
   owner: accounting-data@example.com
   source: {type: events, topic: sync.accounting.ledgerone.invoices.v3}
   target: {table: ledgerone_invoice, merge_keys: [CompanyId, InvoiceID], ordering_key: SyncSeq}
+  governance: {data_class: invoice}
   canonical:
     company_id: CompanyId
     source_invoice_id: InvoiceID
@@ -50,6 +51,7 @@
   owner: accounting-data@example.com
   source: {type: events, topic: sync.accounting.bookwise.invoices.v3}
   target: {table: bookwise_invoice, merge_keys: [company, id], ordering_key: sync_seq}
+  governance: {data_class: invoice}
   canonical:
     company_id: company
     source_invoice_id: "cast(id AS STRING)"
@@ -72,6 +74,7 @@
   owner: accounting-data@example.com
   source: {type: events, topic: sync.erp.orbiterp.ar_documents.v1}
   target: {table: orbiterp_invoice, merge_keys: [company, series, doc_number], ordering_key: sync_seq}
+  governance: {data_class: invoice}
   canonical:
     company_id: company
     source_invoice_id: "concat(series, '-', cast(doc_number AS STRING))"

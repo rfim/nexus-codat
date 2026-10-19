@@ -12,9 +12,11 @@ jobs:
       - uses: actions/setup-java@v4
         with: {distribution: temurin, java-version: "17"}
       - run: pip install -r requirements.txt
-      - name: MCP tools, consent and the agent evals (exported gold, no Spark)
-        run: PYTHONPATH=src python -m pytest -q tests/test_mcp.py tests/test_semantic.py tests/test_contracts.py
-      - name: Spark unit tests (replay, SCD2)
-        run: PYTHONPATH=src python -m pytest -q tests/test_bronze.py tests/test_scd2.py
-      - name: Full run on Spark + Delta, then check the site data is current
+      - name: The whole suite (pure Python, Spark + Delta, MCP evals, data and site checks)
+        run: PYTHONPATH=src python -m pytest -q --junitxml=target/junit.xml
+      - name: Test report for the site
+        run: python scripts/test_report.py target/junit.xml target/tests.json
+      - name: The code editor's file list is current
+        run: python scripts/manifest.py && git diff --exit-code -- assets/data/files.json
+      - name: Full run on Spark + Delta, then show what changed in the site data
         run: ./scripts/build.sh && git diff --stat -- assets/data

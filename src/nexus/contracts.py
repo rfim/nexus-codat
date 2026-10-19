@@ -8,9 +8,8 @@ One file in, three artefacts out:
 import re
 
 import yaml
-from pyspark.sql import SparkSession
 
-from nexus.spark import ROOT, table
+from nexus.paths import ROOT, table
 
 CONTRACTS = ROOT / "contracts"
 RUN_DATE = "DATE'2026-09-30'"
@@ -123,7 +122,7 @@ def compile_governance(c: dict, catalog: str = "nexus") -> str:
     return "\n".join(lines) + "\n"
 
 
-def run_checks(spark: SparkSession, c: dict) -> list[dict]:
+def run_checks(spark, c: dict) -> list[dict]:
     results = []
     for chk in compile_checks(c):
         failing = spark.sql(chk["sql"])

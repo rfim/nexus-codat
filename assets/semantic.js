@@ -34,7 +34,7 @@ const SEM = (() => {
     const bad = groupBy.filter((d) => !m.dimensions.includes(d));
     if (bad.length) throw new Refused("bad_dimension", `${m.label} can't be split by ${bad.join(", ")}; allowed: ${m.dimensions.join(", ")}.`);
     for (const need of m.requires || []) {
-      if (!groupBy.includes(need) && !(need === "company_id" && companyId)) {
+      if (!groupBy.includes(need) && !(need === "company_id" && companyId && m.kind !== "derived")) {
         if (m.kind === "point_in_time")
           throw new Refused("non_additive", `${m.label} is point in time: ask for it by ${m.requires.join(" and ")}.`);
         groupBy.push(need);

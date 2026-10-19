@@ -13,3 +13,4 @@ summarise(log)
 export(log)
 print("wrote assets/data/")
 PY
+python scripts/manifest.py

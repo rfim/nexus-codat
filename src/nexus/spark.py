@@ -1,11 +1,9 @@
 """One SparkSession for local runs and CI. On Databricks the active session is reused."""
 import os
-from pathlib import Path
 
 from pyspark.sql import SparkSession
 
-ROOT = Path(__file__).resolve().parents[2]
-TARGET = ROOT / "target"
+from nexus.paths import ROOT, TARGET, table  # noqa: F401  (re-exported for the Spark modules)
 
 
 def get_spark(app: str = "nexus") -> SparkSession:
@@ -30,8 +28,3 @@ def get_spark(app: str = "nexus") -> SparkSession:
         spark.sql(f"CREATE DATABASE IF NOT EXISTS nexus_{layer}")
     return spark
 
-
-def table(layer: str, name: str) -> str:
-    """nexus_<layer>.<name> locally; nexus.<layer>.<name> under Unity Catalog (NEXUS_CATALOG=nexus)."""
-    catalog = os.environ.get("NEXUS_CATALOG")
-    return f"{catalog}.{layer}.{name}" if catalog else f"nexus_{layer}.{name}"

@@ -2,7 +2,10 @@
 NX.site().then((d) => {
   const $ = (id) => document.getElementById(id), r = d.run, e = d.evidence;
   const max = Math.max(...r.tasks.map((t) => t.duration_s));
-  $("tasks").innerHTML = r.tasks.map((t) => `<div class="bar"><span style="color:#d9d6ff">${NX.esc(t.label)}</span>
+  const CODE = { generate: "src/nexus/generate.py", ingest: "src/nexus/bronze.py", replay: "src/nexus/bronze.py", late: "src/nexus/bronze.py",
+    silver: "src/nexus/silver.py", gold: "src/nexus/gold.py", rerun: "src/nexus/gold.py", restate: "src/nexus/pipeline.py",
+    check_issued: "src/nexus/contracts.py", check: "src/nexus/contracts.py" };
+  $("tasks").innerHTML = r.tasks.map((t) => `<div class="bar"><a href="#code" data-code="${CODE[t.key] || "src/nexus/pipeline.py"}" class="tasklink">${NX.esc(t.label)} <i>${(CODE[t.key] || "").split("/").pop()}</i></a>
     <span class="track" style="background:#1d1f57"><span class="fill" style="left:0;width:${Math.max(2, (t.duration_s / max) * 100)}%"></span></span>
     <span class="num" style="color:#a9a8d8">${t.duration_s}s</span></div>`).join("") +
     `<p style="margin-top:.8rem;color:#a9a8d8;font-size:.85rem">Total ${r.seconds}s. On Databricks each step is a task in one job (<code>databricks.yml</code>).</p>`;

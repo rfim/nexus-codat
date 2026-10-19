@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/codemirror/codemirror.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -19,7 +20,9 @@
     <a href="mcp.html" class="keep"><span class="live" aria-hidden="true"></span>Enable MCP</a>
     <a href="run.html" aria-current="page">How the data gets there</a>
     <a href="oncall.html">On call</a>
-    <a href="https://github.com/rfim/nexus-codat/blob/main/src/nexus/pipeline.py" class="nav-code keep">Pipeline code ↗</a>
+    <a href="#code">The code</a>
+    <a href="#tests">Tests</a>
+    <a href="https://github.com/rfim/nexus-codat" class="nav-code keep">GitHub ↗</a>
   </nav>
 </div></header>
 <main id="main">
@@ -81,8 +84,45 @@
     <div id="contracts"></div>
   </div>
 </section>
+<section class="section dark" id="code">
+  <div class="shell">
+    <div class="index"><span>06 · The code, runnable</span><span>Python in your browser · Pyodide</span></div>
+    <div class="head"><h2>Open it. Edit it. <em>Run it.</em></h2>
+      <p>Every file in the repository, as it is on GitHub. The pure-Python parts (the generator, contracts, the semantic layer, the MCP tools, the evals) run here in your browser. The Spark modules ran for real to make this page; they run in CI and with <code>./scripts/build.sh</code>.</p></div>
+    <div class="ide">
+      <nav class="tree" id="tree" aria-label="Repository files"></nav>
+      <div class="ide-main">
+        <div class="ide-bar"><code id="fname"></code><span id="badge" class="badge"></span><span id="dirty" class="badge b-dirty" hidden>edited</span>
+          <span class="grow"></span><button id="reset" class="ghost">Reset</button><a id="gh" class="ghost" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+          <button id="run" class="primary">▶ Run <kbd>Ctrl ↵</kbd></button></div>
+        <div id="editor" class="editor"></div>
+        <pre id="out" class="console" aria-live="polite"><span class="o-note">Pick a file on the left. Files marked green run here; press Run. Start with examples/.</span></pre>
+      </div>
+    </div>
+    <div class="legend"><span><i class="dot-browser"></i>runs in your browser</span><span><i class="dot-spark"></i>needs Spark · runs in CI</span><span><i class="dot-tests"></i>tests</span><span><i class="dot-view"></i>read only</span></div>
+  </div>
+</section>
+
+<section class="section alt" id="tests">
+  <div class="shell">
+    <div class="index"><span>07 · The tests</span><span>pytest · CI on every push</span></div>
+    <div class="head"><h2>Everything here is <em>tested.</em></h2>
+      <p>The full suite, including the Spark tests, ran with pytest; the report below is its output. Run the pure-Python half again here, in your browser, against the same files.</p></div>
+    <p id="t-sum"></p>
+    <div id="t-suites"></div>
+    <div class="cta"><button id="t-run" class="button b-primary">▶ Run the browser-safe tests here</button></div>
+    <div id="t-live"></div>
+  </div>
+</section>
 </main>
 <footer><div class="shell"><p><b style="color:#fff">From NEXUS, built in Lifepal:</b> best practices from my production work, applied to Codat-shaped data. Synthetic data; fictional companies, customers and systems. An independent application, not affiliated with Codat. <a href="index.html">Back to NEXUS for Codat</a></p></div></footer>
 <script src="assets/common.js"></script>
 <script src="assets/run.js"></script>
+<script src="assets/vendor/codemirror/codemirror.js"></script>
+<script src="assets/vendor/codemirror/mode/python.js"></script>
+<script src="assets/vendor/codemirror/mode/yaml.js"></script>
+<script src="assets/vendor/codemirror/mode/sql.js"></script>
+<script src="assets/vendor/js-yaml.min.js"></script>
+<script src="assets/vendor/pyodide/pyodide.js"></script>
+<script src="assets/code.js"></script>
 </body></html>

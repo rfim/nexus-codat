@@ -16,14 +16,14 @@ from nexus import semantic
 mcp = MCPServer("nexus-insights", instructions=(
     "Answer questions about SMB financial Insights using certified metrics only. "
     "Call list_metrics first, cite the metric, its version and freshness, and never give financial advice."))
-_warehouse: semantic.Warehouse | None = None
+_warehouse = None
 LINEAGE = semantic.ROOT / "assets" / "data" / "lineage.json"
 
 
-def _wh() -> semantic.Warehouse:
+def _wh():
     global _warehouse
     if _warehouse is None:
-        _warehouse = semantic.Warehouse()
+        _warehouse = semantic.warehouse()
     return _warehouse
 
 

@@ -2,7 +2,6 @@
 import asyncio
 import os
 
-import duckdb
 import pytest
 import yaml
 
@@ -25,8 +24,18 @@ def test_query_runs_as_the_caller_and_cites_its_source():
 
 
 def _expected(sql: str) -> float:
-    con = semantic.Warehouse().con
-    return round(float(con.execute(sql).fetchone()[0]), 2)
+    """Independent of the semantic layer: straight SQL against gold (DuckDB), or the rows themselves."""
+    try:
+        con = semantic.Warehouse().con
+        return round(float(con.execute(sql).fetchone()[0]), 2)
+    except ImportError:
+        import re
+        t, col = re.search(r"sum\((\w+)\) FROM gold\.(\w+)", sql).group(2, 1)
+        eq = dict(re.findall(r"(\w+) = '([^']*)'", sql))
+        mo = re.search(r"month = DATE '([\d-]+)'", sql)
+        rows = semantic.MiniWarehouse().tables[t]
+        return round(sum(r[col] for r in rows if all(str(r[k]) == v for k, v in eq.items())
+                         and (not mo or r["month"] == mo[1])), 2)
 
 
 @pytest.mark.parametrize("case", EVALS, ids=[c["id"] for c in EVALS])
@@ -49,3 +58,33 @@ def test_eval(case):
         assert res["citation"]["metric"] == exp["metric"]
     for word in exp.get("mentions", []):
         assert word in str(res).lower()
+
+
+def test_tools_are_described_and_typed_for_the_agent():
+    tools = {t.name: t for t in asyncio.run(mcp_server.mcp.list_tools())}
+    assert all(t.description for t in tools.values())
+    assert tools["query_metric"].input_schema["required"] == ["name"]
+
+
+def test_describe_and_lineage_refuse_uncertified_metrics():
+    for fn in (mcp_server.describe_metric, mcp_server.get_lineage):
+        assert fn("gross_margin")["reason"] == "not_certified"
+
+
+def test_list_metrics_never_offers_an_uncertified_metric():
+    names = {m["name"] for m in mcp_server.list_metrics()}
+    assert "gross_margin" not in names and {"revenue", "net_operating_cash_flow", "dso_days"} <= names
+
+
+def test_an_unknown_caller_gets_nothing():
+    os.environ["NEXUS_CALLER"] = "intruder@example.com"
+    out = mcp_server.query_metric("revenue", ["company_id"])
+    assert out["refused"] and out["reason"] == "unknown_principal"
+
+
+@pytest.mark.parametrize("who, allowed", [("analyst@northbank.example", {f"C-{i}" for i in range(101, 109)}),
+                                          ("analyst@brightpay.example", {f"C-{i}" for i in range(107, 112)})])
+def test_each_customer_sees_exactly_its_consented_companies(who, allowed):
+    os.environ["NEXUS_CALLER"] = who
+    seen = {r["company_id"] for r in mcp_server.query_metric("revenue", ["company_id"])["rows"]}
+    assert seen == allowed

@@ -1,0 +1,284 @@
+[
+ {
+  "path": "examples/01_generate_feeds.py",
+  "folder": "examples",
+  "runs": "browser",
+  "lines": 17
+ },
+ {
+  "path": "examples/02_compile_a_contract.py",
+  "folder": "examples",
+  "runs": "browser",
+  "lines": 8
+ },
+ {
+  "path": "examples/03_semantic_layer.py",
+  "folder": "examples",
+  "runs": "browser",
+  "lines": 14
+ },
+ {
+  "path": "examples/04_mcp_tools_as_two_customers.py",
+  "folder": "examples",
+  "runs": "browser",
+  "lines": 15
+ },
+ {
+  "path": "examples/05_run_the_evals.py",
+  "folder": "examples",
+  "runs": "browser",
+  "lines": 15
+ },
+ {
+  "path": "src/nexus/__init__.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 1
+ },
+ {
+  "path": "src/nexus/agent.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 68
+ },
+ {
+  "path": "src/nexus/bronze.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 39
+ },
+ {
+  "path": "src/nexus/contracts.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 131
+ },
+ {
+  "path": "src/nexus/export.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 125
+ },
+ {
+  "path": "src/nexus/generate.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 270
+ },
+ {
+  "path": "src/nexus/gold.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 134
+ },
+ {
+  "path": "src/nexus/mcp_server.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 93
+ },
+ {
+  "path": "src/nexus/paths.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 12
+ },
+ {
+  "path": "src/nexus/pipeline.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 113
+ },
+ {
+  "path": "src/nexus/semantic.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 153
+ },
+ {
+  "path": "src/nexus/silver.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 83
+ },
+ {
+  "path": "src/nexus/silver_columns.py",
+  "folder": "src/nexus",
+  "runs": "browser",
+  "lines": 3
+ },
+ {
+  "path": "src/nexus/spark.py",
+  "folder": "src/nexus",
+  "runs": "spark",
+  "lines": 30
+ },
+ {
+  "path": "contracts/quality.yml",
+  "folder": "contracts",
+  "runs": "view",
+  "lines": 9
+ },
+ {
+  "path": "contracts/sources.yml",
+  "folder": "contracts",
+  "runs": "view",
+  "lines": 115
+ },
+ {
+  "path": "contracts/products/insights_cash_flow_monthly.yml",
+  "folder": "contracts/products",
+  "runs": "view",
+  "lines": 26
+ },
+ {
+  "path": "contracts/products/insights_commerce_monthly.yml",
+  "folder": "contracts/products",
+  "runs": "view",
+  "lines": 18
+ },
+ {
+  "path": "contracts/products/insights_data_completeness.yml",
+  "folder": "contracts/products",
+  "runs": "view",
+  "lines": 16
+ },
+ {
+  "path": "contracts/products/insights_dso_monthly.yml",
+  "folder": "contracts/products",
+  "runs": "view",
+  "lines": 18
+ },
+ {
+  "path": "contracts/products/insights_revenue_monthly.yml",
+  "folder": "contracts/products",
+  "runs": "view",
+  "lines": 31
+ },
+ {
+  "path": "semantic/metrics.yml",
+  "folder": "semantic",
+  "runs": "view",
+  "lines": 102
+ },
+ {
+  "path": "evals/questions.yml",
+  "folder": "evals",
+  "runs": "view",
+  "lines": 70
+ },
+ {
+  "path": "tests/conftest.py",
+  "folder": "tests",
+  "runs": "spark",
+  "lines": 14
+ },
+ {
+  "path": "tests/test_agent.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 40
+ },
+ {
+  "path": "tests/test_bronze.py",
+  "folder": "tests",
+  "runs": "spark",
+  "lines": 19
+ },
+ {
+  "path": "tests/test_contracts.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 74
+ },
+ {
+  "path": "tests/test_data.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 72
+ },
+ {
+  "path": "tests/test_generate.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 89
+ },
+ {
+  "path": "tests/test_gold.py",
+  "folder": "tests",
+  "runs": "spark",
+  "lines": 42
+ },
+ {
+  "path": "tests/test_mcp.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 90
+ },
+ {
+  "path": "tests/test_mini_warehouse.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 52
+ },
+ {
+  "path": "tests/test_scd2.py",
+  "folder": "tests",
+  "runs": "spark",
+  "lines": 15
+ },
+ {
+  "path": "tests/test_semantic.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 66
+ },
+ {
+  "path": "tests/test_silver.py",
+  "folder": "tests",
+  "runs": "spark",
+  "lines": 48
+ },
+ {
+  "path": "tests/test_site.py",
+  "folder": "tests",
+  "runs": "tests",
+  "lines": 48
+ },
+ {
+  "path": "scripts/build.sh",
+  "folder": "scripts",
+  "runs": "view",
+  "lines": 16
+ },
+ {
+  "path": "scripts/manifest.py",
+  "folder": "scripts",
+  "runs": "view",
+  "lines": 27
+ },
+ {
+  "path": "scripts/test_report.py",
+  "folder": "scripts",
+  "runs": "view",
+  "lines": 46
+ },
+ {
+  "path": "databricks.yml",
+  "folder": ".",
+  "runs": "view",
+  "lines": 28
+ },
+ {
+  "path": ".github/workflows/ci.yml",
+  "folder": ".github/workflows",
+  "runs": "view",
+  "lines": 22
+ },
+ {
+  "path": "requirements.txt",
+  "folder": ".",
+  "runs": "view",
+  "lines": 6
+ }
+]
