@@ -27,7 +27,7 @@
 <section class="section dark" style="padding-top:3rem">
   <div class="shell">
     <div class="index"><span>Python end to end</span><span>Dagster · Great Expectations · MCP · Claude</span></div>
-    <div class="head"><h2>One Python graph, <em>from feed to fix.</em></h2>
+    <div class="head"><h2>One Python graph. <em>From feed to fix.</em></h2>
       <p>Every step is a Dagster asset; every contract is checked twice, as SQL and as a Great Expectations suite; and when a check fails, an on-call agent connects to the MCP server, investigates with read-only tools, and files an incident with a proposed fix. This is the record of the last run.</p></div>
     <div class="grid g4" id="o-tiles"></div>
     <div class="stage" style="margin-top:1.2rem">
@@ -48,7 +48,7 @@
 <section class="section">
   <div class="shell">
     <div class="index"><span>01 · Asset checks</span><span>dagster.AssetCheckResult</span></div>
-    <div class="head"><h2>Every rule, <em>checked on every run.</em></h2>
+    <div class="head"><h2>Every rule. <em>Checked on every run.</em></h2>
       <p>Pipeline checks (replay, quarantine, idempotent re-run) sit on their layers. Each Insights product carries two: the SQL checks compiled from its contract, and a Great Expectations suite generated from the same YAML.</p></div>
     <div id="o-checks"></div>
   </div>
@@ -57,7 +57,7 @@
 <section class="section alt">
   <div class="shell">
     <div class="index"><span>02 · Great Expectations</span><span>src/nexus/quality_gx.py</span></div>
-    <div class="head"><h2>The contract, <em>as expectations.</em></h2>
+    <div class="head"><h2>The contract. <em>As expectations.</em></h2>
       <p>One YAML contract becomes one ExpectationSuite: not-null, accepted values, ranges, grain uniqueness, row count and the grain columns. GX owns the column rules; the SQL checks keep what one table can't say (reconciliation to source, consent).</p></div>
     <div class="grid g2">
       <div><div id="gx-list"></div></div>

@@ -57,7 +57,7 @@
 <section class="section alt">
   <div class="shell">
     <div class="index"><span>How the data gets there</span><span>the last run · PySpark + Delta</span></div>
-    <div class="head"><h2>Land, conform, prove, <em>then publish.</em></h2>
+    <div class="head"><h2>Land, conform, prove. <em>Then publish.</em></h2>
       <p>Each task below is a step of <code>src/nexus/pipeline.py</code>, the same entry point a Databricks job calls. Durations are from the run on a laptop-sized Spark session.</p></div>
     <div class="card" style="background:#101140"><div class="bars" id="tasks"></div></div>
   </div>
@@ -76,7 +76,7 @@
 <section class="section alt">
   <div class="shell">
     <div class="index"><span>02 · Conform</span><span>contracts/sources.yml · src/nexus/silver.py</span></div>
-    <div class="head"><h2>Three schemas, <em>one invoice.</em></h2>
+    <div class="head"><h2>Three schemas. <em>One invoice.</em></h2>
       <p>Each source contract carries a <code>canonical</code> mapping. Silver applies it, then the quality contract splits bad rows out with the failed rule attached.</p></div>
     <div class="grid g2">
       <div><h3 style="margin-bottom:.6rem">Quarantine</h3><div id="quarantine"></div></div>
@@ -97,7 +97,7 @@
 <section class="section alt">
   <div class="shell">
     <div class="index"><span>04 · Late corrections</span><span>time travel · VERSION AS OF 0</span></div>
-    <div class="head"><h2>Restated, <em>with what was issued still queryable.</em></h2>
+    <div class="head"><h2>Restated. <em>With what was issued still queryable.</em></h2>
       <p>A day later, the systems sent backdated credit notes and late voids for August. They merged into the same bronze tables; revenue was republished as Delta version 1.</p></div>
     <div id="restatement"></div>
     <details><summary>Delta history: gold.insights_revenue_monthly</summary><div id="hist-gold"></div></details>
@@ -107,7 +107,7 @@
 <section class="section">
   <div class="shell">
     <div class="index"><span>05 · Prove</span><span>src/nexus/contracts.py</span></div>
-    <div class="head"><h2>Every contract, <em>checked on every load.</em></h2>
+    <div class="head"><h2>Every contract. <em>Checked on every load.</em></h2>
       <p>Each product contract compiles into SQL checks: columns, grain, freshness, consent and reconciliation to source. A failing check keeps the evidence.</p></div>
     <div id="contracts"></div>
   </div>
