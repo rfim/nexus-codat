@@ -303,3 +303,10 @@ pre,.trace,.wirelog{max-width:100%;overflow-wrap:anywhere}
 .hstrip>section{flex:0 0 100%;min-width:0;scroll-snap-align:start}
 @media (prefers-reduced-motion:reduce){.hstrip{scroll-behavior:auto;transition:none}}
 .suite summary span:nth-child(2){min-width:14rem}
+/* header: "built in Lifepal" next to the brand */
+.built-in{display:inline-flex;align-items:center;gap:.45rem;margin-left:.35rem;padding-left:.75rem;border-left:1px solid #3a3d86}
+.built-in small{color:#a9a8d8;font:500 .72rem var(--font);letter-spacing:.04em;white-space:nowrap}
+.logo-chip{display:inline-flex;align-items:center;background:#fff;border-radius:6px;padding:3px 6px}
+.logo-chip img{display:block;width:56px;height:auto}
+@media (max-width:520px){.built-in{padding-left:.5rem;margin-left:.15rem;flex-direction:column;align-items:flex-start;gap:.15rem}.built-in small{font-size:.62rem}.logo-chip img{width:44px}}
+.brand-mark{flex:none}
