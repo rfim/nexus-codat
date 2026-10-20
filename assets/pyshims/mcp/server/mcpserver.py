@@ -36,4 +36,8 @@ class MCPServer:
         return self._tools[name](**arguments)
 
     def run(self, transport="stdio"):
-        raise RuntimeError("The MCP transport doesn't run in the browser; the tools are called directly.")
+        # Run on mcp_server.py: show what a client would see instead of starting a transport
+        print(f"MCP server {self.name!r}: the stdio transport doesn't run in a browser, so here are its tools.")
+        print("Locally: python -m nexus.mcp_server (stdio), or call the tools directly as in examples/04.\n")
+        for n, f in self._tools.items():
+            print(f"  {n}({', '.join(_schema(f).get('properties', {}))})  {(f.__doc__ or '').strip().splitlines()[0]}")

@@ -9,6 +9,8 @@
                   local: ["Dagster · GX · MCP · Claude: runs in a Python env", "b-local"] };
   const MODE = { py: "python", yml: "yaml", yaml: "yaml", sql: "sql", sh: "shell", txt: null, js: "javascript" };
   const original = {}, edited = {};
+  // a missing file must fail loudly: never hand Python an HTML 404 page as source
+  const text = (p) => fetch(p).then((r) => { if (!r.ok) throw new Error(`${p}: HTTP ${r.status} from the site`); return r.text(); });
   let current = null;
 
   // ---------- file tree ----------
@@ -79,7 +81,7 @@
 
   async function open(path) {
     current = path; const f = byPath[path];
-    if (!(path in original)) original[path] = await fetch(path).then((r) => r.text());
+    if (!(path in original)) original[path] = await text(path);
     cm.setOption("mode", MODE[path.split(".").pop()] ?? null);
     cm.setValue(edited[path] ?? original[path]); cm.clearHistory();
     document.querySelectorAll(".tree-file").forEach((b) => b.classList.toggle("active", b.dataset.path === path));
@@ -121,8 +123,8 @@
       for (let i = 1; i <= dir.length; i++) { const d = dir.slice(0, i).join("/"); if (d && !py.FS.analyzePath(d).exists) py.FS.mkdir(d); }
       py.FS.writeFile(path, text);
     };
-    await Promise.all([...need, ...data].map(async (p) => put(`/repo/${p}`, await fetch(p).then((r) => r.text()))));
-    await Promise.all(shims.map(async (s) => put(`/shims/${s}`, await fetch(`assets/pyshims/${s}`).then((r) => r.text()))));
+    await Promise.all([...need, ...data].map(async (p) => put(`/repo/${p}`, await text(p))));
+    await Promise.all(shims.map(async (s) => put(`/shims/${s}`, await text(`assets/pyshims/${s}`))));
     py.runPython(`import sys; sys.path[:0] = ["/shims", "/repo/src"]; import os; os.chdir("/repo")`);
     write(`Python ${py.runPython("import sys; sys.version.split()[0]")} ready in ${((performance.now() - t0) / 1000).toFixed(1)}s. ` +
       `${need.length} repo files mounted at /repo.\n\n`, "o-note");

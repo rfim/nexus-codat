@@ -1,4 +1,5 @@
 """Every page links only to files that exist, and the PDFs and GIFs it offers are in the repo."""
+import json
 import re
 
 import pytest
@@ -46,3 +47,10 @@ def test_the_examples_run_unchanged_in_the_browser_runtime():
     for p in (ROOT / "examples").glob("*.py"):
         text = p.read_text()
         assert "pyspark" not in text and "nexus.spark" not in text and "bronze" not in text, p.name
+
+
+def test_pages_serves_files_that_start_with_an_underscore():
+    """GitHub Pages runs Jekyll unless .nojekyll exists, and Jekyll drops _files: __init__.py would 404 in the editor."""
+    served = [f["path"] for f in json.loads((ROOT / "assets" / "data" / "files.json").read_text())]
+    if any(part.startswith("_") for p in served for part in p.split("/")):
+        assert (ROOT / ".nojekyll").exists()
